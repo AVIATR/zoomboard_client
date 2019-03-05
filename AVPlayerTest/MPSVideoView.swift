@@ -68,6 +68,7 @@ class MPSVideoView : MTKView{
         isPaused = false
         // updates are not event-driven
         enableSetNeedsDisplay = false
+        
     }
     
     private func setupDisplayLink(fps: Int) {

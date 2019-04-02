@@ -14,6 +14,7 @@ class ViewController: UIViewController {
   
     
     @IBOutlet var filtersView: UIView!
+    @IBOutlet weak var labelLecture: UILabel!
     
     @IBOutlet var filtersButton: UIButton!
     @IBOutlet var playButton: UIButton!
@@ -21,13 +22,16 @@ class ViewController: UIViewController {
     @IBOutlet var saveFrameButton: UIButton!
     @IBOutlet var videoView: MPSVideoView!
     
+   // @IBOutlet weak var lectureNameLabel: UILabel!
     var filtersManager : FiltersManager = FiltersManager()
 
     var scaledState : Bool = false
 
     var viewcentre: CGPoint = CGPoint.init()
     var streamURL : URL = URL(string:"https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8")!
-    
+    var lectureName : String = "default"
+
+
     @IBOutlet weak var txtAddItem: UITextField!
 
     override func viewDidLoad() {
@@ -39,6 +43,7 @@ class ViewController: UIViewController {
         streamURL = URL(string: "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8")!
         // once connected, set up folder for the session
         viewcentre =  videoView.center
+        labelLecture.text = lectureName
         
     }
     @IBAction func didTapButton(_ sender: Any) {

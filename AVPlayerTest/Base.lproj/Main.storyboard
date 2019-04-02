@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MFv-Nu-t9W">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -10,6 +10,112 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Menu View Controller-->
+        <scene sceneID="zoS-Nn-XeZ">
+            <objects>
+                <viewController id="a5e-tQ-vtO" customClass="MenuViewController" customModule="AVPlayerTest" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="JNf-hS-y4w">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CCb-3d-Nt9">
+                                <rect key="frame" x="134" y="346" width="147" height="45"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="27"/>
+                                <state key="normal" title="New Lecture"/>
+                                <connections>
+                                    <action selector="newLecture:" destination="a5e-tQ-vtO" eventType="touchUpInside" id="hOD-ko-cwc"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="p8G-gJ-6iT"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="cYn-wH-Chi"/>
+                    <connections>
+                        <segue destination="Xcd-Ox-Zqe" kind="show" identifier="ShowLectureView" id="7Iw-a3-R6Z"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x2g-Fw-JHZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-623.1884057971015" y="130.43478260869566"/>
+        </scene>
+        <!--Lecture View Controller-->
+        <scene sceneID="bme-Sv-bJL">
+            <objects>
+                <viewController id="Xcd-Ox-Zqe" customClass="LectureViewController" customModule="AVPlayerTest" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="NoE-kV-LwJ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter URL here" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Hxb-tC-qkN">
+                                <rect key="frame" x="99" y="283" width="216" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Lecture Name here" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ESC-xq-pqJ">
+                                <rect key="frame" x="99" y="424" width="216" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vns-co-3Zl">
+                                <rect key="frame" x="190" y="540" width="34" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.080975057219999994" green="1" blue="0.13098584690000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" title="Start"/>
+                                <connections>
+                                    <action selector="startVideoViewContoller:" destination="Xcd-Ox-Zqe" eventType="touchUpInside" id="feg-Tg-diy"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Lecture Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KWg-Hl-r4K">
+                                <rect key="frame" x="148" y="395" width="108" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="URL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aw4-7O-JSe">
+                                <rect key="frame" x="186" y="254" width="33" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lOx-pE-cMy">
+                                <rect key="frame" x="15" y="283" width="57" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="AddURL"/>
+                                <connections>
+                                    <action selector="buttonTapAddURL:" destination="Xcd-Ox-Zqe" eventType="touchUpInside" id="w5L-B0-qjC"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IU7-UW-h6X">
+                                <rect key="frame" x="15" y="422" width="72" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Add Name"/>
+                                <connections>
+                                    <action selector="buttonTapAddLectureName:" destination="Xcd-Ox-Zqe" eventType="touchUpInside" id="6BQ-et-yI6"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="Rm8-62-BhQ"/>
+                    </view>
+                    <connections>
+                        <outlet property="textFieldLectureName" destination="ESC-xq-pqJ" id="283-Va-FNF"/>
+                        <outlet property="textFieldURL" destination="Hxb-tC-qkN" id="gAe-U8-PKz"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="ShowVideo" id="YLf-2V-5Sw"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4H0-cQ-cZb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="255.07246376811597" y="130.43478260869566"/>
+        </scene>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -37,7 +143,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FtA-Bp-NJs">
-                                <rect key="frame" x="14" y="69" width="57" height="30"/>
+                                <rect key="frame" x="19" y="68" width="57" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.93861897249518622" green="1" blue="0.77937546517327361" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <state key="normal" title="AddURL"/>
@@ -63,21 +169,6 @@
                                     <action selector="filtersButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Fwm-xl-24Z"/>
                                 </connections>
                             </button>
-                            <view hidden="YES" alpha="0.80000000000000004" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aHG-Hd-B2G">
-                                <rect key="frame" x="252" y="115" width="138" height="521"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
-                            <mtkView multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" colorPixelFormat="BGRA8Unorm" depthStencilPixelFormat="Depth32Float" translatesAutoresizingMaskIntoConstraints="NO" id="uhV-sl-fA3" customClass="MPSVideoView" customModule="AVPlayerTest" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="107" width="414" height="544"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <gestureRecognizers/>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="hn1-dR-ThJ" appends="YES" id="GC7-gJ-eN8"/>
-                                    <outletCollection property="gestureRecognizers" destination="Bd4-KU-E5I" appends="YES" id="Gis-ab-IzJ"/>
-                                    <outletCollection property="gestureRecognizers" destination="WxJ-KE-UVp" appends="YES" id="sVL-48-P2D"/>
-                                </connections>
-                            </mtkView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HtP-CL-HbE">
                                 <rect key="frame" x="158" y="693" width="68" height="43"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -95,6 +186,35 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R5e-Do-ApW">
+                                <rect key="frame" x="37" y="133" width="343" height="486"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <mtkView multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" colorPixelFormat="BGRA8Unorm" depthStencilPixelFormat="Depth32Float" translatesAutoresizingMaskIntoConstraints="NO" id="uhV-sl-fA3" customClass="MPSVideoView" customModule="AVPlayerTest" customModuleProvider="target">
+                                        <rect key="frame" x="8" y="8" width="327" height="470"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <gestureRecognizers/>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="Bd4-KU-E5I" appends="YES" id="Gis-ab-IzJ"/>
+                                            <outletCollection property="gestureRecognizers" destination="WxJ-KE-UVp" appends="YES" id="sVL-48-P2D"/>
+                                            <outletCollection property="gestureRecognizers" destination="hn1-dR-ThJ" appends="YES" id="GC7-gJ-eN8"/>
+                                        </connections>
+                                    </mtkView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <view hidden="YES" alpha="0.80000000000000004" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aHG-Hd-B2G">
+                                <rect key="frame" x="242" y="128" width="138" height="521"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Exg-41-SFx">
+                                <rect key="frame" x="37" y="106" width="132" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -102,6 +222,7 @@
                     <connections>
                         <outlet property="filtersButton" destination="jBA-3h-bwm" id="TZ8-W7-JIc"/>
                         <outlet property="filtersView" destination="aHG-Hd-B2G" id="36U-hi-4TT"/>
+                        <outlet property="labelLecture" destination="Exg-41-SFx" id="3GT-Nv-6YW"/>
                         <outlet property="playButton" destination="YV8-a7-I4C" id="whv-RG-F8s"/>
                         <outlet property="saveFrameButton" destination="CRO-Eg-eqk" id="0Ys-fh-Wtc"/>
                         <outlet property="stopButton" destination="eYG-Id-Yng" id="lnx-v5-v93"/>
@@ -126,7 +247,25 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="130.43478260869566" y="131.25"/>
+            <point key="canvasLocation" x="1037.68115942029" y="131.25"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="O4g-LS-PIK">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="MFv-Nu-t9W" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="WPv-RI-IJL">
+                        <rect key="frame" x="0.0" y="20" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="a5e-tQ-vtO" kind="relationship" relationship="rootViewController" id="VzO-Do-yfe"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vWU-BL-6hD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1530.4347826086957" y="130.43478260869566"/>
         </scene>
     </scenes>
 </document>

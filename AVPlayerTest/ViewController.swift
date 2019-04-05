@@ -34,8 +34,10 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var txtAddItem: UITextField!
 
+    @IBOutlet weak var MovieView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        MovieView.clipsToBounds = true
         // TODO: show modal window to connect to stream
         filtersManager.initializeFilters(filtersView : filtersView)
         videoView.setFiltersManager(filtersManager : filtersManager)

@@ -220,6 +220,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="MovieView" destination="R5e-Do-ApW" id="8IS-uq-Hrw"/>
                         <outlet property="filtersButton" destination="jBA-3h-bwm" id="TZ8-W7-JIc"/>
                         <outlet property="filtersView" destination="aHG-Hd-B2G" id="36U-hi-4TT"/>
                         <outlet property="labelLecture" destination="Exg-41-SFx" id="3GT-Nv-6YW"/>

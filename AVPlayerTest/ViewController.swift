@@ -14,15 +14,18 @@ class ViewController: UIViewController {
   
     
     @IBOutlet var filtersView: UIView!
-    @IBOutlet weak var labelLecture: UILabel!
+    @IBOutlet var videoView: MPSVideoView!
     
     @IBOutlet var filtersButton: UIButton!
     @IBOutlet var playButton: UIButton!
     @IBOutlet var stopButton: UIButton!
     @IBOutlet var saveFrameButton: UIButton!
-    @IBOutlet var videoView: MPSVideoView!
+
     
-   // @IBOutlet weak var lectureNameLabel: UILabel!
+    @IBOutlet weak var labelLecture: UILabel!
+    @IBOutlet weak var labelURL: UILabel!
+    
+    // @IBOutlet weak var lectureNameLabel: UILabel!
     var filtersManager : FiltersManager = FiltersManager()
 
     var scaledState : Bool = false
@@ -32,7 +35,7 @@ class ViewController: UIViewController {
     var lectureName : String = "default"
 
 
-    @IBOutlet weak var txtAddItem: UITextField!
+    
 
     @IBOutlet weak var MovieView: UIView!
     override func viewDidLoad() {
@@ -42,23 +45,14 @@ class ViewController: UIViewController {
         filtersManager.initializeFilters(filtersView : filtersView)
         videoView.setFiltersManager(filtersManager : filtersManager)
         // we set up the streamURL here
-        streamURL = URL(string: "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8")!
+//        streamURL = URL(string: "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8")!
         // once connected, set up folder for the session
         viewcentre =  videoView.center
         labelLecture.text = lectureName
-        
-    }
-    @IBAction func didTapButton(_ sender: Any) {
-        if let text = txtAddItem.text {
-            if text == "" {
-                return
-            }
-            streamURL = URL(string: txtAddItem.text ?? "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8")!
-            txtAddItem.resignFirstResponder()
-        }
+        labelURL.text = streamURL.absoluteString
 
     }
-    
+
     @IBAction func resetViewButton(_ sender: Any) {
         videoView.center = viewcentre
         videoView.transform = CGAffineTransform.identity

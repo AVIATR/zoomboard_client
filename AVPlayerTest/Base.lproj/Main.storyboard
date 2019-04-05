@@ -54,6 +54,9 @@
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="editingDidEndAddURL:" destination="Xcd-Ox-Zqe" eventType="editingDidEnd" id="l0S-zW-fYa"/>
+                                </connections>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Lecture Name here" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ESC-xq-pqJ">
                                 <rect key="frame" x="99" y="424" width="216" height="30"/>
@@ -61,6 +64,9 @@
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <action selector="editingDidEndAddLectureName:" destination="Xcd-Ox-Zqe" eventType="editingDidEnd" id="DRR-kH-fYd"/>
+                                </connections>
                             </textField>
                             <button contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vns-co-3Zl">
                                 <rect key="frame" x="190" y="540" width="34" height="30"/>
@@ -86,22 +92,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lOx-pE-cMy">
-                                <rect key="frame" x="15" y="283" width="57" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="AddURL"/>
-                                <connections>
-                                    <action selector="buttonTapAddURL:" destination="Xcd-Ox-Zqe" eventType="touchUpInside" id="w5L-B0-qjC"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IU7-UW-h6X">
-                                <rect key="frame" x="15" y="422" width="72" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Add Name"/>
-                                <connections>
-                                    <action selector="buttonTapAddLectureName:" destination="Xcd-Ox-Zqe" eventType="touchUpInside" id="6BQ-et-yI6"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="Rm8-62-BhQ"/>
@@ -142,15 +132,6 @@
                                     <action selector="stopButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3bC-wC-53b"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FtA-Bp-NJs">
-                                <rect key="frame" x="19" y="68" width="57" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.93861897249518622" green="1" blue="0.77937546517327361" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <state key="normal" title="AddURL"/>
-                                <connections>
-                                    <action selector="didTapButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="zQG-my-pEa"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CRO-Eg-eqk">
                                 <rect key="frame" x="225" y="657" width="76" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -178,14 +159,6 @@
                                     <action selector="resetViewButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZT7-QJ-EkS"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter URL here" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="v9Y-Qe-55E">
-                                <rect key="frame" x="87" y="69" width="293" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.41372511470000001" green="0.59818261409999995" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R5e-Do-ApW">
                                 <rect key="frame" x="37" y="133" width="343" height="486"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -208,8 +181,15 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Exg-41-SFx">
-                                <rect key="frame" x="37" y="106" width="132" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Lecture" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Exg-41-SFx">
+                                <rect key="frame" x="37" y="106" width="243" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="URL" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TTl-JX-eud">
+                                <rect key="frame" x="37" y="77" width="286" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -224,10 +204,10 @@
                         <outlet property="filtersButton" destination="jBA-3h-bwm" id="TZ8-W7-JIc"/>
                         <outlet property="filtersView" destination="aHG-Hd-B2G" id="36U-hi-4TT"/>
                         <outlet property="labelLecture" destination="Exg-41-SFx" id="3GT-Nv-6YW"/>
+                        <outlet property="labelURL" destination="TTl-JX-eud" id="VrK-ot-8mX"/>
                         <outlet property="playButton" destination="YV8-a7-I4C" id="whv-RG-F8s"/>
                         <outlet property="saveFrameButton" destination="CRO-Eg-eqk" id="0Ys-fh-Wtc"/>
                         <outlet property="stopButton" destination="eYG-Id-Yng" id="lnx-v5-v93"/>
-                        <outlet property="txtAddItem" destination="v9Y-Qe-55E" id="HwS-LG-nxv"/>
                         <outlet property="videoView" destination="uhV-sl-fA3" id="v0K-gm-MUQ"/>
                     </connections>
                 </viewController>

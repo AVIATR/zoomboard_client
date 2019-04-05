@@ -16,6 +16,7 @@ class LectureViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     var streamURL : URL = URL(string:"https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8")!
+    var defaultURL : URL = URL(string:"https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8")!
 
     var lectureName : String = "lecture 1"
     
@@ -32,7 +33,19 @@ class LectureViewController: UIViewController {
         }
     }
     
-    @IBAction func buttonTapAddLectureName(_ sender: Any) {
+    @IBAction func editingDidEndAddURL(_ sender: Any) {
+        if let text = textFieldURL.text {
+            if text == "" {
+                return
+            }
+            streamURL = URL(string: text) ?? streamURL
+            textFieldURL.resignFirstResponder()
+        }
+
+    }
+    
+    @IBAction func editingDidEndAddLectureName(_ sender: Any) {
+        print("editingDidEndAddLectureName")
         if let text = textFieldLectureName.text {
             if text == "" {
                 return
@@ -50,6 +63,10 @@ class LectureViewController: UIViewController {
             viewController.streamURL = streamURL
             viewController.lectureName = lectureName
         }
+    }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        print("touchesBegan")
+        self.view.endEditing(true)
     }
     /*
     // MARK: - Navigation

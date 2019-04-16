@@ -16,11 +16,30 @@ class MenuViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    @IBAction func continueButtonPressed(_ sender: Any) {
+        if (UserDefaults.standard.object(forKey: "MostRecentLecture") as! String?) == nil{
+            return
+        }
+
+        performSegue(withIdentifier: "continueLectureSegue2", sender: nil)
+        
+    }
     @IBAction func newLecture(_ sender: Any) {
         performSegue(withIdentifier: "ShowLectureView", sender: nil)
         
     }
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if let viewController = segue.destination as? ViewController {
+            if let text = UserDefaults.standard.object(forKey: "MostRecentLecture") as! String?{
+                viewController.lectureName = text
+            }
+            else{
+                return
+            }
+            viewController.continueLecture = false
+        }
+    }
     /*
     // MARK: - Navigation
 

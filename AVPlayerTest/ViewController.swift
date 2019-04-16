@@ -17,21 +17,25 @@ class ViewController: UIViewController {
     @IBOutlet var videoView: MPSVideoView!
     
     @IBOutlet var filtersButton: UIButton!
-    @IBOutlet var playButton: UIButton!
+    @IBOutlet var startButton: UIButton!
     @IBOutlet var stopButton: UIButton!
     @IBOutlet var saveFrameButton: UIButton!
 
     
-    @IBOutlet weak var labelLecture: UILabel!
-    @IBOutlet weak var labelURL: UILabel!
+    @IBOutlet weak var lectureLabel: UILabel!
+    @IBOutlet weak var urlLabel: UILabel!
     
     // @IBOutlet weak var lectureNameLabel: UILabel!
     var filtersManager : FiltersManager = FiltersManager()
 
     var scaledState : Bool = false
+    var continueLecture : Bool = false
+
 
     var viewcentre: CGPoint = CGPoint.init()
     var streamURL : URL = URL(string:"https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8")!
+//    var streamURL : URL = URL(string:"http://www.wowza.com/_h264/BigBuckBunny_115k.mov")!
+    
     var lectureName : String = "default"
 
 
@@ -48,9 +52,12 @@ class ViewController: UIViewController {
 //        streamURL = URL(string: "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8")!
         // once connected, set up folder for the session
         viewcentre =  videoView.center
-        labelLecture.text = lectureName
-        labelURL.text = streamURL.absoluteString
-
+        lectureLabel.text = lectureName
+        urlLabel.text = streamURL.absoluteString
+        stopButton.isHidden = true
+        startButton.isHidden = false
+        
+        
     }
 
     @IBAction func resetViewButton(_ sender: Any) {
@@ -130,12 +137,16 @@ class ViewController: UIViewController {
 
     
     @IBAction func startButtonPressed(_ sender: Any) {
+        stopButton.isHidden = false
+        startButton.isHidden = true
         videoView.play(stream: streamURL, fps: 30) {
             self.videoView.player.isMuted = true
         }
     }
     
     @IBAction func stopButtonPressed(_ sender: Any) {
+        stopButton.isHidden = true
+        startButton.isHidden = false
         videoView.stop()
  //       videoView.sizeToFit()
  //       videoView.transform = view.transform.scaledBy(x: videoView.contentScaleFactor, y: videoView.contentScaleFactor)

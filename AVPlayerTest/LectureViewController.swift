@@ -17,6 +17,8 @@ class LectureViewController: UIViewController {
     }
     var streamURL : URL = URL(string:"https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8")!
     var defaultURL : URL = URL(string:"https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8")!
+//    var streamURL : URL = URL(string:"http://www.wowza.com/_h264/BigBuckBunny_115k.mov")!
+//    var defaultURL : URL = URL(string:"http://www.wowza.com/_h264/BigBuckBunny_115k.mov")!
 
     var lectureName : String = "lecture 1"
     
@@ -62,6 +64,8 @@ class LectureViewController: UIViewController {
         if let viewController = segue.destination as? ViewController {
             viewController.streamURL = streamURL
             viewController.lectureName = lectureName
+            viewController.continueLecture = false
+            UserDefaults.standard.set(lectureName, forKey: "MostRecentLecture")
         }
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

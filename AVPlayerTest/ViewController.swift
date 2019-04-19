@@ -14,7 +14,7 @@ class ViewController: UIViewController {
   
     
     @IBOutlet var filtersView: UIView!
-    @IBOutlet var videoView: MPSVideoView!
+    @IBOutlet var subView: MPSVideoView!
     
     @IBOutlet var filtersButton: UIButton!
     @IBOutlet var startButton: UIButton!
@@ -32,26 +32,29 @@ class ViewController: UIViewController {
     var continueLecture : Bool = false
 
 
-    var viewcentre: CGPoint = CGPoint.init()
+    var viewCentre: CGPoint = CGPoint.init()
     var streamURL : URL = URL(string:"https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8")!
 //    var streamURL : URL = URL(string:"http://www.wowza.com/_h264/BigBuckBunny_115k.mov")!
     
     var lectureName : String = "default"
-
-
     
 
-    @IBOutlet weak var MovieView: UIView!
+
+
+    @IBOutlet weak var superView: UIView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        MovieView.clipsToBounds = true
+        superView.clipsToBounds = true
+        
+
         // TODO: show modal window to connect to stream
         filtersManager.initializeFilters(filtersView : filtersView)
-        videoView.setFiltersManager(filtersManager : filtersManager)
+        subView.setFiltersManager(filtersManager : filtersManager)
         // we set up the streamURL here
 //        streamURL = URL(string: "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8")!
         // once connected, set up folder for the session
-        viewcentre =  videoView.center
+        viewCentre =  superView.center
         lectureLabel.text = lectureName
         urlLabel.text = streamURL.absoluteString
         stopButton.isHidden = true
@@ -61,15 +64,38 @@ class ViewController: UIViewController {
     }
 
     @IBAction func resetViewButton(_ sender: Any) {
-        videoView.center = viewcentre
-        videoView.transform = CGAffineTransform.identity
+        subView.center = viewCentre
+        subView.transform = CGAffineTransform.identity
         
     }
     @IBAction func handlePan(recognizer:UIPanGestureRecognizer) {
         let translation = recognizer.translation(in: self.view)
         if let view = recognizer.view {
+            
             view.center = CGPoint(x:view.center.x + translation.x,
                                   y:view.center.y + translation.y)
+            print("subView")
+          //  print(view.center)
+            print(view.frame)
+            
+            print("superView")
+         //   print(superView.center)
+            
+            print(superView.bounds)
+            print(" ")
+            if view.frame.minX > 0 {
+                view.center.x = view.center.x - view.frame.minX
+            }
+            if view.frame.minY > 0 {
+                view.center.y = view.center.y - view.frame.minY
+            }
+            if view.frame.maxX < superView.bounds.width {
+                view.center.x = view.center.x + (superView.bounds.width - view.frame.maxX)
+            }
+            if view.frame.maxY <  superView.bounds.height {
+                view.center.y = view.center.y + (superView.bounds.height - view.frame.maxY)
+            }
+
         }
         recognizer.setTranslation(CGPoint.zero, in: self.view)
     }
@@ -77,8 +103,38 @@ class ViewController: UIViewController {
     @IBAction func handlePinch(recognizer:UIPinchGestureRecognizer) {
         
         if let view = recognizer.view {
+            if view.contentScaleFactor <= 1.0 && recognizer.scale < 1{
+                return
+            }
             view.transform = view.transform.scaledBy(x: recognizer.scale, y: recognizer.scale)
             recognizer.scale = 1
+            
+            print("subView")
+            print(view.center)
+            print(view.frame)
+            print(view.bounds)
+            print("superView")
+            print(superView.center)
+            print(superView.frame)
+            print(superView.bounds)
+
+            if view.frame.maxX - view.frame.minX < superView.frame.width {
+                subView.transform = CGAffineTransform.identity
+            }
+
+            if view.frame.minX > 0 {
+                view.center.x = view.center.x - view.frame.minX
+            }
+            if view.frame.minY > 0 {
+                view.center.y = view.center.y - view.frame.minY
+            }
+            if view.frame.maxX < superView.bounds.width {
+                view.center.x = view.center.x + (superView.bounds.width - view.frame.maxX)
+            }
+            if view.frame.maxY <  superView.bounds.height {
+                view.center.y = view.center.y + (superView.bounds.height - view.frame.maxY)
+            }
+
         }
   //      recognizer.reset()
     }
@@ -93,7 +149,7 @@ class ViewController: UIViewController {
             if scaledState == false {
                 print("by 2")
                 
-                view.center = viewcentre
+                view.center = viewCentre
                 
                 view.transform = view.transform.scaledBy(x: 2, y: 2)
                 scaledState = true
@@ -103,8 +159,8 @@ class ViewController: UIViewController {
             if scaledState == true {
                 print("by 1/2")
 
-                videoView.center = viewcentre
-                videoView.transform = CGAffineTransform.identity
+                subView.center = viewCentre
+                subView.transform = CGAffineTransform.identity
                 scaledState = false
                 return
             }
@@ -139,15 +195,15 @@ class ViewController: UIViewController {
     @IBAction func startButtonPressed(_ sender: Any) {
         stopButton.isHidden = false
         startButton.isHidden = true
-        videoView.play(stream: streamURL, fps: 30) {
-            self.videoView.player.isMuted = true
+        subView.play(stream: streamURL, fps: 30) {
+            self.subView.player.isMuted = true
         }
     }
     
     @IBAction func stopButtonPressed(_ sender: Any) {
         stopButton.isHidden = true
         startButton.isHidden = false
-        videoView.stop()
+        subView.stop()
  //       videoView.sizeToFit()
  //       videoView.transform = view.transform.scaledBy(x: videoView.contentScaleFactor, y: videoView.contentScaleFactor)
 

@@ -18,16 +18,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon LARGE template copy" translatesAutoresizingMaskIntoConstraints="NO" id="l14-WF-noh">
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Zoomboard" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ytg-ak-bch">
-                                <rect key="frame" x="143" y="333.5" width="89" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
+                                <rect key="frame" x="63.5" y="313.5" width="248" height="60"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="50"/>
+                                <color key="textColor" red="1" green="0.96412841431196106" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="l14-WF-noh" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="42z-Lh-s69"/>
                             <constraint firstItem="ytg-ak-bch" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="BBJ-6t-KSM"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="l14-WF-noh" secondAttribute="trailing" id="BXW-bI-Pig"/>
+                            <constraint firstItem="l14-WF-noh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="C26-tc-e2A"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="l14-WF-noh" secondAttribute="bottom" id="P6j-0M-Yo4"/>
                             <constraint firstItem="ytg-ak-bch" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="pgl-Un-eed"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -38,4 +45,7 @@
             <point key="canvasLocation" x="52" y="374.66266866566718"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Icon LARGE template copy" width="512" height="512"/>
+    </resources>
 </document>

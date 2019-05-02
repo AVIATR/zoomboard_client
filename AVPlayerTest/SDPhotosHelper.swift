@@ -203,7 +203,7 @@ public class SDPhotosHelper: NSObject {
             if let album  = assetCollection as PHAssetCollection? {
                 if album.localizedTitle == name {
                     desiredAlbum = album
-                    stop.pointee = true
+                    stop.pointee = true 
                 }
             }
         })

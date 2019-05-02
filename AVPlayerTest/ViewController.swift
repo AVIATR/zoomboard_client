@@ -8,6 +8,7 @@
 
 import UIKit
 import AVKit
+import Photos
 import AVFoundation
 
 class ViewController: UIViewController {
@@ -227,13 +228,30 @@ class ViewController: UIViewController {
      :returns: Nothing
      */
     
+    func getImageToSave() -> UIImage{
+        curImageView.image = subView.getCurrentImage()
+        var size: CGSize
+        if (UIDevice.current.orientation.isLandscape) {
+            size = CGSize(width: subView.bounds.width, height: subView.bounds.height)
+        } else {
+            size = CGSize(width: subView.bounds.height, height: subView.bounds.width)
+        }
+        UIGraphicsBeginImageContext(size)
+        let areaSize = CGRect(x: 0, y: 0, width: size.width, height:  size.height)
+        curImageView.image!.draw(in: areaSize)
+        
+        
+        let savedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return savedImage!
+    }
+    
     
     @IBAction func saveFrameButtonPressed(_ sender: Any) {
-        //TODO
-        // Plug Matthew's code
-        // Trouble unwrapping video.currentImage, replaced with imageview.image
-        curImageView.image = subView.getCurrentImage()
-        SDPhotosHelper.addNewImage(subView.getCurrentImage(), toAlbum: lectureName, onSuccess: { _ in
+                
+        let imageToSave = getImageToSave()
+        
+        SDPhotosHelper.addNewImage(imageToSave, toAlbum: lectureName, onSuccess: { _ in
             let alert = UIAlertController(title: "Success!", message: "Your photo was stored in the album titled \(self.lectureName)", preferredStyle: UIAlertController.Style.alert)
 
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil

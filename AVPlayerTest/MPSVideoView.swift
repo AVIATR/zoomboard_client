@@ -43,7 +43,13 @@ class MPSVideoView : MTKView{
             draw()
         }
     }
-    
+    func getCurrentImage()-> UIImage
+    {
+        if let img = image {
+            return UIImage(ciImage: img)
+        }
+        return UIImage.init()
+    }
     override init(frame frameRect: CGRect, device: MTLDevice?) {
         super.init(frame: frameRect, device: device ?? MTLCreateSystemDefaultDevice())
         setupViewBehaviour()

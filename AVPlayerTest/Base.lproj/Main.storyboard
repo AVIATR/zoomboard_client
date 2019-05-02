@@ -188,6 +188,10 @@
                                             <outletCollection property="gestureRecognizers" destination="hn1-dR-ThJ" appends="YES" id="GC7-gJ-eN8"/>
                                         </connections>
                                     </mtkView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="shh-zR-Byi">
+                                        <rect key="frame" x="160" y="182" width="348" height="289"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -255,6 +259,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="curImageView" destination="shh-zR-Byi" id="RrG-mf-spe"/>
                         <outlet property="filtersButton" destination="jBA-3h-bwm" id="TZ8-W7-JIc"/>
                         <outlet property="filtersView" destination="aHG-Hd-B2G" id="36U-hi-4TT"/>
                         <outlet property="lectureLabel" destination="Exg-41-SFx" id="3GT-Nv-6YW"/>
@@ -283,7 +288,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="255" y="1002"/>
+            <point key="canvasLocation" x="254.67625899280577" y="1001.9784172661871"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="O4g-LS-PIK">

@@ -30,8 +30,10 @@ class ViewController: UIViewController {
 
     var scaledState : Bool = false
     var continueLecture : Bool = false
+  
 
-
+    @IBOutlet weak var curImageView: UIImageView!
+    
     var viewCentre: CGPoint = CGPoint.init()
     var streamURL : URL = URL(string:"https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8")!
 //    var streamURL : URL = URL(string:"http://www.wowza.com/_h264/BigBuckBunny_115k.mov")!
@@ -59,8 +61,17 @@ class ViewController: UIViewController {
         urlLabel.text = streamURL.absoluteString
         stopButton.isHidden = true
         startButton.isHidden = false
+        createAlbum()
         
-        
+    }
+
+    /** Creates a photo album with title lecturename.
+     
+     :returns: Nothing
+     */
+    func createAlbum() {
+        SDPhotosHelper.createAlbum(withTitle: lectureName) { (true, error) in
+        }
     }
 
     @IBAction func resetViewButton(_ sender: Any) {
@@ -209,9 +220,28 @@ class ViewController: UIViewController {
 
 
     }
-
+    /** Saves image to photo album with title lecturename when the snapshot button is pressed, using SDPhotosHelper module. If the action succeeds, the program presents UIAlertController confirming success; otherwise, the program throws an error.
+     
+     :_ sender: UIButton "Snapshot"
+     
+     :returns: Nothing
+     */
+    
+    
     @IBAction func saveFrameButtonPressed(_ sender: Any) {
         //TODO
         // Plug Matthew's code
+        // Trouble unwrapping video.currentImage, replaced with imageview.image
+        curImageView.image = subView.getCurrentImage()
+        SDPhotosHelper.addNewImage(subView.getCurrentImage(), toAlbum: lectureName, onSuccess: { _ in
+            let alert = UIAlertController(title: "Success!", message: "Your photo was stored in the album titled \(self.lectureName)", preferredStyle: UIAlertController.Style.alert)
+
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil
+            ))
+
+            self.present(alert, animated: true, completion: nil)
+        }, onFailure: { (error) in
+        })
+
     }
 }

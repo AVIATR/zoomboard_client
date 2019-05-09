@@ -35,7 +35,7 @@ class FiltersManager{
         for f in filters{
             var toggleButton : UIButton = {
                 let button = UIButton()
-                button.frame = CGRect(x: 20, y: offset*cnt, width: 200, height: 40)
+                button.frame = CGRect(x: 0, y: offset*cnt, width: 200, height: 40)
                 button.backgroundColor = .orange
                 button.isSelected = false   // optional(because by default sender.isSelected  is false)
                 button.setTitle(f, for: .normal)
@@ -46,6 +46,7 @@ class FiltersManager{
             }()
             cnt += 1
             view.addSubview(toggleButton)
+            
         }
     }
     

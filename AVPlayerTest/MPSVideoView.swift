@@ -24,6 +24,7 @@ class MPSVideoView : MTKView{
     private var displayLink: CADisplayLink!
     private var filters: [CIFilter] = []
     
+    
     // queue for GPU operations
     private lazy var commandQueue: MTLCommandQueue? = {
         return self.device!.makeCommandQueue()
@@ -43,6 +44,7 @@ class MPSVideoView : MTKView{
             draw()
         }
     }
+    
     func getCurrentImage()-> UIImage
     {
         if let img = image {
@@ -50,6 +52,26 @@ class MPSVideoView : MTKView{
         }
         return UIImage.init()
     }
+    
+    func getOriginalVideoResolution() -> CGSize {
+        if let img = image {
+            return img.extent.size
+        }
+        return CGSize(width: 0, height: 0)
+    }
+    
+    func getScaledVideoResolution() -> CGSize{
+        if let img = image {
+            let scaleX = drawableSize.width / img.extent.width
+            let scaleY = drawableSize.height / img.extent.height
+            let sz = CGSize(width: img.extent.size.width * scaleX, height: img.extent.size.height * scaleY)
+            return sz
+        }
+        else{
+            return CGSize(width: 0, height: 0)
+        }
+    }
+    
     override init(frame frameRect: CGRect, device: MTLDevice?) {
         super.init(frame: frameRect, device: device ?? MTLCreateSystemDefaultDevice())
         setupViewBehaviour()
@@ -124,7 +146,7 @@ class MPSVideoView : MTKView{
         }
         let currentTexture = currentDrawable.texture
         let drawingBounds = CGRect(origin: .zero, size: drawableSize)
-        
+//        print(image.extent.size)
         let scaleX = drawableSize.width / image.extent.width
         let scaleY = drawableSize.height / image.extent.height
         let scaledImage = image.transformed(by: CGAffineTransform(scaleX: scaleX, y: scaleY))

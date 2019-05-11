@@ -155,15 +155,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="1112" height="834"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HtP-CL-HbE">
-                                <rect key="frame" x="40" y="651" width="74" height="48"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                <state key="normal" title="Reset"/>
-                                <connections>
-                                    <action selector="resetViewButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZT7-QJ-EkS"/>
-                                </connections>
-                            </button>
                             <view contentMode="scaleAspectFit" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R5e-Do-ApW">
                                 <rect key="frame" x="0.0" y="70" width="1111" height="764"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
@@ -176,7 +167,6 @@
                                         <connections>
                                             <outletCollection property="gestureRecognizers" destination="Bd4-KU-E5I" appends="YES" id="Gis-ab-IzJ"/>
                                             <outletCollection property="gestureRecognizers" destination="WxJ-KE-UVp" appends="YES" id="sVL-48-P2D"/>
-                                            <outletCollection property="gestureRecognizers" destination="hn1-dR-ThJ" appends="YES" id="GC7-gJ-eN8"/>
                                         </connections>
                                     </mtkView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="shh-zR-Byi">
@@ -185,6 +175,9 @@
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="hn1-dR-ThJ" appends="YES" id="Tn6-GL-cTF"/>
+                                </connections>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" alpha="0.75" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Lecture" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Exg-41-SFx">
                                 <rect key="frame" x="302" y="399" width="507" height="36"/>

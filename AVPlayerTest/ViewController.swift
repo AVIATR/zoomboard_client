@@ -30,13 +30,18 @@ class ViewController: UIViewController {
     var scaledState : Bool = false
     var continueLecture : Bool = false
     var isPlaying : Bool = false
+    var zoomFactor : CGFloat = 1
+    var playerOriginalSize : CGRect = CGRect(x: 0, y: 0, width: 0, height: 0)
+    var screenHeight : CGFloat = 0
+    var screenWidth : CGFloat = 0
+    
     
     var videoSize : CGSize = CGSize(width: 0, height: 0)
     let barHeight  : CGFloat = 44.0 // player bar height
 
     @IBOutlet weak var snapshotImageView: UIImageView!
     
-    var viewCentre: CGPoint = CGPoint.init()
+    var viewCenter: CGPoint = CGPoint.init()
     var streamURL : URL = URL(string:"https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8")!
 //    var streamURL : URL = URL(string:"http://www.wowza.com/_h264/BigBuckBunny_115k.mov")!
     
@@ -53,7 +58,7 @@ class ViewController: UIViewController {
         filtersManager.initializeFilters(filtersView : filtersView)
         playerView.setFiltersManager(filtersManager : filtersManager)
         
-        viewCentre =  superView.center
+        viewCenter =  superView.center
         lectureLabel.text = lectureName
 
         // set up player bar to always be at the bottom and span the entire width of the screen
@@ -82,113 +87,111 @@ class ViewController: UIViewController {
         playerView.center = superView.center
     }
     
+    func fixView(){
+        var x = playerView.frame.minX
+        if  x > 0{
+            x = 0
+        }
+        else if x < screenWidth - playerView.frame.width{
+            x = screenWidth - playerView.frame.width
+        }
+        let navBarHeight = self.navigationController!.navigationBar.frame.size.height
+        let window = UIApplication.shared.keyWindow
+        let topPadding = window?.safeAreaInsets.top
+        let yoffset = navBarHeight + topPadding!
+        
+        var y = playerView.frame.minY
+        if playerView.frame.height > screenHeight{
+            y = playerView.frame.minY
+            if  y > yoffset{
+                y = yoffset
+            }
+            if y < screenHeight - playerView.frame.height{
+                y = screenHeight - playerView.frame.height
+            }
+        }
+        else{
+            playerView.center.y = viewCenter.y
+        }
+        
+        playerView.frame = CGRect(x: x, y: y, width: playerView.frame.width, height: playerView.frame.height)
+    }
+    
     @IBAction func handlePan(recognizer:UIPanGestureRecognizer) {
         let translation = recognizer.translation(in: self.view)
-        if let view = recognizer.view {
+//        print(translation)
 
-            if !scaledState{
-                return
+        if zoomFactor > 1{
+//            print(playerView.frame.width)
+            var newX : CGFloat = playerView.frame.minX + translation.x
+            
+            
+            if  newX > 0{
+                newX = 0
             }
-
-            view.center = CGPoint(x:view.center.x + translation.x,
-                                  y:view.center.y + translation.y)
-            print("playerView")
-          //  print(view.center)
-            print(view.frame)
-
-            print("superView")
-         //   print(superView.center)
-
-            print(superView.bounds)
-            print(" ")
-            if view.frame.minX > 0 {
-                view.center.x = view.center.x - view.frame.minX
+            else if newX < screenWidth - playerView.frame.width{
+                newX = screenWidth - playerView.frame.width
             }
-            if view.frame.minY > 0 {
-                view.center.y = view.center.y - view.frame.minY
+            let navBarHeight = self.navigationController!.navigationBar.frame.size.height
+            let window = UIApplication.shared.keyWindow
+            let topPadding = window?.safeAreaInsets.top
+            let yoffset = navBarHeight + topPadding!
+            
+            var newY = playerView.frame.minY
+            if playerView.frame.height > screenHeight{
+                newY = playerView.frame.minY + translation.y
+                if  newY > yoffset{
+                    newY = yoffset
+                }
+                if newY < screenHeight - playerView.frame.height{
+                    newY = screenHeight - playerView.frame.height
+                }
             }
-            if view.frame.maxX < superView.bounds.width {
-                view.center.x = view.center.x + (superView.bounds.width - view.frame.maxX)
-            }
-            if view.frame.maxY <  superView.bounds.height {
-                view.center.y = view.center.y + (superView.bounds.height - view.frame.maxY)
-            }
-
+            UIView.animate(withDuration: TimeInterval(0.25), delay: 0, options: .curveLinear, animations: {
+                self.playerView.frame = CGRect(x: newX, y: newY, width: self.playerView.frame.width, height: self.playerView.frame.height)
+                
+            }, completion: nil )
+            
         }
         recognizer.setTranslation(CGPoint.zero, in: self.view)
     }
 
     @IBAction func handlePinch(recognizer:UIPinchGestureRecognizer) {
         
-        if let view = recognizer.view {
-            if view.contentScaleFactor <= 1.0 && recognizer.scale < 1{
-                return
-            }
-            view.transform = view.transform.scaledBy(x: recognizer.scale, y: recognizer.scale)
-            recognizer.scale = 1
-
-            print("playerView")
-            print(view.center)
-            print(view.frame)
-            print(view.bounds)
-            print("superView")
-            print(superView.center)
-            print(superView.frame)
-            print(superView.bounds)
-
-            if view.frame.maxX - view.frame.minX < superView.frame.width {
-                playerView.transform = CGAffineTransform.identity
-            }
-
-            if view.frame.minX > 0 {
-                view.center.x = view.center.x - view.frame.minX
-            }
-            if view.frame.minY > 0 {
-                view.center.y = view.center.y - view.frame.minY
-            }
-            if view.frame.maxX < superView.bounds.width {
-                view.center.x = view.center.x + (superView.bounds.width - view.frame.maxX)
-            }
-            if view.frame.maxY <  superView.bounds.height {
-                view.center.y = view.center.y + (superView.bounds.height - view.frame.maxY)
-            }
-
+        zoomFactor -=  1 - recognizer.scale
+        if zoomFactor > 1 && zoomFactor < 2.5{
+            playerView.transform = playerView.transform.scaledBy(x: recognizer.scale, y: recognizer.scale)
         }
-  //      recognizer.reset()
+        if zoomFactor <= 1 {
+            
+            UIView.animate(withDuration: TimeInterval(0.25), delay: 0, options: .curveLinear, animations: {
+                self.playerView.frame = self.playerOriginalSize
+            }, completion: nil )
+
+            zoomFactor = 1
+        }
+        else if zoomFactor > 2.5{
+            zoomFactor = 2.5
+        }
+        recognizer.scale = 1
+        fixView()
     }
     
     
     // make player bar disappear when touching video
-//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
 ////        playerBar.isHidden = !playerBar.isHidden
-//        lectureLabel.isHidden = !lectureLabel.isHidden
-//    }
+        lectureLabel.isHidden = !lectureLabel.isHidden
+    }
     
    
     
 
     @IBAction func handleDoubletap(recognizer:UITapGestureRecognizer) {
-//        print(recognizer.isEnabled)
-//        recognizer.numberOfTapsRequired = 2
-//        recognizer.numberOfTouchesRequired = 1
-//        if let view = recognizer.view {
-//            if scaledState == false {
-//                print("by 2")
-//                view.center = viewCentre
-//                view.transform = view.transform.scaledBy(x: 2, y: 2)
-//                scaledState = true
-//                return
-//            }
-//            if scaledState == true {
-//                print("by 1/2")
-//                playerView.center = viewCentre
-//                playerView.transform = CGAffineTransform.identity
-//                scaledState = false
-//                return
-//            }
-////            recognizer.reset()
-//        }
-//        //      recognizer.reset()
+        UIView.animate(withDuration: TimeInterval(0.25), delay: 0, options: .curveLinear, animations: {
+            self.playerView.frame = self.playerOriginalSize
+             }, completion: nil )
+        fixView()
     }
 
     
@@ -296,8 +299,8 @@ class ViewController: UIViewController {
         let topPadding = window?.safeAreaInsets.top
         
         let screenSize = UIScreen.main.bounds
-        var screenHeight : CGFloat = self.view.frame.size.height// - (navBarHeight + topPadding!)
-        var screenWidth : CGFloat = self.view.frame.size.width
+        screenHeight = self.view.frame.size.height// - (navBarHeight + topPadding!)
+        screenWidth = self.view.frame.size.width
         
         // this is a workaround for when device is flat
         if (screenSize.height > screenSize.width){ // screen orientation is portrait
@@ -314,8 +317,8 @@ class ViewController: UIViewController {
         }
         
         let ypos = navBarHeight+topPadding!
-        print(screenWidth, screenHeight, ypos)
-        print(navBarHeight, topPadding!)
+//        print(screenWidth, screenHeight, ypos)
+//        print(navBarHeight, topPadding!)
         
         
         superView.frame = CGRect(x:0,y:0, width:screenWidth, height:screenHeight)
@@ -375,6 +378,7 @@ class ViewController: UIViewController {
         let x = center.x - w/2
         let y = center.y - h/2
         playerView.frame = CGRect(x: x, y: y, width: w, height: h)
+        playerOriginalSize = playerView.frame
     }
     
     

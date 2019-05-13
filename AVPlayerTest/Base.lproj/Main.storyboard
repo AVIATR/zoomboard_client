@@ -21,22 +21,13 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yhb-n2-eQY">
                                 <rect key="frame" x="25" y="120" width="784" height="75"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HTJ-2v-Z69">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to Zoomboard" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HTJ-2v-Z69">
                                         <rect key="frame" x="0.0" y="0.0" width="784" height="58.5"/>
-                                        <attributedString key="attributedText">
-                                            <fragment content="Welcome to Zoomboard">
-                                                <attributes>
-                                                    <color key="NSBackgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <font key="NSFont" metaFont="system" size="50"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                </attributes>
-                                            </fragment>
-                                        </attributedString>
+                                        <fontDescription key="fontDescription" name=".SFNSDisplay" family=".SF NS Display" pointSize="50"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="75" id="5xE-Vr-rSh"/>
                                     <constraint firstAttribute="trailing" secondItem="HTJ-2v-Z69" secondAttribute="trailing" id="HNH-SD-1S6"/>
@@ -54,12 +45,10 @@
                                             <constraint firstAttribute="height" constant="120" id="O1V-oO-wnX"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="46"/>
-                                        <color key="textColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter lecture name" textAlignment="center" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="JAq-Pq-12w">
                                         <rect key="frame" x="117" y="155" width="366" height="52"/>
-                                        <color key="backgroundColor" red="0.97780384910264706" green="0.88725825516399193" blue="0.99473096762296453" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                         <textInputTraits key="textInputTraits"/>
@@ -70,15 +59,13 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rC9-2j-KTu">
                                         <rect key="frame" x="177.5" y="410" width="245" height="72"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="50"/>
-                                        <state key="normal" title="Join lecture">
-                                            <color key="titleColor" red="0.68312370777130127" green="0.42103755474090576" blue="0.78042477369308472" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                        </state>
+                                        <state key="normal" title="Join lecture"/>
                                         <connections>
                                             <action selector="joinLecturePressed:" destination="a5e-tQ-vtO" eventType="touchUpInside" id="TKh-jp-a9t"/>
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="rC9-2j-KTu" firstAttribute="centerX" secondItem="2H4-7a-l0f" secondAttribute="centerX" id="4a8-OU-bkG"/>
                                     <constraint firstItem="jbJ-WO-YNL" firstAttribute="centerX" secondItem="2H4-7a-l0f" secondAttribute="centerX" id="7Cz-ge-Rnm"/>
@@ -122,7 +109,7 @@
                                         <state key="normal" image="photo_gallery"/>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="mTN-K9-0u5" secondAttribute="bottom" id="06N-SF-d33"/>
                                     <constraint firstAttribute="trailing" secondItem="kES-pc-S2n" secondAttribute="trailing" id="3LY-qf-knh"/>
@@ -134,7 +121,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="9rh-rP-o24" firstAttribute="trailing" secondItem="Yhb-n2-eQY" secondAttribute="trailing" constant="25" id="46u-wf-i9K"/>
                             <constraint firstItem="lwI-Q7-sm9" firstAttribute="leading" secondItem="9rh-rP-o24" secondAttribute="leading" id="5Dw-PW-NEn"/>
@@ -174,9 +161,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BVX-6O-Lva">
                                 <rect key="frame" x="100" y="802" width="120" height="60"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
-                                <state key="normal" title="Cancel">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
+                                <state key="normal" title="Cancel"/>
                                 <connections>
                                     <action selector="cancelPressed:" destination="pqv-Jr-06J" eventType="touchUpInside" id="XJC-cx-2LN"/>
                                 </connections>
@@ -185,9 +170,7 @@
                                 <rect key="frame" x="602" y="817" width="71" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
-                                <state key="normal" title="OK">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
+                                <state key="normal" title="OK"/>
                                 <connections>
                                     <action selector="acceptChanges:" destination="pqv-Jr-06J" eventType="touchUpInside" id="4Rz-lM-j7f"/>
                                 </connections>
@@ -195,7 +178,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter the IP address of the server" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Ee-Bh-4Vh">
                                 <rect key="frame" x="137" y="220" width="560" height="48"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ESb-2r-jqH">
@@ -209,7 +192,6 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="7Ee-Bh-4Vh" firstAttribute="centerX" secondItem="ybK-7S-eg8" secondAttribute="centerX" id="5ed-uH-iod"/>
                             <constraint firstItem="ESb-2r-jqH" firstAttribute="top" secondItem="7Ee-Bh-4Vh" secondAttribute="bottom" constant="70" id="7EK-WT-lO5"/>

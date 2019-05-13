@@ -108,10 +108,8 @@ class MenuViewController: UIViewController, ModalViewControllerDelegate {
         let blurredBackgroundView = UIVisualEffectView()
         
         blurredBackgroundView.frame = view.frame
-        blurredBackgroundView.effect = UIBlurEffect(style: .dark)
-        
-        view.addSubview(blurredBackgroundView)
-        
+        blurredBackgroundView.effect = UIBlurEffect(style: .extraLight)
+        view.addSubview(blurredBackgroundView) 
     }
     
     func removeBlurredBackgroundView() {

@@ -19,11 +19,12 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var playerBar: UIToolbar!
     @IBOutlet weak var playButton: UIBarButtonItem!
-    @IBOutlet weak var snapshotButton: UIBarButtonItem!
+    //@IBOutlet weak var snapshotButton: UIBarButtonItem!
     @IBOutlet weak var pauseButton: UIBarButtonItem!
     
     @IBOutlet weak var lectureLabel: UILabel!
     
+    @IBOutlet weak var snapshotButton: UIButton!
     
     var filtersManager : FiltersManager = FiltersManager()
 
@@ -43,8 +44,7 @@ class ViewController: UIViewController {
     
     var viewCenter: CGPoint = CGPoint.init()
     var streamURL : URL = URL(string:"https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8")!
-//    var streamURL : URL = URL(string:"http://www.wowza.com/_h264/BigBuckBunny_115k.mov")!
-    
+
     var lectureName : String = "default"
     
 
@@ -69,7 +69,10 @@ class ViewController: UIViewController {
         // once connected, set up folder for the session
         createAlbum()
         setupUI()
-
+        
+        // >>>>>>>> !!! WARNING !!! TODO: DISABLE THIS WHEN RELEASING IT !!! <<<<<
+        streamURL = URL(string:"https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8")!
+        startStream()
     }
 
 
@@ -80,11 +83,6 @@ class ViewController: UIViewController {
     func createAlbum() {
         SDPhotosHelper.createAlbum(withTitle: lectureName) { (true, error) in
         }
-    }
-
-    @IBAction func resetViewButton(_ sender: Any) {
-        playerView.transform = CGAffineTransform.identity
-        playerView.center = superView.center
     }
     
     func fixView(){
@@ -184,8 +182,6 @@ class ViewController: UIViewController {
         lectureLabel.isHidden = !lectureLabel.isHidden
     }
     
-   
-    
 
     @IBAction func handleDoubletap(recognizer:UITapGestureRecognizer) {
         UIView.animate(withDuration: TimeInterval(0.25), delay: 0, options: .curveLinear, animations: {
@@ -201,10 +197,7 @@ class ViewController: UIViewController {
     }
 
      
-    
-    @IBAction func showFiltersPanel(_ sender: UIBarButtonItem) {
-        sender.tintColor = UIColor(named: "red")
-        sender.image = UIImage(named: "equalizer_icon_selected.png")
+    @IBAction func showFiltersButtonPushed(_ sender: Any) {
         filtersView.isHidden = !filtersView.isHidden
     }
     
@@ -212,19 +205,22 @@ class ViewController: UIViewController {
    @objc private func setVideoSize(){
         videoSize = playerView.getOriginalVideoResolution()
     }
-        
     
-    @IBAction func playButtonPressed(_ sender: UIBarButtonItem) {
+    func startStream(){
         if !isPlaying{
             isPlaying = true
             playButton.image =  UIImage()
             playerView.play(stream: streamURL, fps: 30){
                 self.playerView.player.isMuted = true
             }
-            Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(setupUI), userInfo: nil, repeats: false)
-//            playerBar.isHidden = true
+            Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(setupUI), userInfo: nil, repeats: false)
             lectureLabel.isHidden = true
         }
+    }
+        
+    
+    @IBAction func playButtonPressed(_ sender: UIBarButtonItem) {
+        startStream()
     }
     
     @IBAction func pauseButtonPressed(_ sender: UIBarButtonItem) {
@@ -245,12 +241,8 @@ class ViewController: UIViewController {
     func getImageToSave() -> UIImage{
         
         snapshotImageView.image = playerView.getCurrentImage()
-        var size: CGSize
-        if (UIDevice.current.orientation.isLandscape) {
-            size = CGSize(width: playerView.bounds.width, height: playerView.bounds.height)
-        } else {
-            size = CGSize(width: playerView.bounds.height, height: playerView.bounds.width)
-        }
+        let size: CGSize = playerView.getOriginalVideoResolution()
+
         UIGraphicsBeginImageContext(size)
         let areaSize = CGRect(x: 0, y: 0, width: size.width, height:  size.height)
         snapshotImageView.image!.draw(in: areaSize)
@@ -276,13 +268,13 @@ class ViewController: UIViewController {
     }
     
     
-    @IBAction func saveSnapshotPressed(_ sender: Any) {
+    @IBAction func saveSnapshotPushed(_ sender: Any) {
         let imageToSave = getImageToSave()
         SDPhotosHelper.addNewImage(imageToSave, toAlbum: lectureName, onSuccess: { _ in
-             // animate snapshot
+            // animate snapshot
             let offset = CGPoint(x:-500, y:-500)
             self.playImageSaveAnimation(offset: offset, duration: 0.25, delay: 0.0)
-
+            
         }, onFailure: { (error) in
         })
     }
@@ -316,11 +308,6 @@ class ViewController: UIViewController {
             }
         }
         
-        let ypos = navBarHeight+topPadding!
-//        print(screenWidth, screenHeight, ypos)
-//        print(navBarHeight, topPadding!)
-        
-        
         superView.frame = CGRect(x:0,y:0, width:screenWidth, height:screenHeight)
         
         lectureLabel.frame = CGRect(x: 0, y: topPadding! + navBarHeight + 5, width: screenWidth, height: lectureLabel.frame.height)
@@ -337,15 +324,16 @@ class ViewController: UIViewController {
                 // @Parag TODO: handle portrait video
                 setupPortraitVideo(screenHeight : screenHeight, screenWidth : screenWidth, navBarHeight : navBarHeight)
             }
+            snapshotImageView.frame = playerView.frame
         }
         else if isPlaying{ // if the frame size is not available, keep trying until the first frame arrives
-            Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(setupUI), userInfo: nil, repeats: false)
+            Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(setupUI), userInfo: nil, repeats: false)
         }
         
         
         // set filters panel position
         let frame = filtersView.frame
-        filtersView.frame = CGRect(x: screenWidth-frame.width, y: screenHeight-frame.height, width: frame.width, height: frame.height)
+        filtersView.frame = CGRect(x: screenWidth-frame.width, y: screenHeight-frame.height-30, width: frame.width, height: frame.height)
         
     }
     
@@ -379,11 +367,17 @@ class ViewController: UIViewController {
         let y = center.y - h/2
         playerView.frame = CGRect(x: x, y: y, width: w, height: h)
         playerOriginalSize = playerView.frame
+        
     }
     
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator){
         super.viewWillTransition(to: size, with: coordinator)
         setupUI()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.playerView.stop()
     }
 }

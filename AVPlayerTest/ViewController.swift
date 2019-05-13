@@ -157,8 +157,15 @@ class ViewController: UIViewController {
     @IBAction func handlePinch(recognizer:UIPinchGestureRecognizer) {
         
         zoomFactor -=  1 - recognizer.scale
+        
+        var pinchCenter : CGPoint = recognizer.location(in: playerView)
+        pinchCenter.x -= playerView.bounds.midX
+        pinchCenter.y -= playerView.bounds.midY
+        
         if zoomFactor > 1 && zoomFactor < 2.5{
+            playerView.transform = playerView.transform.translatedBy(x: pinchCenter.x, y: pinchCenter.y)
             playerView.transform = playerView.transform.scaledBy(x: recognizer.scale, y: recognizer.scale)
+            playerView.transform = playerView.transform.translatedBy(x: -pinchCenter.x, y: -pinchCenter.y)
         }
         if zoomFactor <= 1 {
             

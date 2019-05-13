@@ -19,46 +19,12 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yhb-n2-eQY">
-                                <rect key="frame" x="25" y="120" width="784" height="220"/>
+                                <rect key="frame" x="25" y="120" width="784" height="75"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HTJ-2v-Z69">
-                                        <rect key="frame" x="0.0" y="0.0" width="784" height="233"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="784" height="58.5"/>
                                         <attributedString key="attributedText">
-                                            <fragment>
-                                                <string key="content">Welcome to Zoomboard, 
-from here you can </string>
-                                                <attributes>
-                                                    <color key="NSBackgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <font key="NSFont" metaFont="system" size="50"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                </attributes>
-                                            </fragment>
-                                            <fragment content="start a new lecture">
-                                                <attributes>
-                                                    <color key="NSBackgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <color key="NSColor" red="0.90789640926611792" green="0.51309899554405947" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <font key="NSFont" metaFont="system" size="50"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                </attributes>
-                                            </fragment>
-                                            <fragment content=" or ">
-                                                <attributes>
-                                                    <color key="NSBackgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <font key="NSFont" metaFont="system" size="50"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                </attributes>
-                                            </fragment>
-                                            <fragment content="resume">
-                                                <attributes>
-                                                    <color key="NSBackgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <color key="NSColor" red="0.90797704458236694" green="0.51172155141830444" blue="0.99944835901260376" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <font key="NSFont" metaFont="system" size="50"/>
-                                                    <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                                </attributes>
-                                            </fragment>
-                                            <fragment content=" a previous session">
+                                            <fragment content="Welcome to Zoomboard">
                                                 <attributes>
                                                     <color key="NSBackgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -72,26 +38,27 @@ from here you can </string>
                                 </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="220" id="5xE-Vr-rSh"/>
+                                    <constraint firstAttribute="height" constant="75" id="5xE-Vr-rSh"/>
                                     <constraint firstAttribute="trailing" secondItem="HTJ-2v-Z69" secondAttribute="trailing" id="HNH-SD-1S6"/>
                                     <constraint firstItem="HTJ-2v-Z69" firstAttribute="top" secondItem="Yhb-n2-eQY" secondAttribute="top" id="gQt-24-nih"/>
                                     <constraint firstItem="HTJ-2v-Z69" firstAttribute="leading" secondItem="Yhb-n2-eQY" secondAttribute="leading" id="maM-cD-FlG"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2H4-7a-l0f">
-                                <rect key="frame" x="117" y="440" width="600" height="647"/>
+                                <rect key="frame" x="117" y="295" width="600" height="792"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What's the name of the lecture?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jbJ-WO-YNL">
-                                        <rect key="frame" x="-8.5" y="5" width="617.5" height="50"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter the name of the album where you want to save your snapshots" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jbJ-WO-YNL">
+                                        <rect key="frame" x="-100" y="15" width="800" height="120"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="O1V-oO-wnX"/>
+                                            <constraint firstAttribute="width" constant="800" id="GbJ-iR-XiR"/>
+                                            <constraint firstAttribute="height" constant="120" id="O1V-oO-wnX"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="46"/>
                                         <color key="textColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter lecture name" textAlignment="center" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="JAq-Pq-12w">
-                                        <rect key="frame" x="117" y="105" width="366" height="52"/>
+                                        <rect key="frame" x="117" y="155" width="366" height="52"/>
                                         <color key="backgroundColor" red="0.97780384910264706" green="0.88725825516399193" blue="0.99473096762296453" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="40"/>
@@ -114,13 +81,14 @@ from here you can </string>
                                 <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <constraints>
                                     <constraint firstItem="rC9-2j-KTu" firstAttribute="centerX" secondItem="2H4-7a-l0f" secondAttribute="centerX" id="4a8-OU-bkG"/>
-                                    <constraint firstItem="jbJ-WO-YNL" firstAttribute="centerX" secondItem="2H4-7a-l0f" secondAttribute="centerX" id="APR-Ft-vvZ"/>
-                                    <constraint firstAttribute="bottom" relation="lessThanOrEqual" secondItem="rC9-2j-KTu" secondAttribute="bottom" constant="165" id="JjV-th-5fW"/>
+                                    <constraint firstItem="jbJ-WO-YNL" firstAttribute="centerX" secondItem="2H4-7a-l0f" secondAttribute="centerX" id="7Cz-ge-Rnm"/>
                                     <constraint firstItem="JAq-Pq-12w" firstAttribute="centerX" secondItem="2H4-7a-l0f" secondAttribute="centerX" id="MZv-2g-deg"/>
-                                    <constraint firstItem="rC9-2j-KTu" firstAttribute="top" relation="lessThanOrEqual" secondItem="JAq-Pq-12w" secondAttribute="bottom" constant="253" id="RQy-Uv-2Uo"/>
-                                    <constraint firstItem="rC9-2j-KTu" firstAttribute="top" relation="greaterThanOrEqual" secondItem="JAq-Pq-12w" secondAttribute="bottom" constant="10" id="hne-Yd-btm"/>
-                                    <constraint firstItem="JAq-Pq-12w" firstAttribute="top" secondItem="jbJ-WO-YNL" secondAttribute="bottom" constant="50" id="paW-58-bGj"/>
-                                    <constraint firstItem="jbJ-WO-YNL" firstAttribute="top" secondItem="2H4-7a-l0f" secondAttribute="top" constant="5" id="ptO-z2-rVX"/>
+                                    <constraint firstItem="JAq-Pq-12w" firstAttribute="top" secondItem="jbJ-WO-YNL" secondAttribute="bottom" constant="20" id="Nef-ZG-09j"/>
+                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="rC9-2j-KTu" secondAttribute="bottom" constant="100" id="Pfc-gX-B9o"/>
+                                    <constraint firstItem="jbJ-WO-YNL" firstAttribute="top" secondItem="2H4-7a-l0f" secondAttribute="top" constant="15" id="TbY-eR-cxd"/>
+                                    <constraint firstItem="rC9-2j-KTu" firstAttribute="top" relation="greaterThanOrEqual" secondItem="JAq-Pq-12w" secondAttribute="bottom" constant="30" id="ZwW-v6-5fZ"/>
+                                    <constraint firstItem="rC9-2j-KTu" firstAttribute="top" relation="lessThanOrEqual" secondItem="JAq-Pq-12w" secondAttribute="bottom" constant="203" id="kGx-NF-HZY"/>
+                                    <constraint firstAttribute="bottom" relation="lessThanOrEqual" secondItem="rC9-2j-KTu" secondAttribute="bottom" constant="310" id="lyI-mf-Now"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lwI-Q7-sm9">
@@ -437,7 +405,6 @@ from here you can </string>
         <!--Navigation Controller-->
         <scene sceneID="O4g-LS-PIK">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="vWU-BL-6hD" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="MFv-Nu-t9W" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="WPv-RI-IJL">
@@ -449,6 +416,7 @@ from here you can </string>
                         <segue destination="a5e-tQ-vtO" kind="relationship" relationship="rootViewController" id="VzO-Do-yfe"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vWU-BL-6hD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1530.4347826086957" y="130.43478260869566"/>
         </scene>

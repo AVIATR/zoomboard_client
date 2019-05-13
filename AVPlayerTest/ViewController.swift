@@ -117,13 +117,9 @@ class ViewController: UIViewController {
     
     @IBAction func handlePan(recognizer:UIPanGestureRecognizer) {
         let translation = recognizer.translation(in: self.view)
-//        print(translation)
-
         if zoomFactor > 1{
-//            print(playerView.frame.width)
             var newX : CGFloat = playerView.frame.minX + translation.x
-            
-            
+
             if  newX > 0{
                 newX = 0
             }
@@ -145,7 +141,7 @@ class ViewController: UIViewController {
                     newY = screenHeight - playerView.frame.height
                 }
             }
-            UIView.animate(withDuration: TimeInterval(0.25), delay: 0, options: .curveLinear, animations: {
+            UIView.animate(withDuration: TimeInterval(0.1), delay: 0, options: .curveLinear, animations: {
                 self.playerView.frame = CGRect(x: newX, y: newY, width: self.playerView.frame.width, height: self.playerView.frame.height)
                 
             }, completion: nil )
@@ -156,20 +152,16 @@ class ViewController: UIViewController {
 
     @IBAction func handlePinch(recognizer:UIPinchGestureRecognizer) {
         
+        // this is used to keep track of the cumulative level of zoom
         zoomFactor -=  1 - recognizer.scale
         
-        var pinchCenter : CGPoint = recognizer.location(in: playerView)
-        pinchCenter.x -= playerView.bounds.midX
-        pinchCenter.y -= playerView.bounds.midY
-        
         if zoomFactor > 1 && zoomFactor < 2.5{
-            playerView.transform = playerView.transform.translatedBy(x: pinchCenter.x, y: pinchCenter.y)
-            playerView.transform = playerView.transform.scaledBy(x: recognizer.scale, y: recognizer.scale)
-            playerView.transform = playerView.transform.translatedBy(x: -pinchCenter.x, y: -pinchCenter.y)
+            let pinchCenter : CGPoint = recognizer.location(in: playerView)
+            zoomToLocation(zoomPoint : pinchCenter, zoomFactor : recognizer.scale)
         }
         if zoomFactor <= 1 {
             
-            UIView.animate(withDuration: TimeInterval(0.25), delay: 0, options: .curveLinear, animations: {
+            UIView.animate(withDuration: TimeInterval(0.1), delay: 0, options: .curveLinear, animations: {
                 self.playerView.frame = self.playerOriginalSize
             }, completion: nil )
 
@@ -182,19 +174,42 @@ class ViewController: UIViewController {
         fixView()
     }
     
+    func zoomToLocation(zoomPoint : CGPoint, zoomFactor : CGFloat){
+        var pt : CGPoint = zoomPoint
+        pt.x -= playerView.bounds.midX
+        pt.y -= playerView.bounds.midY
+        playerView.transform = playerView.transform.translatedBy(x: pt.x, y: pt.y)
+        playerView.transform = playerView.transform.scaledBy(x: zoomFactor, y: zoomFactor)
+        playerView.transform = playerView.transform.translatedBy(x: -pt.x, y: -pt.y)
+    }
+    
+    
     
     // make player bar disappear when touching video
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-////        playerBar.isHidden = !playerBar.isHidden
         lectureLabel.isHidden = !lectureLabel.isHidden
     }
     
 
     @IBAction func handleDoubletap(recognizer:UITapGestureRecognizer) {
-        UIView.animate(withDuration: TimeInterval(0.25), delay: 0, options: .curveLinear, animations: {
-            self.playerView.frame = self.playerOriginalSize
-             }, completion: nil )
+        recognizer.numberOfTapsRequired = 2
+        recognizer.numberOfTouchesRequired = 1
+        if (zoomFactor > 1){
+            UIView.animate(withDuration: TimeInterval(0.1), delay: 0, options: .curveLinear, animations: {
+                let ratio = self.playerOriginalSize.width / self.playerView.frame.width
+                print(ratio)
+                self.playerView.transform = self.playerView.transform.scaledBy(x: ratio, y: ratio)
+                self.playerView.frame = self.playerOriginalSize
+                 }, completion: nil )
+            zoomFactor = 1
         fixView()
+        }
+        else{
+            let zoomPoint = recognizer.location(in: playerView)
+            zoomFactor = 2
+            zoomToLocation(zoomPoint : zoomPoint, zoomFactor : zoomFactor)
+            fixView()
+        }
     }
 
     
@@ -249,7 +264,6 @@ class ViewController: UIViewController {
         
         snapshotImageView.image = playerView.getCurrentImage()
         let size: CGSize = playerView.getOriginalVideoResolution()
-
         UIGraphicsBeginImageContext(size)
         let areaSize = CGRect(x: 0, y: 0, width: size.width, height:  size.height)
         snapshotImageView.image!.draw(in: areaSize)
@@ -316,27 +330,10 @@ class ViewController: UIViewController {
         }
         
         superView.frame = CGRect(x:0,y:0, width:screenWidth, height:screenHeight)
-        
         lectureLabel.frame = CGRect(x: 0, y: topPadding! + navBarHeight + 5, width: screenWidth, height: lectureLabel.frame.height)
         
-        // if we received the first frame
-        if (videoSize.width > 0){
-            
-            //resize player view to fit video stream
-            // determine if video is landscape or portrait
-            if videoSize.width > videoSize.height{ // landscape video
-                setupLandscapeVideo(screenHeight : screenHeight, screenWidth : screenWidth, navBarHeight : navBarHeight)
-            }
-            else{
-                // @Parag TODO: handle portrait video
-                setupPortraitVideo(screenHeight : screenHeight, screenWidth : screenWidth, navBarHeight : navBarHeight)
-            }
-            snapshotImageView.frame = playerView.frame
-        }
-        else if isPlaying{ // if the frame size is not available, keep trying until the first frame arrives
-            Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(setupUI), userInfo: nil, repeats: false)
-        }
-        
+        //fit video frame to screen
+        setupVideoFrameSize()
         
         // set filters panel position
         let frame = filtersView.frame
@@ -344,13 +341,31 @@ class ViewController: UIViewController {
         
     }
     
-    func setupPortraitVideo(screenHeight : CGFloat, screenWidth : CGFloat, navBarHeight : CGFloat){
+    func setupVideoFrameSize(){
+        // if we received the first frame, resize video to fit available space on screen
+        if (videoSize.width > 0){
+            if videoSize.width > videoSize.height{ // landscape video
+                setupLandscapeVideo()
+            }
+            else{
+                // @Parag TODO: handle portrait video
+                setupPortraitVideo()
+            }
+            snapshotImageView.frame = playerView.frame
+        }
+        else if isPlaying{ // if the frame size is not available, keep trying until the first frame arrives
+            Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(setupUI), userInfo: nil, repeats: false)
+        }
+    }
+    
+    func setupPortraitVideo(){
+        print("!!! IMPLEMENT METHOD: setupPortraitVideo")
+        assert(false)
         
-        print("!!! IMPLEMENT METHOD")
     }
     
     
-    func setupLandscapeVideo(screenHeight : CGFloat, screenWidth : CGFloat, navBarHeight : CGFloat){
+    func setupLandscapeVideo(){
         var w : CGFloat = 0
         var h : CGFloat = 0
         let center = superView.center

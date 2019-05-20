@@ -251,7 +251,14 @@ class ViewController: UIViewController {
             playerView.play(stream: streamURL, fps: 30){
                 self.playerView.player.isMuted = true
             }
- //           Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(setupUI), userInfo: nil, repeats: false)
+            setVideoSize()
+//            while videoSize.width == 0{
+//                DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(30)) {
+//                    self.setVideoSize()
+//                }
+//            
+//            }
+            Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(setupUI), userInfo: nil, repeats: false)
             lectureLabel.isHidden = true
         }
     }
@@ -367,13 +374,7 @@ class ViewController: UIViewController {
     func setupVideoFrameSize(){
         // if we received the first frame, resize video to fit available space on screen
         if (videoSize.width > 0){
-            if videoSize.width > videoSize.height{ // landscape video
-                setupLandscapeVideo()
-            }
-            else{
-                // @Parag TODO: handle portrait video
-                setupPortraitVideo()
-            }
+            setupLandscapePotraitVideo()
             snapshotImageView.frame = playerView.frame
         }
         else if isPlaying{ // if the frame size is not available, keep trying until the first frame arrives
@@ -384,66 +385,22 @@ class ViewController: UIViewController {
     func setupPortraitVideo(){
         print("!!! IMPLEMENT METHOD: setupPortraitVideo")
         assert(false)
-        var w : CGFloat = 0
-        var h : CGFloat = 0
-        let center = superView.center
-        let aspectRatio = (screenHeight) / screenWidth
-        
-        if (UIDevice.current.orientation.isPortrait){
-            
-            if aspectRatio > videoSize.height / videoSize.width {
-                w = screenWidth
-                h = (videoSize.height / videoSize.width) * w
-            }
-            else{
-                h = screenHeight
-                w = (videoSize.width / videoSize.height) * screenHeight
-            }
-        }
-        if (UIDevice.current.orientation.isLandscape) {
-            if aspectRatio > videoSize.height / videoSize.width {
-                w = screenWidth
-                h = (videoSize.height / videoSize.width) * w
-            }
-            else{
-                h = screenHeight
-                w = (videoSize.width / videoSize.height) * screenHeight
-            }
-        }
-        let x = center.x - w/2
-        let y = center.y - h/2
-        playerView.frame = CGRect(x: x, y: y, width: w, height: h)
-        playerOriginalSize = playerView.frame
     }
     
-    
-    func setupLandscapeVideo(){
+    func setupLandscapePotraitVideo(){
         var w : CGFloat = 0
         var h : CGFloat = 0
         let center = superView.center
         let aspectRatio = (screenHeight) / screenWidth
+        if aspectRatio > videoSize.height / videoSize.width {
+            w = screenWidth
+            h = (videoSize.height / videoSize.width) * w
+        }
+        else{
+            h = screenHeight
+            w = (videoSize.width / videoSize.height) * screenHeight
+        }
         
-        if (UIDevice.current.orientation.isPortrait){
-
-            if aspectRatio > videoSize.height / videoSize.width {
-                w = screenWidth
-                h = (videoSize.height / videoSize.width) * w
-            }
-            else{
-                h = screenHeight
-                w = (videoSize.width / videoSize.height) * screenHeight
-            }
-        }
-        if (UIDevice.current.orientation.isLandscape) {
-            if aspectRatio > videoSize.height / videoSize.width {
-                w = screenWidth
-                h = (videoSize.height / videoSize.width) * w
-            }
-            else{
-                h = screenHeight
-                w = (videoSize.width / videoSize.height) * screenHeight
-            }
-        }
         let x = center.x - w/2
         let y = center.y - h/2
         playerView.frame = CGRect(x: x, y: y, width: w, height: h)

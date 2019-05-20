@@ -13,6 +13,7 @@ import AVFoundation
 
 class ViewController: UIViewController {
   
+    @IBOutlet weak var streamButton: UISwitch!
     
     @IBOutlet var filtersView: UIView!
     @IBOutlet var playerView: MPSVideoView!
@@ -35,7 +36,7 @@ class ViewController: UIViewController {
     var playerOriginalSize : CGRect = CGRect(x: 0, y: 0, width: 0, height: 0)
     var screenHeight : CGFloat = 0
     var screenWidth : CGFloat = 0
-    
+    var isStarting: Bool = true
     
     var videoSize : CGSize = CGSize(width: 0, height: 0)
     let barHeight  : CGFloat = 44.0 // player bar height
@@ -43,12 +44,16 @@ class ViewController: UIViewController {
     @IBOutlet weak var snapshotImageView: UIImageView!
     
     var viewCenter: CGPoint = CGPoint.init()
-    var streamURL : URL = URL(string:"https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8")!
-
-    var lectureName : String = "default"
     
+    var highResStream : URL = URL(string:"https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8")!
+    var lowResStream : URL = URL(string:"https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8")!
+    var highRes : Bool = true
+    var lectureName : String = "default"
+    var streamURL : URL = URL(string: "default")!
 
+    @IBOutlet weak var streamSwitch: UISwitch!
     @IBOutlet weak var superView: UIView!
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,11 +73,13 @@ class ViewController: UIViewController {
         
         // once connected, set up folder for the session
         createAlbum()
-        setupUI()
+ 
         
         // >>>>>>>> !!! WARNING !!! TODO: DISABLE THIS WHEN RELEASING IT !!! <<<<<
-        streamURL = URL(string:"https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8")!
+        streamURL = highResStream
         startStream()
+        setupUI()
+        
     }
 
 
@@ -114,7 +121,16 @@ class ViewController: UIViewController {
         
         playerView.frame = CGRect(x: x, y: y, width: playerView.frame.width, height: playerView.frame.height)
     }
-    
+//---------------------------------------------------------
+    @IBAction func toggleStreamSwitch(_ sender: Any) {
+        playerView.stop()
+        isPlaying = false
+        
+        streamURL = streamSwitch.isOn ? lowResStream : highResStream
+        startStream()
+        
+    }
+//---------------------------------------------------------
     @IBAction func handlePan(recognizer:UIPanGestureRecognizer) {
         let translation = recognizer.translation(in: self.view)
         if zoomFactor > 1{
@@ -235,7 +251,7 @@ class ViewController: UIViewController {
             playerView.play(stream: streamURL, fps: 30){
                 self.playerView.player.isMuted = true
             }
-            Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(setupUI), userInfo: nil, repeats: false)
+ //           Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(setupUI), userInfo: nil, repeats: false)
             lectureLabel.isHidden = true
         }
     }
@@ -312,20 +328,27 @@ class ViewController: UIViewController {
         let topPadding = window?.safeAreaInsets.top
         
         let screenSize = UIScreen.main.bounds
-        screenHeight = self.view.frame.size.height// - (navBarHeight + topPadding!)
-        screenWidth = self.view.frame.size.width
-        
+        if isStarting == true {
+            screenHeight = self.view.frame.size.height// - (navBarHeight + topPadding!)
+            screenWidth = self.view.frame.size.width
+        }
+        else {
+            screenHeight = self.view.frame.size.width// - (navBarHeight + topPadding!)
+            screenWidth = self.view.frame.size.height
+        }
+        print("screenHeight = \(screenHeight)")
+        print("screenWidth = \(screenWidth)")
         // this is a workaround for when device is flat
         if (screenSize.height > screenSize.width){ // screen orientation is portrait
             if self.view.frame.size.height < self.view.frame.size.width{
-                screenHeight = self.view.frame.size.width// - (navBarHeight + topPadding!)
-                screenWidth = self.view.frame.size.height
+ //               screenHeight = self.view.frame.size.width// - (navBarHeight + topPadding!)
+ //               screenWidth = self.view.frame.size.height
             }
         }
         if (screenSize.width > screenSize.height){ // screen orientation is landscaspe
             if self.view.frame.size.width < self.view.frame.size.height{
-                screenHeight = self.view.frame.size.width// - (navBarHeight + topPadding!)
-                screenWidth = self.view.frame.size.height
+  //              screenHeight = self.view.frame.size.width// - (navBarHeight + topPadding!)
+  //              screenWidth = self.view.frame.size.height
             }
         }
         
@@ -361,7 +384,36 @@ class ViewController: UIViewController {
     func setupPortraitVideo(){
         print("!!! IMPLEMENT METHOD: setupPortraitVideo")
         assert(false)
+        var w : CGFloat = 0
+        var h : CGFloat = 0
+        let center = superView.center
+        let aspectRatio = (screenHeight) / screenWidth
         
+        if (UIDevice.current.orientation.isPortrait){
+            
+            if aspectRatio > videoSize.height / videoSize.width {
+                w = screenWidth
+                h = (videoSize.height / videoSize.width) * w
+            }
+            else{
+                h = screenHeight
+                w = (videoSize.width / videoSize.height) * screenHeight
+            }
+        }
+        if (UIDevice.current.orientation.isLandscape) {
+            if aspectRatio > videoSize.height / videoSize.width {
+                w = screenWidth
+                h = (videoSize.height / videoSize.width) * w
+            }
+            else{
+                h = screenHeight
+                w = (videoSize.width / videoSize.height) * screenHeight
+            }
+        }
+        let x = center.x - w/2
+        let y = center.y - h/2
+        playerView.frame = CGRect(x: x, y: y, width: w, height: h)
+        playerOriginalSize = playerView.frame
     }
     
     
@@ -372,10 +424,17 @@ class ViewController: UIViewController {
         let aspectRatio = (screenHeight) / screenWidth
         
         if (UIDevice.current.orientation.isPortrait){
-            w = screenWidth
-            h = (screenHeight) * (videoSize.height / videoSize.width)
+
+            if aspectRatio > videoSize.height / videoSize.width {
+                w = screenWidth
+                h = (videoSize.height / videoSize.width) * w
+            }
+            else{
+                h = screenHeight
+                w = (videoSize.width / videoSize.height) * screenHeight
+            }
         }
-        else {
+        if (UIDevice.current.orientation.isLandscape) {
             if aspectRatio > videoSize.height / videoSize.width {
                 w = screenWidth
                 h = (videoSize.height / videoSize.width) * w
@@ -392,9 +451,18 @@ class ViewController: UIViewController {
         
     }
     
-    
+
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator){
         super.viewWillTransition(to: size, with: coordinator)
+        if UIDevice.current.orientation.isLandscape {
+            print("Landscape")
+            if UIDevice.current.orientation.isFlat {
+                print("Flat")
+            } else {
+                print("Portrait")
+            }
+        }
+        isStarting = false
         setupUI()
     }
     

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MFv-Nu-t9W">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MFv-Nu-t9W">
     <device id="ipad10_5" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -166,9 +166,8 @@
                                     <action selector="cancelPressed:" destination="pqv-Jr-06J" eventType="touchUpInside" id="XJC-cx-2LN"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ykD-6M-8Eh">
-                                <rect key="frame" x="602" y="817" width="71" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ykD-6M-8Eh">
+                                <rect key="frame" x="957" y="524" width="55" height="60"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                 <state key="normal" title="OK"/>
                                 <connections>
@@ -195,8 +194,10 @@
                         <constraints>
                             <constraint firstItem="7Ee-Bh-4Vh" firstAttribute="centerX" secondItem="ybK-7S-eg8" secondAttribute="centerX" id="5ed-uH-iod"/>
                             <constraint firstItem="ESb-2r-jqH" firstAttribute="top" secondItem="7Ee-Bh-4Vh" secondAttribute="bottom" constant="70" id="7EK-WT-lO5"/>
+                            <constraint firstItem="NgE-iG-uWy" firstAttribute="bottom" secondItem="ykD-6M-8Eh" secondAttribute="bottom" constant="250" id="S30-UA-D4B"/>
                             <constraint firstItem="BVX-6O-Lva" firstAttribute="leading" secondItem="NgE-iG-uWy" secondAttribute="leading" constant="100" id="VS6-9A-4z7"/>
                             <constraint firstItem="7Ee-Bh-4Vh" firstAttribute="top" secondItem="NgE-iG-uWy" secondAttribute="top" constant="200" id="WAd-oi-OaJ"/>
+                            <constraint firstItem="NgE-iG-uWy" firstAttribute="trailing" secondItem="ykD-6M-8Eh" secondAttribute="trailing" constant="100" id="Y2N-3e-4sz"/>
                             <constraint firstItem="ESb-2r-jqH" firstAttribute="centerX" secondItem="ybK-7S-eg8" secondAttribute="centerX" id="hrN-Zm-Qdi"/>
                             <constraint firstItem="NgE-iG-uWy" firstAttribute="bottom" secondItem="BVX-6O-Lva" secondAttribute="bottom" constant="250" id="tou-vU-s9D"/>
                         </constraints>
@@ -413,10 +414,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="accessibility" width="37.5" height="37.5"/>
+        <image name="accessibility" width="50" height="50"/>
         <image name="equalizer_icon" width="480" height="480"/>
-        <image name="photo_gallery" width="75" height="75"/>
-        <image name="settings_icon" width="75" height="75"/>
-        <image name="snapshot" width="37.5" height="37.5"/>
+        <image name="photo_gallery" width="50" height="50"/>
+        <image name="settings_icon" width="50" height="50"/>
+        <image name="snapshot" width="50" height="50"/>
     </resources>
 </document>

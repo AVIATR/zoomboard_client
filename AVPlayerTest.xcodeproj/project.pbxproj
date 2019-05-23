@@ -34,6 +34,7 @@
 		7D931AB4227AB28F005ABCE0 /* SDPhotosHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SDPhotosHelper.swift; sourceTree = "<group>"; };
 		7DDED8BB225304D3000F2C4D /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
 		7DDED8BD2253050D000F2C4D /* LectureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureViewController.swift; sourceTree = "<group>"; };
+		823C072D2296854B007B5B0E /* ViewController_vold.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController_vold.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +70,7 @@
 				3FA58E622203A45D00C90B23 /* AppDelegate.swift */,
 				7DDED8BD2253050D000F2C4D /* LectureViewController.swift */,
 				3FA58E642203A45D00C90B23 /* ViewController.swift */,
+				823C072D2296854B007B5B0E /* ViewController_vold.swift */,
 				7DDED8BB225304D3000F2C4D /* MenuViewController.swift */,
 				3F77700A2289624500EB4E2A /* Launch Screen.storyboard */,
 				3FA58E662203A45D00C90B23 /* Main.storyboard */,

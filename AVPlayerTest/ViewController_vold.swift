@@ -13,7 +13,6 @@ import AVFoundation
 
 class ViewController: UIViewController {
   
-    @IBOutlet weak var streamButton: UISwitch!
     
     @IBOutlet var filtersView: UIView!
     @IBOutlet var playerView: MPSVideoView!
@@ -36,7 +35,7 @@ class ViewController: UIViewController {
     var playerOriginalSize : CGRect = CGRect(x: 0, y: 0, width: 0, height: 0)
     var screenHeight : CGFloat = 0
     var screenWidth : CGFloat = 0
-    var isStarting: Bool = true
+    
     
     var videoSize : CGSize = CGSize(width: 0, height: 0)
     let barHeight  : CGFloat = 44.0 // player bar height
@@ -44,28 +43,18 @@ class ViewController: UIViewController {
     @IBOutlet weak var snapshotImageView: UIImageView!
     
     var viewCenter: CGPoint = CGPoint.init()
-    
-    var highResStream : URL = URL(string:"https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8")!
-    var lowResStream : URL = URL(string:"https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8")!
-    var highRes : Bool = true
-    var lectureName : String = "default"
-    var streamURL : URL = URL(string: "default")!
+    var streamURL : URL = URL(string:"https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8")!
 
-    @IBOutlet weak var streamSwitch: UISwitch!
-    @IBOutlet weak var superView: UIView!
+    var lectureName : String = "default"
     
+
+    @IBOutlet weak var superView: UIView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
-
-        //Register for the applicationWillResignActive anywhere in your app.
-        
         superView.clipsToBounds = true
         
+
         filtersManager.initializeFilters(filtersView : filtersView)
         playerView.setFiltersManager(filtersManager : filtersManager)
         
@@ -79,24 +68,14 @@ class ViewController: UIViewController {
         
         // once connected, set up folder for the session
         createAlbum()
- 
         setupUI()
+        
         // >>>>>>>> !!! WARNING !!! TODO: DISABLE THIS WHEN RELEASING IT !!! <<<<<
-        streamURL = highResStream
+        streamURL = URL(string:"https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8")!
         startStream()
     }
-    @objc func appMovedToBackground() {
-        print("App moved to background!")
-        print("Player Stopped")
-        self.playerView.stop()
-    }
-    @objc func appMovedToForeground() {
-        print("App moved to Foreground!")
-        print("Player Started")
-        playerView.play(stream: streamURL, fps: 30){
-            self.playerView.player.isMuted = true
-        }
-    }
+
+
     /** Creates a photo album with title lecturename.
      
      :returns: Nothing
@@ -135,16 +114,7 @@ class ViewController: UIViewController {
         
         playerView.frame = CGRect(x: x, y: y, width: playerView.frame.width, height: playerView.frame.height)
     }
-//---------------------------------------------------------
-    @IBAction func toggleStreamSwitch(_ sender: Any) {
-        playerView.stop()
-        streamURL = streamSwitch.isOn ? lowResStream : highResStream
-        playerView.play(stream: streamURL, fps: 30){
-            self.playerView.player.isMuted = true
-        }
-        
-    }
-//---------------------------------------------------------
+    
     @IBAction func handlePan(recognizer:UIPanGestureRecognizer) {
         let translation = recognizer.translation(in: self.view)
         if zoomFactor > 1{
@@ -247,11 +217,14 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+
+     
     @IBAction func showFiltersButtonPushed(_ sender: Any) {
         filtersView.isHidden = !filtersView.isHidden
     }
+    
 
-    @objc private func setVideoSize(){
+   @objc private func setVideoSize(){
         videoSize = playerView.getOriginalVideoResolution()
     }
     
@@ -266,7 +239,7 @@ class ViewController: UIViewController {
             lectureLabel.isHidden = true
         }
     }
-
+        
     
     @IBAction func playButtonPressed(_ sender: UIBarButtonItem) {
         startStream()
@@ -339,16 +312,9 @@ class ViewController: UIViewController {
         let topPadding = window?.safeAreaInsets.top
         
         let screenSize = UIScreen.main.bounds
-        if isStarting == true {
-            screenHeight = self.view.frame.size.height// - (navBarHeight + topPadding!)
-            screenWidth = self.view.frame.size.width
-        }
-        else {
-            screenHeight = self.view.frame.size.width// - (navBarHeight + topPadding!)
-            screenWidth = self.view.frame.size.height
-        }
-        print("screenHeight = \(screenHeight)")
-        print("screenWidth = \(screenWidth)")
+        screenHeight = self.view.frame.size.height// - (navBarHeight + topPadding!)
+        screenWidth = self.view.frame.size.width
+        
         // this is a workaround for when device is flat
         if (screenSize.height > screenSize.width){ // screen orientation is portrait
             if self.view.frame.size.height < self.view.frame.size.width{
@@ -388,57 +354,52 @@ class ViewController: UIViewController {
             snapshotImageView.frame = playerView.frame
         }
         else if isPlaying{ // if the frame size is not available, keep trying until the first frame arrives
-            Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(setupUI), userInfo: nil, repeats: false)
+            Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(setupUI), userInfo: nil, repeats: false)
         }
     }
     
     func setupPortraitVideo(){
-       setupLandscapeVideo()
+        print("!!! IMPLEMENT METHOD: setupPortraitVideo")
+        assert(false)
+        
     }
+    
     
     func setupLandscapeVideo(){
         var w : CGFloat = 0
         var h : CGFloat = 0
         let center = superView.center
         let aspectRatio = (screenHeight) / screenWidth
-        if aspectRatio > videoSize.height / videoSize.width {
-            w = screenWidth
-            h = (videoSize.height / videoSize.width) * w
-        }
-        else{
-            h = screenHeight
-            w = (videoSize.width / videoSize.height) * screenHeight
-        }
         
+        if (UIDevice.current.orientation.isPortrait){
+            w = screenWidth
+            h = (screenHeight) * (videoSize.height / videoSize.width)
+        }
+        else {
+            if aspectRatio > videoSize.height / videoSize.width {
+                w = screenWidth
+                h = (videoSize.height / videoSize.width) * w
+            }
+            else{
+                h = screenHeight
+                w = (videoSize.width / videoSize.height) * screenHeight
+            }
+        }
         let x = center.x - w/2
         let y = center.y - h/2
         playerView.frame = CGRect(x: x, y: y, width: w, height: h)
         playerOriginalSize = playerView.frame
+        
     }
     
-
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator)
-    {
+    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator){
         super.viewWillTransition(to: size, with: coordinator)
-        if UIDevice.current.orientation.isLandscape {
-            print("Landscape")
-        }
-        else if UIDevice.current.orientation.isFlat {
-            print("Flat")
-        }
-        else {
-            print("Portrait")
-        }
-        isStarting = false
         setupUI()
     }
-
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        print("viewWillDisappear - Player Stopped")
-        NotificationCenter.default.removeObserver(self)
         self.playerView.stop()
     }
-    
 }

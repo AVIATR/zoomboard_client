@@ -105,6 +105,7 @@ class MenuViewController: UIViewController {
         if let identifier = segue.identifier {
             if identifier == "settingsModalView" {
                 if let viewController = segue.destination as? SettingsView {
+                    viewController.modalPresentationStyle = .overFullScreen
                     viewController.highResURL = self.ipAddress_highres
                     viewController.lowResURL = self.ipAddress_lowres
                 }
@@ -119,4 +120,5 @@ class MenuViewController: UIViewController {
         }
     }
     
+
 }

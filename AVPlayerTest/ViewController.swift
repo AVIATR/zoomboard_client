@@ -241,6 +241,13 @@ class ViewController: UIViewController {
             fixView()
         }
     }
+    
+    func resetZoom(){
+        zoomFactor = 1
+        let ratio = self.playerOriginalSize.width / self.playerView.frame.width
+        self.playerView.transform = self.playerView.transform.scaledBy(x: ratio, y: ratio)
+        self.playerView.frame = self.playerOriginalSize
+    }
 
     
     override func didReceiveMemoryWarning() {
@@ -279,14 +286,7 @@ class ViewController: UIViewController {
         }
     }
 
-    /** Saves image to photo album with title lecturename when the snapshot button is pressed, using SDPhotosHelper module. If the action succeeds, the program presents UIAlertController confirming success; otherwise, the program throws an error.
-     
-     :_ sender: UIButton "Snapshot"
-     
-     :returns: Nothing
-     */
-    
-    // TODO: save zoomed and panned image?
+
     func getImageToSave() -> UIImage{
         
         snapshotImageView.image = playerView.getCurrentImage()
@@ -330,8 +330,13 @@ class ViewController: UIViewController {
     
     @objc func setupUI(){
         
+        
+        
         if (videoSize.width == 0){
             setVideoSize()
+        }
+        else{
+            resetZoom()
         }
         
         let navBarHeight = self.navigationController!.navigationBar.frame.size.height
@@ -368,6 +373,7 @@ class ViewController: UIViewController {
         
         //fit video frame to screen
         setupVideoFrameSize()
+
         
         // set filters panel position
         let frame = filtersView.frame

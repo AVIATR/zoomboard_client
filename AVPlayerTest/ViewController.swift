@@ -18,10 +18,7 @@ class ViewController: UIViewController {
     @IBOutlet var filtersView: UIView!
     @IBOutlet var playerView: MPSVideoView!
     
-    @IBOutlet weak var playerBar: UIToolbar!
-    @IBOutlet weak var playButton: UIBarButtonItem!
-    //@IBOutlet weak var snapshotButton: UIBarButtonItem!
-    @IBOutlet weak var pauseButton: UIBarButtonItem!
+   
     
     @IBOutlet weak var lectureLabel: UILabel!
     
@@ -75,15 +72,16 @@ class ViewController: UIViewController {
         // set up player bar to always be at the bottom and span the entire width of the screen
         let screenHeight = UIScreen.main.bounds.height
         let screenWidth = UIScreen.main.bounds.width
-        playerBar.frame = CGRect(x:0,y:screenHeight-barHeight, width:screenWidth, height:barHeight)
+       
+        streamURL = highResStream
+        startStream()
         
         // once connected, set up folder for the session
         createAlbum()
  
         setupUI()
         
-        streamURL = highResStream
-        startStream()
+        
     }
     @objc func appMovedToBackground() {
         print("App moved to background!")
@@ -265,7 +263,7 @@ class ViewController: UIViewController {
     func startStream(){
         if !isPlaying{
             isPlaying = true
-            playButton.image =  UIImage()
+           
             playerView.play(stream: streamURL, fps: 30){
                 self.playerView.player.isMuted = true
             }
@@ -274,17 +272,6 @@ class ViewController: UIViewController {
         }
     }
 
-    
-    @IBAction func playButtonPressed(_ sender: UIBarButtonItem) {
-        startStream()
-    }
-    
-    @IBAction func pauseButtonPressed(_ sender: UIBarButtonItem) {
-        if isPlaying{
-            playerView.stop()
-            isPlaying = false
-        }
-    }
 
 
     func getImageToSave() -> UIImage{
@@ -329,8 +316,6 @@ class ViewController: UIViewController {
     
     
     @objc func setupUI(){
-        
-        
         
         if (videoSize.width == 0){
             setVideoSize()

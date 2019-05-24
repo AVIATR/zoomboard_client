@@ -42,12 +42,7 @@ class SettingsView: UIViewController {
     @IBAction func acceptChanges(_ sender: Any) {
         
         if urlLowResTextField.text?.isEmpty == false && urlHighResTextField.text?.isEmpty == false{
-            if let presenter = presentingViewController as? MenuViewController {
-                presenter.ipAddress_highres = urlHighResTextField.text ?? "127.0.0.1"
-                presenter.ipAddress_lowres = urlLowResTextField.text ?? "127.0.0.1"
-            }
-            dismiss(animated: true, completion: nil)
-            delegate?.removeBlurredBackgroundView()
+            performSegue(withIdentifier: "mainMenu", sender: nil)
         }
         else{
             if urlLowResTextField.text?.isEmpty == true{
@@ -58,18 +53,16 @@ class SettingsView: UIViewController {
             }
         }
     }
-    override func viewDidLayoutSubviews() {
-//        view.backgroundColor = UIColor.clear
-    }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        
+        if let identifier = segue.identifier {
+            if identifier == "mainMenu" {
+                if let viewController = segue.destination as? MenuViewController {
+                    viewController.ipAddress_highres = urlHighResTextField.text!
+                    viewController.ipAddress_lowres = urlLowResTextField.text!
+                }
+            }
+        }
     }
-    */
-
 }

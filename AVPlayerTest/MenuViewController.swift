@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MenuViewController: UIViewController, ModalViewControllerDelegate {
+class MenuViewController: UIViewController {
 
     @IBOutlet weak var welcomeText: UIView!
     
@@ -105,8 +105,6 @@ class MenuViewController: UIViewController, ModalViewControllerDelegate {
         if let identifier = segue.identifier {
             if identifier == "settingsModalView" {
                 if let viewController = segue.destination as? SettingsView {
-                    viewController.delegate = self
-                    viewController.modalPresentationStyle = .overFullScreen
                     viewController.highResURL = self.ipAddress_highres
                     viewController.lowResURL = self.ipAddress_lowres
                 }
@@ -117,26 +115,6 @@ class MenuViewController: UIViewController, ModalViewControllerDelegate {
                     viewController.lowResStream = URL(string: self.ipAddress_lowres)!
                     viewController.lectureName = self.lectureName
                 }
-            }
-        }
-    }
-    
-    
-    
-//    func overlayBlurredBackgroundView() {
-//
-//        let blurredBackgroundView = UIVisualEffectView()
-//
-//        blurredBackgroundView.frame = view.frame
-//        blurredBackgroundView.effect = UIBlurEffect(style: .extraLight)
-//        view.addSubview(blurredBackgroundView)
-//    }
-//
-    func removeBlurredBackgroundView() {
-
-        for subview in view.subviews {
-            if subview.isKind(of: UIVisualEffectView.self) {
-                subview.removeFromSuperview()
             }
         }
     }

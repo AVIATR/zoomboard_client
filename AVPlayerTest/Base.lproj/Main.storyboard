@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yhb-n2-eQY">
-                                <rect key="frame" x="25" y="120" width="1062" height="75"/>
+                                <rect key="frame" x="25" y="70" width="1062" height="75"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to Zoomboard" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HTJ-2v-Z69">
                                         <rect key="frame" x="0.0" y="0.0" width="1062" height="58.5"/>
@@ -36,7 +36,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2H4-7a-l0f">
-                                <rect key="frame" x="117" y="295" width="878" height="514"/>
+                                <rect key="frame" x="117" y="245" width="878" height="564"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter the name of the album where you want to save your snapshots" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jbJ-WO-YNL">
                                         <rect key="frame" x="39" y="15" width="800" height="120"/>
@@ -233,6 +233,7 @@
                     <connections>
                         <outlet property="urlHighResTextField" destination="ESb-2r-jqH" id="W2B-jN-ZUQ"/>
                         <outlet property="urlLowResTextField" destination="7CF-CX-d2z" id="m6E-On-onQ"/>
+                        <segue destination="a5e-tQ-vtO" kind="show" identifier="mainMenu" id="33l-lD-4Kr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dRC-xB-9Tf" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -299,38 +300,6 @@
                                 </subviews>
                                 <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                             </view>
-                            <toolbar hidden="YES" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BV1-iU-G9t">
-                                <rect key="frame" x="-139" y="256" width="1389" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <items>
-                                    <barButtonItem width="20" style="plain" systemItem="fixedSpace" id="2Y3-Ha-qJw"/>
-                                    <barButtonItem style="plain" systemItem="play" id="0HQ-vm-ZDT">
-                                        <connections>
-                                            <action selector="playButtonPressed:" destination="BYZ-38-t0r" id="BU5-yy-kxo"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem width="55" style="plain" systemItem="fixedSpace" id="tSC-U4-L5i"/>
-                                    <barButtonItem systemItem="pause" id="CQj-eA-fvF">
-                                        <connections>
-                                            <action selector="pauseButtonPressed:" destination="BYZ-38-t0r" id="HZT-k0-pRs"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem width="40" style="plain" systemItem="fixedSpace" id="gdZ-Du-Nfk"/>
-                                    <barButtonItem systemItem="camera" id="kKI-Sz-R4d">
-                                        <connections>
-                                            <action selector="saveSnapshotPressed:" destination="BYZ-38-t0r" id="otq-3N-fju"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem width="756" style="plain" systemItem="fixedSpace" id="OSX-MU-MEt"/>
-                                    <barButtonItem title="Filters" image="equalizer_icon" width="729" id="hzZ-g4-mhk">
-                                        <connections>
-                                            <action selector="showFiltersPanel:" destination="BYZ-38-t0r" id="s36-LH-SLd"/>
-                                        </connections>
-                                    </barButtonItem>
-                                </items>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="barTintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </toolbar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bD9-B5-06C">
                                 <rect key="frame" x="1" y="758" width="1112" height="75"/>
                                 <subviews>
@@ -393,9 +362,6 @@
                     <connections>
                         <outlet property="filtersView" destination="aHG-Hd-B2G" id="36U-hi-4TT"/>
                         <outlet property="lectureLabel" destination="Exg-41-SFx" id="3GT-Nv-6YW"/>
-                        <outlet property="pauseButton" destination="CQj-eA-fvF" id="FkI-Pz-r2h"/>
-                        <outlet property="playButton" destination="0HQ-vm-ZDT" id="1T6-KE-Bbh"/>
-                        <outlet property="playerBar" destination="BV1-iU-G9t" id="jAv-yn-fWt"/>
                         <outlet property="playerView" destination="uhV-sl-fA3" id="9zq-eR-HYt"/>
                         <outlet property="snapshotButton" destination="Orl-rA-P2q" id="D0M-Hx-SyB"/>
                         <outlet property="snapshotImageView" destination="shh-zR-Byi" id="oJl-cW-DK9"/>
@@ -443,9 +409,11 @@
     </scenes>
     <resources>
         <image name="accessibility" width="50" height="50"/>
-        <image name="equalizer_icon" width="480" height="480"/>
         <image name="photo_gallery" width="50" height="50"/>
         <image name="settings_icon" width="50" height="50"/>
         <image name="snapshot" width="50" height="50"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="33l-lD-4Kr"/>
+    </inferredMetricsTieBreakers>
 </document>

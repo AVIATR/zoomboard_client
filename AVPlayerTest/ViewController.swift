@@ -45,8 +45,8 @@ class ViewController: UIViewController {
     
     var viewCenter: CGPoint = CGPoint.init()
     
-    var highResStream : URL = URL(string:"https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8")!
-    var lowResStream : URL = URL(string:"https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8")!
+    var highResStream : URL = URL(string: "default")!
+    var lowResStream : URL = URL(string: "default")!
     var highRes : Bool = true
     var lectureName : String = "default"
     var streamURL : URL = URL(string: "default")!
@@ -81,7 +81,7 @@ class ViewController: UIViewController {
         createAlbum()
  
         setupUI()
-        // >>>>>>>> !!! WARNING !!! TODO: DISABLE THIS WHEN RELEASING IT !!! <<<<<
+        
         streamURL = highResStream
         startStream()
     }

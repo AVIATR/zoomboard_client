@@ -15,15 +15,27 @@ class MenuViewController: UIViewController, ModalViewControllerDelegate {
     @IBOutlet weak var connectView: UIView!
     
 
-    var ipAddress : String {
+    var ipAddress_highres : String {
         get {
         // Get the standard UserDefaults as "defaults"
         let defaults = UserDefaults.standard
-            return defaults.string(forKey: "ipAddress") ?? "https://127.0.0.1"
+            return defaults.string(forKey: "ipAddress_highres") ?? "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8"
         }
         set (newValue) {
             let defaults = UserDefaults.standard
-            defaults.set(newValue, forKey: "ipAddress")
+            defaults.set(newValue, forKey: "ipAddress_highres")
+        }
+    }
+    
+    var ipAddress_lowres : String {
+        get {
+            // Get the standard UserDefaults as "defaults"
+            let defaults = UserDefaults.standard
+            return defaults.string(forKey: "ipAddress_lowres") ?? "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8"
+        }
+        set (newValue) {
+            let defaults = UserDefaults.standard
+            defaults.set(newValue, forKey: "ipAddress_lowres")
         }
     }
     
@@ -60,7 +72,7 @@ class MenuViewController: UIViewController, ModalViewControllerDelegate {
     @IBAction func showSettingsView(_ sender: Any) {
         self.definesPresentationContext = true
         self.providesPresentationContextTransitionStyle = true
-        self.overlayBlurredBackgroundView()
+//        self.overlayBlurredBackgroundView()
         performSegue(withIdentifier: "settingsModalView", sender: nil)
     }
     
@@ -95,12 +107,14 @@ class MenuViewController: UIViewController, ModalViewControllerDelegate {
                 if let viewController = segue.destination as? SettingsView {
                     viewController.delegate = self
                     viewController.modalPresentationStyle = .overFullScreen
-                    viewController.ipAddress = self.ipAddress
+                    viewController.highResURL = self.ipAddress_highres
+                    viewController.lowResURL = self.ipAddress_lowres
                 }
             }
             else if identifier == "StreamVideo"{
                 if let viewController = segue.destination as? ViewController {
-                    viewController.streamURL = URL(string: ipAddress)!
+                    viewController.highResStream = URL(string: self.ipAddress_highres)!
+                    viewController.lowResStream = URL(string: self.ipAddress_lowres)!
                     viewController.lectureName = self.lectureName
                 }
             }
@@ -109,17 +123,17 @@ class MenuViewController: UIViewController, ModalViewControllerDelegate {
     
     
     
-    func overlayBlurredBackgroundView() {
-        
-        let blurredBackgroundView = UIVisualEffectView()
-        
-        blurredBackgroundView.frame = view.frame
-        blurredBackgroundView.effect = UIBlurEffect(style: .extraLight)
-        view.addSubview(blurredBackgroundView) 
-    }
-    
+//    func overlayBlurredBackgroundView() {
+//
+//        let blurredBackgroundView = UIVisualEffectView()
+//
+//        blurredBackgroundView.frame = view.frame
+//        blurredBackgroundView.effect = UIBlurEffect(style: .extraLight)
+//        view.addSubview(blurredBackgroundView)
+//    }
+//
     func removeBlurredBackgroundView() {
-        
+
         for subview in view.subviews {
             if subview.isKind(of: UIVisualEffectView.self) {
                 subview.removeFromSuperview()

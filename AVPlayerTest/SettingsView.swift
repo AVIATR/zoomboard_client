@@ -15,32 +15,51 @@ protocol ModalViewControllerDelegate: class {
 class SettingsView: UIViewController {
 
     weak var delegate: ModalViewControllerDelegate?
-    var ipAddress : String = ""
+    var highResURL : String = ""
+    var lowResURL : String = ""
     
-    @IBOutlet weak var ipAddressTextField: UITextField!
+    @IBOutlet weak var urlHighResTextField: UITextField!
+    @IBOutlet weak var urlLowResTextField: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        ipAddressTextField.text = ipAddress
+        urlHighResTextField.text = highResURL
+        urlLowResTextField.text = lowResURL
         // Do any additional setup after loading the view.
     }
     
     @IBAction func cancelPressed(_ sender: Any) {
         dismiss(animated: true, completion: nil)
         delegate?.removeBlurredBackgroundView()
-        
-        
     }
+    
+    @IBAction func editingStarted(_ sender: UITextField) {
+        sender.backgroundColor = UIColor.white
+    }
+    
     
     // TODO: sanitaze input ip address
     @IBAction func acceptChanges(_ sender: Any) {
-        if let presenter = presentingViewController as? MenuViewController {
-            presenter.ipAddress = ipAddressTextField.text ?? "127.0.0.1"
+        
+        if urlLowResTextField.text?.isEmpty == false && urlHighResTextField.text?.isEmpty == false{
+            if let presenter = presentingViewController as? MenuViewController {
+                presenter.ipAddress_highres = urlHighResTextField.text ?? "127.0.0.1"
+                presenter.ipAddress_lowres = urlLowResTextField.text ?? "127.0.0.1"
+            }
+            dismiss(animated: true, completion: nil)
+            delegate?.removeBlurredBackgroundView()
         }
-        dismiss(animated: true, completion: nil)
-        delegate?.removeBlurredBackgroundView()
+        else{
+            if urlLowResTextField.text?.isEmpty == true{
+                urlLowResTextField.backgroundColor = UIColor.red
+            }
+            if urlHighResTextField.text?.isEmpty == true{
+                urlHighResTextField.backgroundColor = UIColor.red
+            }
+        }
     }
     override func viewDidLayoutSubviews() {
-        view.backgroundColor = UIColor.clear
+//        view.backgroundColor = UIColor.clear
     }
     
     /*

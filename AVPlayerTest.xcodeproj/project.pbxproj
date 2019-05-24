@@ -17,7 +17,6 @@
 		3FB086B0221CD58C009F78F0 /* MPSVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB086AF221CD58C009F78F0 /* MPSVideoView.swift */; };
 		7D931AB5227AB28F005ABCE0 /* SDPhotosHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D931AB4227AB28F005ABCE0 /* SDPhotosHelper.swift */; };
 		7DDED8BC225304D3000F2C4D /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DDED8BB225304D3000F2C4D /* MenuViewController.swift */; };
-		7DDED8BE2253050D000F2C4D /* LectureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DDED8BD2253050D000F2C4D /* LectureViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,7 +32,6 @@
 		3FB086AF221CD58C009F78F0 /* MPSVideoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPSVideoView.swift; sourceTree = "<group>"; };
 		7D931AB4227AB28F005ABCE0 /* SDPhotosHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SDPhotosHelper.swift; sourceTree = "<group>"; };
 		7DDED8BB225304D3000F2C4D /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
-		7DDED8BD2253050D000F2C4D /* LectureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureViewController.swift; sourceTree = "<group>"; };
 		823C072D2296854B007B5B0E /* ViewController_vold.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController_vold.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -68,7 +66,6 @@
 			isa = PBXGroup;
 			children = (
 				3FA58E622203A45D00C90B23 /* AppDelegate.swift */,
-				7DDED8BD2253050D000F2C4D /* LectureViewController.swift */,
 				3FA58E642203A45D00C90B23 /* ViewController.swift */,
 				823C072D2296854B007B5B0E /* ViewController_vold.swift */,
 				7DDED8BB225304D3000F2C4D /* MenuViewController.swift */,
@@ -156,7 +153,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3FA58E652203A45D00C90B23 /* ViewController.swift in Sources */,
-				7DDED8BE2253050D000F2C4D /* LectureViewController.swift in Sources */,
 				7DDED8BC225304D3000F2C4D /* MenuViewController.swift in Sources */,
 				3F10D9E022248CA5002B9A85 /* FiltersManager.swift in Sources */,
 				3FA58E632203A45D00C90B23 /* AppDelegate.swift in Sources */,

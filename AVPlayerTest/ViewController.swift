@@ -81,7 +81,6 @@ class ViewController: UIViewController {
  
         setupUI()
         
-        
     }
     @objc func appMovedToBackground() {
         print("App moved to background!")

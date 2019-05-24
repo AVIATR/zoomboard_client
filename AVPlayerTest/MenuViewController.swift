@@ -76,10 +76,16 @@ class MenuViewController: UIViewController, ModalViewControllerDelegate {
     
     
     @IBAction func isEditing(_ sender: Any) {
+        lectureNameTextBox.backgroundColor = UIColor.white
         lectureName = lectureNameTextBox.text ?? "Lecture"
     }
     @IBAction func joinLecturePressed(_ sender: Any) {
-        performSegue(withIdentifier: "StreamVideo", sender: nil)
+        if lectureNameTextBox.text?.isEmpty == false{
+            performSegue(withIdentifier: "StreamVideo", sender: nil)
+        }
+        else{
+            lectureNameTextBox.backgroundColor = UIColor.red
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

@@ -121,6 +121,7 @@ class MPSVideoView : MTKView{
         layer.isOpaque = true
         
         let item = AVPlayerItem(url: stream)
+        
         output = AVPlayerItemVideoOutput(outputSettings: nil)
         
         item.add(output)
@@ -129,12 +130,12 @@ class MPSVideoView : MTKView{
             guard item.status == .readyToPlay else { return }
             self?.playerItemObserver = nil
             self?.setupDisplayLink(fps: fps)
-            
             self?.player.play()
             completion?()
         }
         
         player = AVPlayer(playerItem: item)
+        
     }
     
     override func draw(_ rect: CGRect) {
@@ -159,7 +160,9 @@ class MPSVideoView : MTKView{
     func stop() {
         if (player != nil){
             player.rate = 0
-            displayLink.invalidate()
+            if let disp = displayLink {
+            disp.invalidate()
+            }
         }
     }
 }

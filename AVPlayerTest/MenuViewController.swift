@@ -20,6 +20,7 @@ class MenuViewController: UIViewController {
         // Get the standard UserDefaults as "defaults"
         let defaults = UserDefaults.standard
             return defaults.string(forKey: "ipAddress_highres") ?? "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8"
+//            return "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8"
         }
         set (newValue) {
             let defaults = UserDefaults.standard
@@ -32,6 +33,8 @@ class MenuViewController: UIViewController {
             // Get the standard UserDefaults as "defaults"
             let defaults = UserDefaults.standard
             return defaults.string(forKey: "ipAddress_lowres") ?? "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8"
+//            return "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8"
+
         }
         set (newValue) {
             let defaults = UserDefaults.standard
@@ -106,12 +109,16 @@ class MenuViewController: UIViewController {
             if identifier == "settingsModalView" {
                 if let viewController = segue.destination as? SettingsView {
                     viewController.modalPresentationStyle = .overFullScreen
+                    viewController.delegate2 = self
                     viewController.highResURL = self.ipAddress_highres
                     viewController.lowResURL = self.ipAddress_lowres
                 }
             }
             else if identifier == "StreamVideo"{
                 if let viewController = segue.destination as? ViewController {
+                    print(ipAddress_highres)
+                    print(ipAddress_lowres)
+                    
                     viewController.highResStream = URL(string: self.ipAddress_highres)!
                     viewController.lowResStream = URL(string: self.ipAddress_lowres)!
                     viewController.lectureName = self.lectureName

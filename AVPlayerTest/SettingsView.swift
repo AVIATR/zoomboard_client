@@ -15,6 +15,10 @@ protocol ModalViewControllerDelegate: class {
 class SettingsView: UIViewController {
 
     weak var delegate: ModalViewControllerDelegate?
+    weak var delegate2: MenuViewController?
+    var highResDef : String = "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8"
+    var lowResDef : String = "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8"
+
     var highResURL : String = ""
     var lowResURL : String = ""
     
@@ -28,9 +32,13 @@ class SettingsView: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    @IBAction func resetPressed(_ sender: Any) {
+        urlHighResTextField.text = highResDef
+        urlLowResTextField.text = lowResDef
+    }
     @IBAction func cancelPressed(_ sender: Any) {
         dismiss(animated: true, completion: nil)
-        delegate?.removeBlurredBackgroundView()
+  //      delegate?.removeBlurredBackgroundView()
     }
     
     @IBAction func editingStarted(_ sender: UITextField) {
@@ -42,7 +50,10 @@ class SettingsView: UIViewController {
     @IBAction func acceptChanges(_ sender: Any) {
         
         if urlLowResTextField.text?.isEmpty == false && urlHighResTextField.text?.isEmpty == false{
-            performSegue(withIdentifier: "mainMenu", sender: nil)
+            delegate2?.ipAddress_highres = urlHighResTextField.text!
+            delegate2?.ipAddress_lowres = urlLowResTextField.text!
+            dismiss(animated: true, completion: nil)
+  //          performSegue(withIdentifier: "mainMenu", sender: nil)
         }
         else{
             if urlLowResTextField.text?.isEmpty == true{

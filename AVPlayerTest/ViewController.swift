@@ -54,7 +54,7 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+print(navigationController)
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
@@ -74,6 +74,7 @@ class ViewController: UIViewController {
         let screenWidth = UIScreen.main.bounds.width
        
         streamURL = highResStream
+//        setupUI()
         startStream()
         
         // once connected, set up folder for the session
@@ -282,7 +283,11 @@ class ViewController: UIViewController {
         snapshotImageView.image!.draw(in: areaSize)
         let savedImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        return savedImage!
+        if let img = savedImage {
+            return img}
+        else {
+            return UIImage.init()
+        }
     }
     
     
@@ -322,9 +327,13 @@ class ViewController: UIViewController {
         else{
             resetZoom()
         }
-        
+        if navigationController == nil
+        {
+            return
+        }
         let navBarHeight = self.navigationController!.navigationBar.frame.size.height
-        let window = UIApplication.shared.keyWindow
+
+            let window = UIApplication.shared.keyWindow
         let topPadding = window?.safeAreaInsets.top
         
         let screenSize = UIScreen.main.bounds
@@ -362,6 +371,7 @@ class ViewController: UIViewController {
         // set filters panel position
         let frame = filtersView.frame
         filtersView.frame = CGRect(x: screenWidth-frame.width, y: screenHeight-frame.height-30, width: frame.width, height: frame.height)
+            
         
     }
     

@@ -54,7 +54,7 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-print(navigationController)
+
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
@@ -65,7 +65,7 @@ print(navigationController)
         
         filtersManager.initializeFilters(filtersView : filtersView)
         playerView.setFiltersManager(filtersManager : filtersManager)
-        
+        playerView.delegateView = self
         viewCenter =  superView.center
         lectureLabel.text = lectureName
 
@@ -99,6 +99,9 @@ print(navigationController)
      
      :returns: Nothing
      */
+    func fail()-> Void{
+        
+    }
     func createAlbum() {
         SDPhotosHelper.createAlbum(withTitle: lectureName) { (true, error) in
         }

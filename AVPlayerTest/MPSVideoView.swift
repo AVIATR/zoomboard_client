@@ -19,6 +19,7 @@ class MPSVideoView : MTKView{
     private var filtersManager : FiltersManager?
     private var output: AVPlayerItemVideoOutput!
     private var playerItemObserver: NSKeyValueObservation?
+    var delegateView : ViewController?
     
     // timer to synchronize drawing to refresh rate of display
     private var displayLink: CADisplayLink!
@@ -117,7 +118,7 @@ class MPSVideoView : MTKView{
         image = filtersManager!.applyFilters(image: baseImg, context: context)
     }
     
-    func play(stream: URL, fps: Int, completion:  (()->Void)? = nil) {
+    func play(stream: URL, fps: Int, completion:  (()->Void)? = nil){
         layer.isOpaque = true
         
         let item = AVPlayerItem(url: stream)
@@ -127,7 +128,21 @@ class MPSVideoView : MTKView{
         item.add(output)
         
         playerItemObserver = item.observe(\.status) { [weak self] item, _ in
-            guard item.status == .readyToPlay else { return }
+            guard item.status == .readyToPlay
+            else {
+                print("failed")
+                 AJAlertController.initialization().showAlertWithOkButton(aStrMessage: "Please enter a URL with Valid Content") { (index, title) in
+                    
+
+                    print(index,title)
+                    if index == 0 {
+                        self?.delegateView?.navigationController?.popViewController(animated: false)
+                        self?.delegateView?.navigationController?.popViewController(animated: true)
+                        
+                    }
+                }
+                return
+            }
             self?.playerItemObserver = nil
             self?.setupDisplayLink(fps: fps)
             self?.player.play()

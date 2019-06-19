@@ -44,7 +44,7 @@ class ViewController: UIViewController {
     
     var highResStream : URL = URL(string: "default")!
     var lowResStream : URL = URL(string: "default")!
-    var highRes : Bool = true
+    
     var lectureName : String = "default"
     var streamURL : URL = URL(string: "default")!
 
@@ -139,7 +139,7 @@ class ViewController: UIViewController {
 //---------------------------------------------------------
     @IBAction func toggleStreamSwitch(_ sender: Any) {
         playerView.stop()
-        streamURL = streamSwitch.isOn ? lowResStream : highResStream
+        streamURL = streamSwitch.isOn ? highResStream : lowResStream
         playerView.play(stream: streamURL, fps: 30){
             self.playerView.player.isMuted = true
         }

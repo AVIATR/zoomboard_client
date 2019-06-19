@@ -130,8 +130,9 @@ class MPSVideoView : MTKView{
         playerItemObserver = item.observe(\.status) { [weak self] item, _ in
             guard item.status == .readyToPlay
             else {
+                
                 print("failed")
-                 AJAlertController.initialization().showAlertWithOkButton(aStrMessage: "Please enter a URL with Valid Content") { (index, title) in
+                AJAlertController.initialization().showAlertWithOkButton(title:"Player",aStrMessage: "Please enter a URL with Valid Content") { (index, title) in
                     
 
                     print(index,title)
@@ -150,7 +151,6 @@ class MPSVideoView : MTKView{
         }
         
         player = AVPlayer(playerItem: item)
-        
     }
     
     override func draw(_ rect: CGRect) {

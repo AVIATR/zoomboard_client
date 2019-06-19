@@ -17,6 +17,7 @@
 		3FB086B0221CD58C009F78F0 /* MPSVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FB086AF221CD58C009F78F0 /* MPSVideoView.swift */; };
 		7D931AB5227AB28F005ABCE0 /* SDPhotosHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D931AB4227AB28F005ABCE0 /* SDPhotosHelper.swift */; };
 		7DDED8BC225304D3000F2C4D /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DDED8BB225304D3000F2C4D /* MenuViewController.swift */; };
+		8210496622BA00CE0001601A /* Movies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8210496522BA00CE0001601A /* Movies.swift */; };
 		822D616922B21F18000327EC /* AJAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 822D616722B21F18000327EC /* AJAlertController.swift */; };
 		822D616A22B21F18000327EC /* AJAlertController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 822D616822B21F18000327EC /* AJAlertController.xib */; };
 /* End PBXBuildFile section */
@@ -34,6 +35,7 @@
 		3FB086AF221CD58C009F78F0 /* MPSVideoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPSVideoView.swift; sourceTree = "<group>"; };
 		7D931AB4227AB28F005ABCE0 /* SDPhotosHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SDPhotosHelper.swift; sourceTree = "<group>"; };
 		7DDED8BB225304D3000F2C4D /* MenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
+		8210496522BA00CE0001601A /* Movies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Movies.swift; path = AVPlayerTest/Movies.swift; sourceTree = "<group>"; };
 		822D616722B21F18000327EC /* AJAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AJAlertController.swift; sourceTree = "<group>"; };
 		822D616822B21F18000327EC /* AJAlertController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AJAlertController.xib; sourceTree = "<group>"; };
 		823C072D2296854B007B5B0E /* ViewController_vold.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController_vold.swift; sourceTree = "<group>"; };
@@ -53,6 +55,7 @@
 		3FA58E562203A45D00C90B23 = {
 			isa = PBXGroup;
 			children = (
+				8210496522BA00CE0001601A /* Movies.swift */,
 				3FA58E612203A45D00C90B23 /* AVPlayerTest */,
 				3FA58E602203A45D00C90B23 /* Products */,
 			);
@@ -172,6 +175,7 @@
 				7DDED8BC225304D3000F2C4D /* MenuViewController.swift in Sources */,
 				3F10D9E022248CA5002B9A85 /* FiltersManager.swift in Sources */,
 				3FA58E632203A45D00C90B23 /* AppDelegate.swift in Sources */,
+				8210496622BA00CE0001601A /* Movies.swift in Sources */,
 				3F77700922893F0F00EB4E2A /* SettingsView.swift in Sources */,
 				7D931AB5227AB28F005ABCE0 /* SDPhotosHelper.swift in Sources */,
 				3FB086B0221CD58C009F78F0 /* MPSVideoView.swift in Sources */,

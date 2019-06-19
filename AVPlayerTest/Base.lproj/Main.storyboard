@@ -224,6 +224,22 @@
                                     <action selector="resetPressed:" destination="pqv-Jr-06J" eventType="touchUpInside" id="ZCJ-7z-OFZ"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Em-Nf-Z5q">
+                                <rect key="frame" x="775" y="444" width="90" height="44"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <state key="normal" title="Validate"/>
+                                <connections>
+                                    <action selector="validateLowRes:" destination="pqv-Jr-06J" eventType="touchUpInside" id="i3d-aL-kBA"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v3E-cN-wuo">
+                                <rect key="frame" x="778.5" y="222.5" width="83" height="41"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <state key="normal" title="Validate"/>
+                                <connections>
+                                    <action selector="validateURL:" destination="pqv-Jr-06J" eventType="touchUpInside" id="q1q-4b-rUA"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -236,10 +252,14 @@
                             <constraint firstItem="7Ee-Bh-4Vh" firstAttribute="top" secondItem="NgE-iG-uWy" secondAttribute="top" constant="100" id="WAd-oi-OaJ"/>
                             <constraint firstItem="NgE-iG-uWy" firstAttribute="trailing" secondItem="ykD-6M-8Eh" secondAttribute="trailing" constant="100" id="Y2N-3e-4sz"/>
                             <constraint firstItem="7CF-CX-d2z" firstAttribute="centerX" secondItem="ybK-7S-eg8" secondAttribute="centerX" id="bJ9-xs-Mnx"/>
+                            <constraint firstItem="8Em-Nf-Z5q" firstAttribute="centerY" secondItem="7CF-CX-d2z" secondAttribute="centerY" id="fI8-4K-ZRJ"/>
+                            <constraint firstItem="v3E-cN-wuo" firstAttribute="centerX" secondItem="8Em-Nf-Z5q" secondAttribute="centerX" id="fvx-o3-Sbj"/>
+                            <constraint firstItem="v3E-cN-wuo" firstAttribute="centerY" secondItem="ESb-2r-jqH" secondAttribute="centerY" id="fzO-3A-e4S"/>
                             <constraint firstItem="cRg-8I-WOV" firstAttribute="centerX" secondItem="ybK-7S-eg8" secondAttribute="centerX" id="hgI-Rl-78a"/>
                             <constraint firstItem="ESb-2r-jqH" firstAttribute="centerX" secondItem="ybK-7S-eg8" secondAttribute="centerX" id="hrN-Zm-Qdi"/>
                             <constraint firstItem="6Xz-mb-QBp" firstAttribute="centerX" secondItem="NgE-iG-uWy" secondAttribute="centerX" id="phD-Ez-4Z7"/>
                             <constraint firstItem="NgE-iG-uWy" firstAttribute="bottom" secondItem="BVX-6O-Lva" secondAttribute="bottom" constant="150" id="tou-vU-s9D"/>
+                            <constraint firstItem="8Em-Nf-Z5q" firstAttribute="leading" secondItem="7CF-CX-d2z" secondAttribute="trailing" constant="44" id="uIC-16-b1a"/>
                             <constraint firstItem="cRg-8I-WOV" firstAttribute="top" secondItem="ESb-2r-jqH" secondAttribute="bottom" constant="65" id="zdv-x4-UVF"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="NgE-iG-uWy"/>

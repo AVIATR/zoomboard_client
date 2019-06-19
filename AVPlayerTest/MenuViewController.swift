@@ -19,8 +19,8 @@ class MenuViewController: UIViewController {
         get {
         // Get the standard UserDefaults as "defaults"
         let defaults = UserDefaults.standard
-            return defaults.string(forKey: "ipAddress_highres") ?? "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8"
-//            return "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8"
+            return defaults.string(forKey: "ipAddress_highres") ?? Movies.hRes()
+//            return
         }
         set (newValue) {
             let defaults = UserDefaults.standard
@@ -32,8 +32,8 @@ class MenuViewController: UIViewController {
         get {
             // Get the standard UserDefaults as "defaults"
             let defaults = UserDefaults.standard
-            return defaults.string(forKey: "ipAddress_lowres") ?? "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8"
-//            return "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8"
+            return defaults.string(forKey: "ipAddress_lowres") ?? Movies.lRes()
+//            return
 
         }
         set (newValue) {

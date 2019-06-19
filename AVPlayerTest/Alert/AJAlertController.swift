@@ -129,6 +129,7 @@ class AJAlertController: UIViewController {
         self.btnCancelTitle     = btnCancelTitle
         self.btnOtherTitle    = btnOtherTitle
     }
+
     
     /// Show Alert Controller
     private func show()
@@ -238,11 +239,14 @@ class AJAlertController: UIViewController {
      - parameter completion:  Completion block. OK Button Index - 0
      */
     
-    public func showAlertWithOkButton( aStrMessage:String,
-                                completion : alertCompletionBlock){
+
+    public func showAlertWithOkButton( title:String,aStrMessage:String,
+                                       completion : alertCompletionBlock){
         configure(message: aStrMessage, btnCancelTitle: nil, btnOtherTitle: nil)
+        self.strAlertTitle = title
         show()
         block = completion
     }
+    
  }
 

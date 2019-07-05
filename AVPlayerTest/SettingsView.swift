@@ -22,19 +22,80 @@ class SettingsView: UIViewController {
     var highResURL : String = ""
     var lowResURL : String = ""
     
+    @IBOutlet weak var highResImgStatus: UIImageView!
+    @IBOutlet weak var lowResImgStatus: UIImageView!
+    
     @IBOutlet weak var urlHighResTextField: UITextField!
     @IBOutlet weak var urlLowResTextField: UITextField!
+    var highR: Bool = true
+    var lowR: Bool = true
+    var high: Bool {
+        get{
+            return highR
+        }
+        set(val) {
+            highR = val
+            if val == true && low == true
+            {
+                OKbutton.tintColor = UIColor.blue
+            }
+            else {
+                    OKbutton.tintColor = UIColor.gray
+                
+            }
+        }
+    }
+        var low : Bool {
+        get{
+        return lowR
+        }
+        set(val) {
+            lowR = val
+            if val == true && high == true{
+            OKbutton.tintColor = UIColor.blue
+        }
+        else{
+            OKbutton.tintColor = UIColor.gray
+        }
+        }
+    }
+
     
+    
+    @IBOutlet weak var OKbutton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
+        high = true
+        low = true
+
         urlHighResTextField.text = highResURL
         urlLowResTextField.text = lowResURL
         // Do any additional setup after loading the view.
+//        OKbutton.tintColor = UIColor.gray
+        highResImgStatus.image = UIImage(named: "tick")
+        lowResImgStatus.image = UIImage(named: "tick")
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
+    @IBAction func highResTextEntered(_ sender: Any) {
+        lowResImgStatus.image = UIImage(named: "sync")
+        highR = false
+        OKbutton.tintColor = UIColor.gray
+        self.validateURL(sender)
+    }
+    
+    @IBAction func lowResTextEntered(_ sender: Any) {
+        lowR = false
+        highResImgStatus.image = UIImage(named: "sync")
+        OKbutton.tintColor = UIColor.gray
+        self.validateLowRes(sender)
+    }
     @IBAction func resetPressed(_ sender: Any) {
+        highR = true
+        lowR = true
+        lowResImgStatus.image = UIImage(named: "tick")
+        highResImgStatus.image = UIImage(named: "tick")
         urlHighResTextField.text = highResDef
         urlLowResTextField.text = lowResDef
     }
@@ -121,55 +182,58 @@ class SettingsView: UIViewController {
         return predicate.evaluate(with: string)
 //        return predicate2.evaluate(with: string)
     }
-    
+    func throwAlerts(URL : String,TypeofURL : String)-> Bool{
+        if canOpenURL(URL)==false{
+            if TypeofURL == "High"{
+           lowResImgStatus.image = UIImage(named: "cross")
+                high = false
+            }
+            else {
+                low = false
+
+                highResImgStatus.image = UIImage(named: "cross")
+            }
+          AJAlertController.initialization().showAlertWithOkButton(title:"Settings",aStrMessage: "Please enter a valid \(TypeofURL) Resolution URL") { (index, title) in
+                
+                print(index,title)
+                if index == 0 {
+                }
+            }
+            
+            return false
+        }
+        return true
+    }
     @IBAction func validateURL(_ sender: Any) {
         
         if urlHighResTextField.text?.isEmpty == false{
-            
-            
             urlHighResTextField.text = urlHighResTextField.text?.sanitize()
-            
-            if canOpenURL(urlHighResTextField.text)==false{
-                AJAlertController.initialization().showAlertWithOkButton(title:"Settings",aStrMessage: "Please enter a valid High Resolution URL") { (index, title) in
-                    
-                    print(index,title)
-                    if index == 0 {
-                    }
-                }
-                
+            if throwAlerts(URL : urlHighResTextField.text!, TypeofURL: "High") == false{
+                //Blur ok button
+   //             highResImgStatus.image = UIImage(named: "cross")
                 return
             }
-            getURLResponse(urlPath: urlHighResTextField.text!)
+            getURLResponse(urlPath: urlHighResTextField.text!, TypeofURL: "High")
         }
-
     }
     
     @IBAction func validateLowRes(_ sender: Any) {
         if urlLowResTextField.text?.isEmpty == false {
-            
             urlLowResTextField.text = urlLowResTextField.text?.sanitize()
-            
-            
-            if canOpenURL(urlLowResTextField.text)==false{
-                
-                AJAlertController.initialization().showAlertWithOkButton(title:"Settings",aStrMessage: "Please enter a valid Low Resolution URL") { (index, title) in
-                    
-                    print(index,title)
-                    if index == 0 {
-                        
-                    }
-                }
-                
+            if throwAlerts(URL : urlLowResTextField.text!, TypeofURL: "Low") == false {
+                //Blur ok button
+      //          lowResImgStatus.image = UIImage(named: "cross")
                 return
             }
-
-            getURLResponse(urlPath: urlLowResTextField.text!)
-           
-
+            getURLResponse(urlPath: urlLowResTextField.text!, TypeofURL: "Low")
         }
     }
-    func getURLResponse(urlPath : String){
-        self.showSpinner(onView: self.view)
+    
+    func getURLResponse(urlPath : String, TypeofURL: String) {
+//        self.showSpinner(onView: self.view)
+
+        var valid : Bool = true
+ 
         let url = URL(string: urlPath)!
         let request = URLRequest(url: url)
 
@@ -181,41 +245,51 @@ class SettingsView: UIViewController {
  
                 if httpResponse.statusCode >= 400
                 {
+                    
                     let message : String =  String(httpResponse.statusCode) + " " + localizedResponse
                    print(message)
                     AJAlertController.initialization().showAlertWithOkButton(title:"Status Code : ",aStrMessage: message) { (index, title) in
-                    self.removeSpinner()
+  //                  self.removeSpinner()
                     print(index,title)
                     if index == 0 {
-                        self.removeSpinner()
+ //                       self.removeSpinner()
                     }
                     }
-                    
+                    if TypeofURL == "High"{
+                        self.lowResImgStatus.image = UIImage(named: "cross")
+                        self.high = false
+                    }
+                    else {
+                        self.highResImgStatus.image = UIImage(named: "cross")
+                        self.low = false
+
+                    }
                     }
                 else {
                     let message : String = String(httpResponse.statusCode) + " " + localizedResponse
                     print(message)
-                    
                     AJAlertController.initialization().showAlertWithOkButton(title:"Status Code : ",aStrMessage: message) { (index, title) in
-                        self.removeSpinner()
+     //                   self.removeSpinner()
                         print(index,title)
                         if index == 0 {
-                            self.removeSpinner()
-                            
+      //                      self.removeSpinner()
                         }
                     }
-                    
-
+                    if TypeofURL == "Low" {
+                        self.highResImgStatus.image = UIImage(named: "tick")
+                        self.low = true
+                    }
+                    else {
+                        self.high = true
+                        self.lowResImgStatus.image = UIImage(named: "tick")
+                    }
                 }
-
-                
-                
                 }
             
         }
         task.resume()
+        
     }
-
 }
 extension String {
     func replace(string:String, replacement:String) -> String {

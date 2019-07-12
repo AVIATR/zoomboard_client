@@ -19,6 +19,7 @@ class SettingsView: UIViewController {
     var highResDef : String = Movies.hRes()
     var lowResDef : String = Movies.lRes()
 
+    @IBOutlet weak var srollViewOutlet: UIScrollView!
     var highResURL : String = ""
     var lowResURL : String = ""
     
@@ -67,6 +68,12 @@ class SettingsView: UIViewController {
         super.viewDidLoad()
         high = true
         low = true
+        
+        srollViewOutlet.showsVerticalScrollIndicator = false
+        srollViewOutlet.showsHorizontalScrollIndicator = false
+
+        srollViewOutlet.isPagingEnabled = false
+        srollViewOutlet.isScrollEnabled = false
 
         urlHighResTextField.text = highResURL
         urlLowResTextField.text = lowResURL
@@ -79,13 +86,16 @@ class SettingsView: UIViewController {
         self.view.endEditing(true)
     }
     @IBAction func highResTextEntered(_ sender: Any) {
+        srollViewOutlet.scrollRectToVisible(topRect.frame, animated: true)
         lowResImgStatus.image = UIImage(named: "sync")
         highR = false
         OKbutton.tintColor = UIColor.gray
         self.validateURL(sender)
     }
     
+    @IBOutlet weak var topRect: UILabel!
     @IBAction func lowResTextEntered(_ sender: Any) {
+        srollViewOutlet.scrollRectToVisible(topRect.frame, animated: true)
         lowR = false
         highResImgStatus.image = UIImage(named: "sync")
         OKbutton.tintColor = UIColor.gray
@@ -104,8 +114,13 @@ class SettingsView: UIViewController {
   //      delegate?.removeBlurredBackgroundView()
     }
     
+    @IBOutlet weak var topKeyboardLimit: UILabel!
+    @IBOutlet weak var keyboardText: UILabel!
     @IBAction func editingStarted(_ sender: UITextField) {
         sender.backgroundColor = UIColor.white
+        if sender == urlLowResTextField {
+            srollViewOutlet.scrollRectToVisible(keyboardText.frame, animated: true)
+        }
     }
     
     

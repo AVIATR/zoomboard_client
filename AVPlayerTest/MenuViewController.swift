@@ -54,8 +54,12 @@ class MenuViewController: UIViewController {
         }
     }
     
+    @IBOutlet weak var bottomView: UIView!
     @IBOutlet weak var lectureNameTextBox: UITextField!
     
+    @IBOutlet weak var bottomRef: UILabel!
+    @IBOutlet weak var topRef: UILabel!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,7 +67,10 @@ class MenuViewController: UIViewController {
         self.welcomeText.alpha = 0
         showWelcomeText()
         lectureNameTextBox.text = lectureName
+        let screenHeight = UIScreen.main.bounds.height
+        let screenWidth = UIScreen.main.bounds.width
 
+        bottomView.frame.origin.y =   screenWidth - bottomView.bounds.height
     }
     
     func fadeInOutView(view : UIView, duration: TimeInterval, delay : TimeInterval){
@@ -91,8 +98,17 @@ class MenuViewController: UIViewController {
     
     
     @IBAction func isEditing(_ sender: Any) {
+        
         lectureNameTextBox.backgroundColor = UIColor.white
         lectureName = lectureNameTextBox.text ?? "Lecture"
+    }
+    
+    @IBAction func lectureNameEditingBegan(_ sender: Any) {
+       
+        scrollView.scrollRectToVisible(bottomRef.frame, animated: true)
+    }
+    @IBAction func lectureNameEditingEnded(_ sender: Any) {
+      scrollView.scrollRectToVisible(topRef.frame, animated: true)
     }
     @IBAction func joinLecturePressed(_ sender: Any) {
         if lectureNameTextBox.text?.isEmpty == false{

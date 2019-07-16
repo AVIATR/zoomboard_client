@@ -18,7 +18,7 @@ class SettingsView: UIViewController {
     weak var delegate2: MenuViewController?
     var highResDef : String = Movies.hRes()
     var lowResDef : String = Movies.lRes()
-
+    var code : Int = 0
     @IBOutlet weak var srollViewOutlet: UIScrollView!
     var highResURL : String = ""
     var lowResURL : String = ""
@@ -257,19 +257,19 @@ class SettingsView: UIViewController {
             if let httpResponse = response as? HTTPURLResponse {
                 let localizedResponse = HTTPURLResponse.localizedString(forStatusCode: httpResponse.statusCode)
                 print("Status Code : \(httpResponse.statusCode)  \(localizedResponse)")
- 
+                self.code = httpResponse.statusCode
                 if httpResponse.statusCode >= 400
                 {
                     
                     let message : String =  String(httpResponse.statusCode) + " " + localizedResponse
                    print(message)
-                    AJAlertController.initialization().showAlertWithOkButton(title:"Status Code : ",aStrMessage: message) { (index, title) in
-  //                  self.removeSpinner()
-                    print(index,title)
-                    if index == 0 {
- //                       self.removeSpinner()
-                    }
-                    }
+//                    AJAlertController.initialization().showAlertWithOkButton(title:"Status Code : ",aStrMessage: message) { (index, title) in
+//  //                  self.removeSpinner()
+//                    print(index,title)
+//                    if index == 0 {
+// //                       self.removeSpinner()
+//                    }
+//                    }
                     if TypeofURL == "High"{
                         self.lowResImgStatus.image = UIImage(named: "cross")
                         self.high = false
@@ -279,17 +279,18 @@ class SettingsView: UIViewController {
                         self.low = false
 
                     }
+                    
                     }
                 else {
                     let message : String = String(httpResponse.statusCode) + " " + localizedResponse
                     print(message)
-                    AJAlertController.initialization().showAlertWithOkButton(title:"Status Code : ",aStrMessage: message) { (index, title) in
-     //                   self.removeSpinner()
-                        print(index,title)
-                        if index == 0 {
-      //                      self.removeSpinner()
-                        }
-                    }
+//                    AJAlertController.initialization().showAlertWithOkButton(title:"Status Code : ",aStrMessage: message) { (index, title) in
+//     //                   self.removeSpinner()
+//                        print(index,title)
+//                        if index == 0 {
+//      //                      self.removeSpinner()
+//                        }
+//                    }
                     if TypeofURL == "Low" {
                         self.highResImgStatus.image = UIImage(named: "tick")
                         self.low = true
@@ -300,12 +301,14 @@ class SettingsView: UIViewController {
                     }
                 }
                 }
-            
         }
         task.resume()
         
+
     }
+
 }
+
 extension String {
     func replace(string:String, replacement:String) -> String {
         return self.replacingOccurrences(of: string, with: replacement, options: NSString.CompareOptions.literal, range: nil)

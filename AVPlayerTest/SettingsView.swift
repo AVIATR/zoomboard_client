@@ -243,7 +243,7 @@ class SettingsView: UIViewController {
             getURLResponse(urlPath: urlLowResTextField.text!, TypeofURL: "Low")
         }
     }
-    
+    var URLFlag : Bool = false
     func getURLResponse(urlPath : String, TypeofURL: String) {
 //        self.showSpinner(onView: self.view)
 
@@ -271,12 +271,14 @@ class SettingsView: UIViewController {
 //                    }
 //                    }
                     if TypeofURL == "High"{
-                        self.lowResImgStatus.image = UIImage(named: "cross")
+//                        self.lowResImgStatus.image = UIImage(named: "cross")
                         self.high = false
+                        self.URLFlag = true
                     }
                     else {
-                        self.highResImgStatus.image = UIImage(named: "cross")
+//                        self.highResImgStatus.image = UIImage(named: "cross")
                         self.low = false
+                        self.URLFlag = true
 
                     }
                     
@@ -292,19 +294,38 @@ class SettingsView: UIViewController {
 //                        }
 //                    }
                     if TypeofURL == "Low" {
-                        self.highResImgStatus.image = UIImage(named: "tick")
+ //                       self.highResImgStatus.image = UIImage(named: "tick")
                         self.low = true
+                        self.URLFlag = true
                     }
                     else {
                         self.high = true
-                        self.lowResImgStatus.image = UIImage(named: "tick")
+                        self.URLFlag = true
+ //                       self.lowResImgStatus.image = UIImage(named: "tick")
                     }
                 }
                 }
         }
+        Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(run), userInfo: nil, repeats: false)
         task.resume()
         
-
+    }
+    @objc func run(){
+        print("timer function ran  URLflag = \(self.URLFlag)")
+        if self.URLFlag == true{
+            if self.low == true{
+                self.highResImgStatus.image = UIImage(named: "tick")
+            }
+            else{
+                self.highResImgStatus.image = UIImage(named: "cross")
+            }
+            if self.high == true{
+                self.lowResImgStatus.image = UIImage(named: "tick")
+            }
+            else{
+                self.lowResImgStatus.image = UIImage(named: "cross")
+            }
+        }
     }
 
 }

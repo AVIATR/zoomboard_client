@@ -263,6 +263,7 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ykD-6M-8Eh">
                                                 <rect key="frame" x="756" y="618" width="55" height="60"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                                <color key="tintColor" red="0.082815976900000005" green="0.34116479830000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal" title="OK">
                                                     <color key="titleColor" red="0.082815976900000005" green="0.34116479830000002" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 </state>
@@ -589,7 +590,6 @@
         <image name="snapshot" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="hlr-IN-18C"/>
         <segue reference="33l-lD-4Kr"/>
     </inferredMetricsTieBreakers>
 </document>

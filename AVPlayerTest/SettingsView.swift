@@ -13,7 +13,7 @@ protocol ModalViewControllerDelegate: class {
 }
 
 class SettingsView: UIViewController {
-
+    var message : String = ""
     weak var delegate: ModalViewControllerDelegate?
     weak var delegate2: MenuViewController?
     var highResDef : String = Movies.hRes()
@@ -38,10 +38,10 @@ class SettingsView: UIViewController {
             highR = val
             if val == true && low == true
             {
-                OKbutton.tintColor = UIColor.blue
+ //               OKbutton.tintColor = UIColor.blue
             }
             else {
-                    OKbutton.tintColor = UIColor.gray
+ //                   OKbutton.tintColor = UIColor.gray
                 
             }
         }
@@ -53,19 +53,18 @@ class SettingsView: UIViewController {
         set(val) {
             lowR = val
             if val == true && high == true{
-            OKbutton.tintColor = UIColor.blue
+ //           OKbutton.tintColor = UIColor.blue
         }
         else{
-            OKbutton.tintColor = UIColor.gray
+   //         OKbutton.tintColor = UIColor.gray
         }
         }
     }
 
-    
-    
     @IBOutlet weak var OKbutton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
+        OKbutton.titleLabel?.textColor = UIColor.blue
         high = true
         low = true
         
@@ -81,24 +80,29 @@ class SettingsView: UIViewController {
 //        OKbutton.tintColor = UIColor.gray
         highResImgStatus.image = UIImage(named: "tick")
         lowResImgStatus.image = UIImage(named: "tick")
+        
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
     @IBAction func highResTextEntered(_ sender: Any) {
+        lowResText = false
         srollViewOutlet.scrollRectToVisible(topRect.frame, animated: true)
         lowResImgStatus.image = UIImage(named: "sync")
         highR = false
-        OKbutton.tintColor = UIColor.gray
+
+ //       OKbutton.tintColor = UIColor.gray
         self.validateURL(sender)
     }
     
     @IBOutlet weak var topRect: UILabel!
+    var lowResText : Bool = true
     @IBAction func lowResTextEntered(_ sender: Any) {
+        lowResText = true
         srollViewOutlet.scrollRectToVisible(topRect.frame, animated: true)
         lowR = false
         highResImgStatus.image = UIImage(named: "sync")
-        OKbutton.tintColor = UIColor.gray
+ //       OKbutton.tintColor = UIColor.gray
         self.validateLowRes(sender)
     }
     @IBAction func resetPressed(_ sender: Any) {
@@ -108,6 +112,7 @@ class SettingsView: UIViewController {
         highResImgStatus.image = UIImage(named: "tick")
         urlHighResTextField.text = highResDef
         urlLowResTextField.text = lowResDef
+        OKbutton.titleLabel?.textColor = UIColor.blue
     }
     @IBAction func cancelPressed(_ sender: Any) {
         dismiss(animated: true, completion: nil)
@@ -127,6 +132,10 @@ class SettingsView: UIViewController {
     // TODO: sanitaze input ip address
     @IBAction func acceptChanges(_ sender: Any) {
 
+        if self.low == false || self.high == false {
+            OKbutton.titleLabel?.textColor = UIColor.gray
+            return
+        }
 
         if urlLowResTextField.text?.isEmpty == false && urlHighResTextField.text?.isEmpty == false{
 
@@ -134,7 +143,6 @@ class SettingsView: UIViewController {
             urlHighResTextField.text = urlHighResTextField.text?.sanitize()
             
             if canOpenURL(urlLowResTextField.text)==false{
-
                 AJAlertController.initialization().showAlertWithOkButton(title:"Settings",aStrMessage: "Please enter a valid Low Resolution URL") { (index, title) in
                     
                     print(index,title)
@@ -263,6 +271,8 @@ class SettingsView: UIViewController {
                     
                     let message : String =  String(httpResponse.statusCode) + " " + localizedResponse
                    print(message)
+                    self.message = message
+                    
 //                    AJAlertController.initialization().showAlertWithOkButton(title:"Status Code : ",aStrMessage: message) { (index, title) in
 //  //                  self.removeSpinner()
 //                    print(index,title)
@@ -286,6 +296,7 @@ class SettingsView: UIViewController {
                 else {
                     let message : String = String(httpResponse.statusCode) + " " + localizedResponse
                     print(message)
+                    self.message = message
 //                    AJAlertController.initialization().showAlertWithOkButton(title:"Status Code : ",aStrMessage: message) { (index, title) in
 //     //                   self.removeSpinner()
 //                        print(index,title)
@@ -310,6 +321,7 @@ class SettingsView: UIViewController {
         task.resume()
         
     }
+    
     @objc func run(){
         print("timer function ran  URLflag = \(self.URLFlag)")
         if self.URLFlag == true{
@@ -318,12 +330,37 @@ class SettingsView: UIViewController {
             }
             else{
                 self.highResImgStatus.image = UIImage(named: "cross")
+                if lowResText == true {
+                AJAlertController.initialization().showAlertWithOkButton(title:"Low Res Status Code : ",aStrMessage: self.message) { (index, title) in
+ //                   self.removeSpinner()
+                    print(index,title)
+                    if index == 0 {
+  //                      self.removeSpinner()
+                    }
+                }
+                }
             }
             if self.high == true{
                 self.lowResImgStatus.image = UIImage(named: "tick")
             }
             else{
                 self.lowResImgStatus.image = UIImage(named: "cross")
+                if lowResText == false {
+                    AJAlertController.initialization().showAlertWithOkButton(title:"High Res Status Code : ",aStrMessage: self.message) { (index, title) in
+                        //                   self.removeSpinner()
+                        print(index,title)
+                        if index == 0 {
+                            //                      self.removeSpinner()
+                        }
+                    }
+
+                }
+            }
+            if self.low == true && self.high == true{
+                self.OKbutton.titleLabel?.textColor = UIColor.blue
+            }
+            else{
+                self.OKbutton.titleLabel?.textColor = UIColor.gray
             }
         }
     }

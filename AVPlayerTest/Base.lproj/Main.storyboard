@@ -543,6 +543,7 @@
                         <outlet property="snapshotImageView" destination="shh-zR-Byi" id="oJl-cW-DK9"/>
                         <outlet property="streamSwitch" destination="5WY-sB-jEL" id="HLm-kn-sdi"/>
                         <outlet property="superView" destination="R5e-Do-ApW" id="8IS-uq-Hrw"/>
+                        <outlet property="tapGesture" destination="WxJ-KE-UVp" id="EUa-79-VJa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

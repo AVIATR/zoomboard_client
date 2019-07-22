@@ -64,7 +64,8 @@ class SettingsView: UIViewController {
     @IBOutlet weak var OKbutton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
-        OKbutton.titleLabel?.textColor = UIColor.blue
+//        OKbutton.titleLabel?.textColor = UIColor.blue
+        OKbutton.setTitleColor(.gray, for: .disabled)
         high = true
         low = true
         
@@ -80,7 +81,9 @@ class SettingsView: UIViewController {
 //        OKbutton.tintColor = UIColor.gray
         highResImgStatus.image = UIImage(named: "tick")
         lowResImgStatus.image = UIImage(named: "tick")
-        
+        highResImgStatus.isHidden = true
+        lowResImgStatus.isHidden = true
+
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
@@ -89,6 +92,9 @@ class SettingsView: UIViewController {
         lowResText = false
         srollViewOutlet.scrollRectToVisible(topRect.frame, animated: true)
         lowResImgStatus.image = UIImage(named: "sync")
+//        highResImgStatus.isHidden = false
+        lowResImgStatus.isHidden = false
+
         highR = false
 
  //       OKbutton.tintColor = UIColor.gray
@@ -102,12 +108,17 @@ class SettingsView: UIViewController {
         srollViewOutlet.scrollRectToVisible(topRect.frame, animated: true)
         lowR = false
         highResImgStatus.image = UIImage(named: "sync")
+        highResImgStatus.isHidden = false
+//        lowResImgStatus.isHidden = false
  //       OKbutton.tintColor = UIColor.gray
         self.validateLowRes(sender)
     }
     @IBAction func resetPressed(_ sender: Any) {
         highR = true
         lowR = true
+        highResImgStatus.isHidden = true
+        lowResImgStatus.isHidden = true
+
         lowResImgStatus.image = UIImage(named: "tick")
         highResImgStatus.image = UIImage(named: "tick")
         urlHighResTextField.text = highResDef
@@ -128,12 +139,16 @@ class SettingsView: UIViewController {
         }
     }
     
-    
+    func changeToColor(but : UIButton, col : UIColor){
+        but.titleColor(for: .disabled)
+
+    }
     // TODO: sanitaze input ip address
     @IBAction func acceptChanges(_ sender: Any) {
 
         if self.low == false || self.high == false {
             OKbutton.titleLabel?.textColor = UIColor.gray
+            OKbutton.isEnabled = false
             return
         }
 
@@ -357,10 +372,12 @@ class SettingsView: UIViewController {
                 }
             }
             if self.low == true && self.high == true{
-                self.OKbutton.titleLabel?.textColor = UIColor.blue
+  //              self.OKbutton.titleLabel?.textColor = UIColor.blue
+                self.OKbutton.isEnabled = true
             }
             else{
-                self.OKbutton.titleLabel?.textColor = UIColor.gray
+                self.OKbutton.isEnabled = false
+//                self.OKbutton.titleLabel?.textColor = UIColor.gray
             }
         }
     }

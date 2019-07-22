@@ -52,9 +52,11 @@ class ViewController: UIViewController {
     @IBOutlet weak var superView: UIView!
     
 
+    @IBOutlet var tapGesture: UITapGestureRecognizer!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        tapGesture.numberOfTapsRequired = 2
+        tapGesture.numberOfTouchesRequired = 1
         let notificationCenter = NotificationCenter.default
         notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.willResignActiveNotification, object: nil)
         notificationCenter.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
@@ -209,9 +211,11 @@ class ViewController: UIViewController {
         var pt : CGPoint = zoomPoint
         pt.x -= playerView.bounds.midX
         pt.y -= playerView.bounds.midY
-        playerView.transform = playerView.transform.translatedBy(x: pt.x, y: pt.y)
-        playerView.transform = playerView.transform.scaledBy(x: zoomFactor, y: zoomFactor)
-        playerView.transform = playerView.transform.translatedBy(x: -pt.x, y: -pt.y)
+        var tranf = playerView.transform
+
+        playerView.transform = playerView.transform.translatedBy(x: pt.x, y: pt.y).scaledBy(x: zoomFactor, y: zoomFactor).translatedBy(x: -pt.x, y: -pt.y)
+//        playerView.transform = playerView.transform.scaledBy(x: zoomFactor, y: zoomFactor)
+  //      playerView.transform = playerView.transform.translatedBy(x: -pt.x, y: -pt.y)
     }
     
     
@@ -226,26 +230,32 @@ class ViewController: UIViewController {
         recognizer.numberOfTapsRequired = 2
         recognizer.numberOfTouchesRequired = 1
         if (zoomFactor > 1){
-            UIView.animate(withDuration: TimeInterval(0.1), delay: 0, options: .curveLinear, animations: {
+            UIView.animate(withDuration: TimeInterval(0.4), delay: 0, options: .curveEaseInOut, animations: {
                 let ratio = self.playerOriginalSize.width / self.playerView.frame.width
                 print(ratio)
-                self.playerView.transform = self.playerView.transform.scaledBy(x: ratio, y: ratio)
-                self.playerView.frame = self.playerOriginalSize
+                self.playerView.transform = .identity
+//                self.playerView.transform = self.playerView.transform.scaledBy(x: ratio, y: ratio)
+  //              self.playerView.frame = self.playerOriginalSize
+                
+                self.zoomFactor = 1
+                self.fixView()
                  }, completion: nil )
-            zoomFactor = 1
-        fixView()
+           
         }
         else{
-            let zoomPoint = recognizer.location(in: playerView)
-            zoomFactor = 2
-            zoomToLocation(zoomPoint : zoomPoint, zoomFactor : zoomFactor)
-            fixView()
+            UIView.animate(withDuration: TimeInterval(0.4), delay: 0, options: .curveEaseInOut, animations: {
+                let zoomPoint = recognizer.location(in: self.playerView)
+                self.zoomFactor = 2
+                self.zoomToLocation(zoomPoint : zoomPoint, zoomFactor : self.zoomFactor)
+                self.fixView()
+                }, completion: nil )
         }
     }
     
     func resetZoom(){
         zoomFactor = 1
         let ratio = self.playerOriginalSize.width / self.playerView.frame.width
+        
         self.playerView.transform = self.playerView.transform.scaledBy(x: ratio, y: ratio)
         self.playerView.frame = self.playerOriginalSize
     }

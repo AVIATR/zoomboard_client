@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/ViewController.swift"
-            timestampString = "585041999.0848089"
+            timestampString = "585471866.108114"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "331"
-            endingLineNumber = "331"
+            startingLineNumber = "341"
+            endingLineNumber = "341"
             landmarkName = "setupUI()"
             landmarkType = "7">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/ViewController.swift"
-            timestampString = "585041999.0849349"
+            timestampString = "585471866.1085989"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "328"
-            endingLineNumber = "328"
+            startingLineNumber = "338"
+            endingLineNumber = "338"
             landmarkName = "setupUI()"
             landmarkType = "7">
          </BreakpointContent>
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/ViewController.swift"
-            timestampString = "585041999.085011"
+            timestampString = "585471866.1089571"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "269"
-            endingLineNumber = "269"
+            startingLineNumber = "279"
+            endingLineNumber = "279"
             landmarkName = "startStream()"
             landmarkType = "7">
             <Locations>
@@ -90,11 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/ViewController.swift"
-            timestampString = "585041999.08506"
+            timestampString = "585471866.109277"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "329"
-            endingLineNumber = "329"
+            startingLineNumber = "339"
+            endingLineNumber = "339"
             landmarkName = "setupUI()"
             landmarkType = "7">
          </BreakpointContent>
@@ -106,11 +106,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/ViewController.swift"
-            timestampString = "585041999.085106"
+            timestampString = "585471866.109587"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "78"
-            endingLineNumber = "78"
+            startingLineNumber = "80"
+            endingLineNumber = "80"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
@@ -138,11 +138,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/SettingsView.swift"
-            timestampString = "585132618.012441"
+            timestampString = "585471866.109919"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "183"
-            endingLineNumber = "183"
+            startingLineNumber = "198"
+            endingLineNumber = "198"
             landmarkName = "prepare(for:sender:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -154,11 +154,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/SettingsView.swift"
-            timestampString = "585132618.012512"
+            timestampString = "585471866.1099761"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "119"
-            endingLineNumber = "119"
+            startingLineNumber = "130"
+            endingLineNumber = "130"
             landmarkName = "cancelPressed(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -186,11 +186,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/SettingsView.swift"
-            timestampString = "585132618.012624"
+            timestampString = "585471866.110036"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "167"
-            endingLineNumber = "167"
+            startingLineNumber = "182"
+            endingLineNumber = "182"
             landmarkName = "acceptChanges(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -202,11 +202,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/SettingsView.swift"
-            timestampString = "585132618.012684"
+            timestampString = "585471866.1100841"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "272"
-            endingLineNumber = "272"
+            startingLineNumber = "287"
+            endingLineNumber = "287"
             landmarkName = "getURLResponse(urlPath:TypeofURL:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -218,11 +218,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/SettingsView.swift"
-            timestampString = "585132618.012743"
+            timestampString = "585471866.110129"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "269"
-            endingLineNumber = "269"
+            startingLineNumber = "284"
+            endingLineNumber = "284"
             landmarkName = "getURLResponse(urlPath:TypeofURL:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -282,23 +282,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/SettingsView.swift"
-            timestampString = "585132618.012841"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "283"
-            endingLineNumber = "283"
-            landmarkName = "getURLResponse(urlPath:TypeofURL:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "AVPlayerTest/SettingsView.swift"
-            timestampString = "585132618.012902"
+            timestampString = "585471866.110208"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "298"
@@ -314,11 +298,27 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/SettingsView.swift"
-            timestampString = "585132618.012959"
+            timestampString = "585471866.110256"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "126"
-            endingLineNumber = "126"
+            startingLineNumber = "313"
+            endingLineNumber = "313"
+            landmarkName = "getURLResponse(urlPath:TypeofURL:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AVPlayerTest/SettingsView.swift"
+            timestampString = "585471866.1102999"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "137"
+            endingLineNumber = "137"
             landmarkName = "editingStarted(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -378,11 +378,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/SettingsView.swift"
-            timestampString = "585132618.013155"
+            timestampString = "585471866.110379"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "267"
-            endingLineNumber = "267"
+            startingLineNumber = "282"
+            endingLineNumber = "282"
             landmarkName = "getURLResponse(urlPath:TypeofURL:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -394,11 +394,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/SettingsView.swift"
-            timestampString = "585132618.013225"
+            timestampString = "585471866.110425"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "285"
-            endingLineNumber = "285"
+            startingLineNumber = "300"
+            endingLineNumber = "300"
             landmarkName = "getURLResponse(urlPath:TypeofURL:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -410,11 +410,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/SettingsView.swift"
-            timestampString = "585132618.013285"
+            timestampString = "585471866.110469"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "321"
-            endingLineNumber = "321"
+            startingLineNumber = "336"
+            endingLineNumber = "336"
             landmarkName = "getURLResponse(urlPath:TypeofURL:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -426,11 +426,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/SettingsView.swift"
-            timestampString = "585132618.013346"
+            timestampString = "585471866.110513"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "323"
-            endingLineNumber = "323"
+            startingLineNumber = "338"
+            endingLineNumber = "338"
             landmarkName = "getURLResponse(urlPath:TypeofURL:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -442,11 +442,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/SettingsView.swift"
-            timestampString = "585132618.013406"
+            timestampString = "585471866.1105551"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "368"
-            endingLineNumber = "368"
+            startingLineNumber = "385"
+            endingLineNumber = "385"
             landmarkName = "SettingsView"
             landmarkType = "3">
          </BreakpointContent>
@@ -458,11 +458,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/SettingsView.swift"
-            timestampString = "585132618.013473"
+            timestampString = "585471866.1105959"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "326"
-            endingLineNumber = "326"
+            startingLineNumber = "341"
+            endingLineNumber = "341"
             landmarkName = "run()"
             landmarkType = "7">
          </BreakpointContent>
@@ -474,11 +474,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/SettingsView.swift"
-            timestampString = "585132618.01364"
+            timestampString = "585471866.110638"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "322"
-            endingLineNumber = "322"
+            startingLineNumber = "337"
+            endingLineNumber = "337"
             landmarkName = "getURLResponse(urlPath:TypeofURL:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -490,11 +490,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/SettingsView.swift"
-            timestampString = "585132618.013725"
+            timestampString = "585471866.11068"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "314"
-            endingLineNumber = "314"
+            startingLineNumber = "329"
+            endingLineNumber = "329"
             landmarkName = "getURLResponse(urlPath:TypeofURL:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -506,11 +506,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/SettingsView.swift"
-            timestampString = "585132618.01379"
+            timestampString = "585471866.110721"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "310"
-            endingLineNumber = "310"
+            startingLineNumber = "325"
+            endingLineNumber = "325"
             landmarkName = "getURLResponse(urlPath:TypeofURL:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -522,11 +522,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/SettingsView.swift"
-            timestampString = "585132618.013849"
+            timestampString = "585471866.110764"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "291"
-            endingLineNumber = "291"
+            startingLineNumber = "306"
+            endingLineNumber = "306"
             landmarkName = "getURLResponse(urlPath:TypeofURL:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -538,11 +538,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/SettingsView.swift"
-            timestampString = "585132618.013909"
+            timestampString = "585471866.1108069"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "286"
-            endingLineNumber = "286"
+            startingLineNumber = "301"
+            endingLineNumber = "301"
             landmarkName = "getURLResponse(urlPath:TypeofURL:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -554,11 +554,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/SettingsView.swift"
-            timestampString = "585132618.013968"
+            timestampString = "585471866.1108479"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "86"
-            endingLineNumber = "86"
+            startingLineNumber = "89"
+            endingLineNumber = "89"
             landmarkName = "touchesBegan(_:with:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -570,11 +570,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/SettingsView.swift"
-            timestampString = "585132618.0140229"
+            timestampString = "585471866.110913"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "292"
-            endingLineNumber = "292"
+            startingLineNumber = "307"
+            endingLineNumber = "307"
             landmarkName = "getURLResponse(urlPath:TypeofURL:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -586,11 +586,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/SettingsView.swift"
-            timestampString = "585132618.014075"
+            timestampString = "585471866.110965"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "332"
-            endingLineNumber = "332"
+            startingLineNumber = "347"
+            endingLineNumber = "347"
             landmarkName = "run()"
             landmarkType = "7">
          </BreakpointContent>
@@ -602,11 +602,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/SettingsView.swift"
-            timestampString = "585132618.014128"
+            timestampString = "585471866.111007"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "360"
-            endingLineNumber = "360"
+            startingLineNumber = "375"
+            endingLineNumber = "375"
             landmarkName = "run()"
             landmarkType = "7">
          </BreakpointContent>
@@ -618,12 +618,76 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/SettingsView.swift"
-            timestampString = "585132618.0141931"
+            timestampString = "585471866.11105"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "364"
-            endingLineNumber = "364"
+            startingLineNumber = "381"
+            endingLineNumber = "381"
             landmarkName = "run()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AVPlayerTest/ViewController.swift"
+            timestampString = "585471866.111093"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "225"
+            endingLineNumber = "225"
+            landmarkName = "touchesBegan(_:with:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AVPlayerTest/ViewController.swift"
+            timestampString = "585471866.111414"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "231"
+            endingLineNumber = "231"
+            landmarkName = "handleDoubletap(recognizer:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AVPlayerTest/ViewController.swift"
+            timestampString = "585471866.111721"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "234"
+            endingLineNumber = "234"
+            landmarkName = "handleDoubletap(recognizer:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AVPlayerTest/ViewController.swift"
+            timestampString = "585471866.112025"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "248"
+            endingLineNumber = "248"
+            landmarkName = "handleDoubletap(recognizer:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

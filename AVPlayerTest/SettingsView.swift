@@ -118,12 +118,12 @@ class SettingsView: UIViewController {
         lowR = true
         highResImgStatus.isHidden = true
         lowResImgStatus.isHidden = true
-
+        OKbutton.isEnabled = true
         lowResImgStatus.image = UIImage(named: "tick")
         highResImgStatus.image = UIImage(named: "tick")
         urlHighResTextField.text = highResDef
         urlLowResTextField.text = lowResDef
-        OKbutton.titleLabel?.textColor = UIColor.blue
+//        OKbutton.titleLabel?.textColor = UIColor.blue
     }
     @IBAction func cancelPressed(_ sender: Any) {
         dismiss(animated: true, completion: nil)

@@ -38,7 +38,8 @@ class AJAlertController: UIViewController {
     /// AlertController Completion handler
     typealias alertCompletionBlock = ((Int, String) -> Void)?
     private var block : alertCompletionBlock?
-    
+    public var isEnabled : Bool = true
+
     // MARK:- AJAlertController Initialization
     // MARK:-
     
@@ -242,6 +243,9 @@ class AJAlertController: UIViewController {
 
     public func showAlertWithOkButton( title:String,aStrMessage:String,
                                        completion : alertCompletionBlock){
+//        if isEnabled == false{
+//            return
+//        }
         configure(message: aStrMessage, btnCancelTitle: nil, btnOtherTitle: nil)
         self.strAlertTitle = title
         show()

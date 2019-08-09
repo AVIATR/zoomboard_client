@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MenuViewController: UIViewController {
+class MenuViewController: UIViewController,UITextFieldDelegate {
 
     @IBOutlet weak var welcomeText: UIView!
     
@@ -66,6 +66,7 @@ class MenuViewController: UIViewController {
         self.connectView.alpha = 0
         self.welcomeText.alpha = 0
         showWelcomeText()
+        lectureNameTextBox.delegate = self
         lectureNameTextBox.text = lectureName
         let screenHeight = UIScreen.main.bounds.height
         let screenWidth = UIScreen.main.bounds.width
@@ -96,6 +97,12 @@ class MenuViewController: UIViewController {
         }, completion: nil)
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        joinLecturePressed(self)
+        return false
+
+    }
     
     @IBAction func isEditing(_ sender: Any) {
         

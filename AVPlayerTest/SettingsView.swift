@@ -12,7 +12,7 @@ protocol ModalViewControllerDelegate: class {
     func removeBlurredBackgroundView()
 }
 
-class SettingsView: UIViewController {
+class SettingsView: UIViewController,UITextFieldDelegate {
     
     var highResMessage : String = ""
     var highResCode : Int = 0
@@ -123,7 +123,10 @@ class SettingsView: UIViewController {
 //       OKbutton.tintColor = UIColor.gray
         self.validateLowRes(sender)
     }
-    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return false
+    }
     @IBAction func resetPressed(_ sender: Any) {
 //        highR = true
 //        lowR = true

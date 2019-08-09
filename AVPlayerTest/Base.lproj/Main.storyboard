@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MFv-Nu-t9W">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MFv-Nu-t9W">
     <device id="ipad10_5" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -41,7 +41,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lwI-Q7-sm9">
-                                                <rect key="frame" x="0.0" y="714" width="1112" height="100"/>
+                                                <rect key="frame" x="0.0" y="-20" width="1112" height="100"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mTN-K9-0u5">
                                                         <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
@@ -60,7 +60,7 @@
                                                             <segue destination="pqv-Jr-06J" kind="presentation" identifier="settingsModalView" id="hlr-IN-18C"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kES-pc-S2n">
+                                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kES-pc-S2n">
                                                         <rect key="frame" x="1012" y="0.0" width="100" height="100"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <accessibility key="accessibilityConfiguration" hint="shows images gallery" label="browse snapshots"/>
@@ -86,15 +86,15 @@
                                                 <rect key="frame" x="117" y="170" width="878" height="564"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is the name of the album where your snapshots will be saved" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jbJ-WO-YNL">
-                                                        <rect key="frame" x="39" y="152" width="800" height="110"/>
+                                                        <rect key="frame" x="189" y="152" width="500" height="72"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="width" constant="800" id="K6v-vS-bKw"/>
+                                                            <constraint firstAttribute="width" constant="500" id="K6v-vS-bKw"/>
                                                         </constraints>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="46"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rC9-2j-KTu">
-                                                        <rect key="frame" x="316.5" y="357" width="245" height="72"/>
+                                                        <rect key="frame" x="316.5" y="319" width="245" height="72"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="72" id="5kj-fa-kq0"/>
                                                             <constraint firstAttribute="width" constant="245" id="ydP-0f-vO0"/>
@@ -105,14 +105,14 @@
                                                             <action selector="joinLecturePressed:" destination="a5e-tQ-vtO" eventType="touchUpInside" id="TKh-jp-a9t"/>
                                                         </connections>
                                                     </button>
-                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter lecture name" textAlignment="center" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="JAq-Pq-12w">
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Lecture Name" textAlignment="center" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="JAq-Pq-12w">
                                                         <rect key="frame" x="256" y="57" width="366" height="52"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="366" id="epe-h1-uc7"/>
                                                         </constraints>
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="40"/>
-                                                        <textInputTraits key="textInputTraits"/>
+                                                        <textInputTraits key="textInputTraits" keyboardAppearance="alert" returnKeyType="join" enablesReturnKeyAutomatically="YES"/>
                                                         <connections>
                                                             <action selector="isEditing:" destination="a5e-tQ-vtO" eventType="editingChanged" id="OyF-Ay-k4G"/>
                                                             <action selector="lectureNameEditingBegan:" destination="a5e-tQ-vtO" eventType="editingDidBegin" id="ehG-R0-fTX"/>
@@ -130,6 +130,14 @@
                                                             <action selector="joinLecturePressed:" destination="a5e-tQ-vtO" eventType="touchUpInside" id="AJp-hF-whb"/>
                                                         </connections>
                                                     </button>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter Lecture Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y5g-wT-JmT">
+                                                        <rect key="frame" x="289" y="8" width="300" height="36"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="300" id="gc2-JI-v7h"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -142,19 +150,21 @@
                                                     <constraint firstItem="XNz-fQ-6MZ" firstAttribute="leading" secondItem="JAq-Pq-12w" secondAttribute="trailing" constant="32" id="RbK-p6-q6o"/>
                                                     <constraint firstItem="jbJ-WO-YNL" firstAttribute="top" secondItem="JAq-Pq-12w" secondAttribute="bottom" constant="43" id="nOV-on-rVB"/>
                                                     <constraint firstItem="rC9-2j-KTu" firstAttribute="top" secondItem="jbJ-WO-YNL" secondAttribute="bottom" constant="95" id="o6Z-lG-SAH"/>
+                                                    <constraint firstItem="y5g-wT-JmT" firstAttribute="centerX" secondItem="JAq-Pq-12w" secondAttribute="centerX" id="uEh-5z-tMM"/>
                                                     <constraint firstAttribute="width" constant="878" id="wGC-dN-TlL"/>
+                                                    <constraint firstItem="JAq-Pq-12w" firstAttribute="top" secondItem="y5g-wT-JmT" secondAttribute="bottom" constant="13" id="y5O-kz-oai"/>
                                                 </constraints>
                                             </view>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstItem="lwI-Q7-sm9" firstAttribute="bottom" secondItem="pXu-p6-5iH" secondAttribute="bottom" constant="-20" id="LTJ-QA-JiO"/>
                                             <constraint firstAttribute="width" constant="1112" id="M6j-nu-5bZ"/>
                                             <constraint firstItem="lwI-Q7-sm9" firstAttribute="trailing" secondItem="pXu-p6-5iH" secondAttribute="trailing" id="MK5-sr-LTz"/>
                                             <constraint firstItem="Yhb-n2-eQY" firstAttribute="leading" secondItem="pXu-p6-5iH" secondAttribute="leading" id="OAa-fH-ghB"/>
                                             <constraint firstItem="2H4-7a-l0f" firstAttribute="centerX" secondItem="Yhb-n2-eQY" secondAttribute="centerX" id="RK5-fn-DNt"/>
                                             <constraint firstItem="Yhb-n2-eQY" firstAttribute="trailing" secondItem="pXu-p6-5iH" secondAttribute="trailing" id="ghi-fu-Mkk"/>
                                             <constraint firstItem="lwI-Q7-sm9" firstAttribute="leading" secondItem="pXu-p6-5iH" secondAttribute="leading" id="pmD-XQ-WX7"/>
+                                            <constraint firstItem="lwI-Q7-sm9" firstAttribute="top" secondItem="pXu-p6-5iH" secondAttribute="top" constant="-20" id="qNZ-Sb-OGE"/>
                                             <constraint firstItem="Yhb-n2-eQY" firstAttribute="top" secondItem="pXu-p6-5iH" secondAttribute="top" constant="38" id="rLN-q8-ho9"/>
                                             <constraint firstItem="2H4-7a-l0f" firstAttribute="top" secondItem="HTJ-2v-Z69" secondAttribute="bottom" constant="65" id="rwa-P7-dT9"/>
                                         </constraints>
@@ -268,10 +278,11 @@
                                                 </constraints>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="URL" keyboardAppearance="alert" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                 <connections>
                                                     <action selector="editingStarted:" destination="pqv-Jr-06J" eventType="editingDidBegin" id="ijC-es-GZP"/>
                                                     <action selector="lowResTextEntered:" destination="pqv-Jr-06J" eventType="editingDidEnd" id="SUV-wB-cpc"/>
+                                                    <outlet property="delegate" destination="pqv-Jr-06J" id="svx-vL-UTm"/>
                                                 </connections>
                                             </textField>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ykD-6M-8Eh">
@@ -314,10 +325,11 @@
                                                 </constraints>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
-                                                <textInputTraits key="textInputTraits"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="URL" keyboardAppearance="alert" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                 <connections>
                                                     <action selector="editingStarted:" destination="pqv-Jr-06J" eventType="editingDidBegin" id="WkN-tr-LnC"/>
                                                     <action selector="highResTextEntered:" destination="pqv-Jr-06J" eventType="editingDidEnd" id="M9O-ZE-ZWw"/>
+                                                    <outlet property="delegate" destination="pqv-Jr-06J" id="fgi-YI-Vqk"/>
                                                 </connections>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter the URL of high-res stream" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Ee-Bh-4Vh">
@@ -600,11 +612,11 @@
         </scene>
     </scenes>
     <resources>
-        <image name="accessibility" width="50" height="50"/>
+        <image name="accessibility" width="37.5" height="37.5"/>
         <image name="go" width="225" height="225"/>
-        <image name="photo_gallery" width="50" height="50"/>
-        <image name="settings_icon" width="50" height="50"/>
-        <image name="snapshot" width="50" height="50"/>
+        <image name="photo_gallery" width="75" height="75"/>
+        <image name="settings_icon" width="75" height="75"/>
+        <image name="snapshot" width="37.5" height="37.5"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="33l-lD-4Kr"/>

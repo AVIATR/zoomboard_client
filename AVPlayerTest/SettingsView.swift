@@ -29,8 +29,8 @@ class SettingsView: UIViewController,UITextFieldDelegate {
     var highResURL : String = ""
     var lowResURL : String = ""
     
-    @IBOutlet weak var highResImgStatus: UIImageView!
-    @IBOutlet weak var lowResImgStatus: UIImageView!
+    @IBOutlet weak var low1ResImgStatus: UIImageView!
+    @IBOutlet weak var high1ResImgStatus: UIImageView!
     
     @IBOutlet weak var urlHighResTextField: UITextField!
     @IBOutlet weak var urlLowResTextField: UITextField!
@@ -101,10 +101,9 @@ class SettingsView: UIViewController,UITextFieldDelegate {
     @IBAction func highResTextEntered(_ sender: Any) {
         lowResText = false
         srollViewOutlet.scrollRectToVisible(topRect.frame, animated: true)
-        lowResImgStatus.image = UIImage(named: "sync")
+        high1ResImgStatus.image = UIImage(named: "sync")
 //        highResImgStatus.isHidden = false
-        lowResImgStatus.isHidden = false
-
+        high1ResImgStatus.isHidden = false
         highR = false
 
  //       OKbutton.tintColor = UIColor.gray
@@ -117,8 +116,8 @@ class SettingsView: UIViewController,UITextFieldDelegate {
         lowResText = true
         srollViewOutlet.scrollRectToVisible(topRect.frame, animated: true)
         lowR = false
-        highResImgStatus.image = UIImage(named: "sync")
-        highResImgStatus.isHidden = false
+        low1ResImgStatus.image = UIImage(named: "sync")
+        low1ResImgStatus.isHidden = false
 //        lowResImgStatus.isHidden = false
 //       OKbutton.tintColor = UIColor.gray
         self.validateLowRes(sender)
@@ -240,13 +239,13 @@ class SettingsView: UIViewController,UITextFieldDelegate {
     func throwAlerts(URL : String,TypeofURL : String)-> Bool{
         if canOpenURL(URL)==false{
             if TypeofURL == "High"{
-           lowResImgStatus.image = UIImage(named: "cross")
+           high1ResImgStatus.image = UIImage(named: "cross")
                 high = false
             }
             else {
                 low = false
 
-                highResImgStatus.image = UIImage(named: "cross")
+                low1ResImgStatus.image = UIImage(named: "cross")
             }
           AJAlertController.initialization().showAlertWithOkButton(title:"Settings",aStrMessage: "Please enter a valid \(TypeofURL) Resolution URL") { (index, title) in
                 
@@ -270,6 +269,20 @@ class SettingsView: UIViewController,UITextFieldDelegate {
             }
             getURLResponse(urlPath: urlHighResTextField.text!, TypeofURL: "High")
         }
+        else {
+            high1ResImgStatus.image = UIImage(named: "cross")
+            OKbutton.isEnabled = false
+            high = false
+            let popUpTitle = "Empty URL"
+            let popUpMessage = "Please enter a URL"
+            AJAlertController.initialization().showAlertWithOkButton(title:popUpTitle,aStrMessage: popUpMessage) { (index, title) in
+                //                   self.removeSpinner()
+                print(index,title)
+                if index == 0 {
+                    //                      self.removeSpinner()
+                }
+            }
+        }
     }
     
     @IBAction func validateLowRes(_ sender: Any) {
@@ -282,18 +295,48 @@ class SettingsView: UIViewController,UITextFieldDelegate {
             }
             getURLResponse(urlPath: urlLowResTextField.text!, TypeofURL: "Low")
         }
+        else {
+            low1ResImgStatus.image = UIImage(named: "cross")
+            OKbutton.isEnabled = false
+            low = false
+            let popUpTitle = "Empty URL"
+            let popUpMessage = "Please enter a URL"
+            AJAlertController.initialization().showAlertWithOkButton(title:popUpTitle,aStrMessage: popUpMessage) { (index, title) in
+                //                   self.removeSpinner()
+                print(index,title)
+                if index == 0 {
+                //                      self.removeSpinner()
+                }
+            }
+        }
     }
     var highResURLFlag : Bool = false
     var lowResURLFlag : Bool = false
-
+    func fileExists(url : NSURL!) -> Bool {
+        
+        let req = NSMutableURLRequest(url: url as URL)
+        req.httpMethod = "HEAD"
+        req.timeoutInterval = 1.0 // Adjust to your needs
+        
+        var response : URLResponse?
+        do {
+        try NSURLConnection.sendSynchronousRequest(req as URLRequest, returning: &response)
+        }
+        catch {
+            print("fail")
+        }
+        return ((response as? HTTPURLResponse)?.statusCode ?? -1) == 200
+    }
     func getURLResponse(urlPath : String, TypeofURL: String) {
 //        self.showSpinner(onView: self.view)
 
         var valid : Bool = true
  
         let url = URL(string: urlPath)!
+        if fileExists(url: url as NSURL) == false {
+            print("file dose not exists")
+        }
         let request = URLRequest(url: url)
-
         let task = URLSession.shared.dataTask(with: request) {data, response, error in
             
             if let httpResponse = response as? HTTPURLResponse {
@@ -384,10 +427,10 @@ class SettingsView: UIViewController,UITextFieldDelegate {
         print("timer function ran URLflag ")
         if self.lowResURLFlag == true {
             if self.low == true{
-                self.highResImgStatus.image = UIImage(named: "tick")
+                self.low1ResImgStatus.image = UIImage(named: "tick")
             }
             else{
-                self.highResImgStatus.image = UIImage(named: "cross")
+                self.low1ResImgStatus.image = UIImage(named: "cross")
                 if lowResText == true {
                 AJAlertController.initialization().showAlertWithOkButton(title:"Low Res Status Code : ",aStrMessage: self.lowResMessage) { (index, title) in
  //                   self.removeSpinner()
@@ -412,10 +455,10 @@ class SettingsView: UIViewController,UITextFieldDelegate {
             print("timer function ran URLflag ")
             if self.highResURLFlag == true {
                 if self.high == true{
-                    self.lowResImgStatus.image = UIImage(named: "tick")
+                    self.high1ResImgStatus.image = UIImage(named: "tick")
                 }
                 else{
-                    self.lowResImgStatus.image = UIImage(named: "cross")
+                    self.high1ResImgStatus.image = UIImage(named: "cross")
                     if lowResText == false {
                         AJAlertController.initialization().showAlertWithOkButton(title:"High Res Status Code : ",aStrMessage: self.highResMessage) { (index, title) in
                             //                   self.removeSpinner()

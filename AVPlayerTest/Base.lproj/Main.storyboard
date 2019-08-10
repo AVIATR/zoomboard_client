@@ -428,9 +428,9 @@
                     <size key="freeformSize" width="1112" height="1000"/>
                     <connections>
                         <outlet property="OKbutton" destination="ykD-6M-8Eh" id="xVV-lD-fJ0"/>
-                        <outlet property="highResImgStatus" destination="ILM-FN-PKt" id="15G-ra-i8k"/>
+                        <outlet property="high1ResImgStatus" destination="YOY-gm-tSd" id="RJs-Dt-46d"/>
                         <outlet property="keyboardText" destination="HAF-m3-ewy" id="tFy-SY-Sn7"/>
-                        <outlet property="lowResImgStatus" destination="YOY-gm-tSd" id="RJs-Dt-46d"/>
+                        <outlet property="low1ResImgStatus" destination="ILM-FN-PKt" id="15G-ra-i8k"/>
                         <outlet property="srollViewOutlet" destination="mxe-c5-sEZ" id="m8H-Gv-kCt"/>
                         <outlet property="topKeyboardLimit" destination="ytM-iH-sYY" id="84u-Nu-bRb"/>
                         <outlet property="topRect" destination="ytM-iH-sYY" id="1vZ-aa-KqC"/>

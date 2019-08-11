@@ -7,6 +7,10 @@
 //
 
 import UIKit
+import UIKit
+import MetalKit
+import MetalPerformanceShaders
+import AVKit
 
 protocol ModalViewControllerDelegate: class {
     func removeBlurredBackgroundView()
@@ -34,38 +38,8 @@ class SettingsView: UIViewController,UITextFieldDelegate {
     
     @IBOutlet weak var urlHighResTextField: UITextField!
     @IBOutlet weak var urlLowResTextField: UITextField!
-    var highR: Bool = true
-    var lowR: Bool = true
-    var high: Bool {
-        get{
-            return highR
-        }
-        set(val) {
-            highR = val
-            if val == true && low == true
-            {
- //               OKbutton.tintColor = UIColor.blue
-            }
-            else {
- //                   OKbutton.tintColor = UIColor.gray
-                
-            }
-        }
-    }
-        var low : Bool {
-        get{
-        return lowR
-        }
-        set(val) {
-            lowR = val
-            if val == true && high == true{
- //           OKbutton.tintColor = UIColor.blue
-        }
-        else{
-   //         OKbutton.tintColor = UIColor.gray
-        }
-        }
-    }
+    var high: Bool = true
+    var low : Bool = true
 
     @IBOutlet weak var OKbutton: UIButton!
     override func viewDidLoad() {
@@ -104,7 +78,7 @@ class SettingsView: UIViewController,UITextFieldDelegate {
         high1ResImgStatus.image = UIImage(named: "sync")
 //        highResImgStatus.isHidden = false
         high1ResImgStatus.isHidden = false
-        highR = false
+        high = false
 
  //       OKbutton.tintColor = UIColor.gray
         self.validateURL(sender)
@@ -115,7 +89,7 @@ class SettingsView: UIViewController,UITextFieldDelegate {
     @IBAction func lowResTextEntered(_ sender: Any) {
         lowResText = true
         srollViewOutlet.scrollRectToVisible(topRect.frame, animated: true)
-        lowR = false
+        low = false
         low1ResImgStatus.image = UIImage(named: "sync")
         low1ResImgStatus.isHidden = false
 //        lowResImgStatus.isHidden = false
@@ -260,6 +234,7 @@ class SettingsView: UIViewController,UITextFieldDelegate {
     }
     @IBAction func validateURL(_ sender: Any) {
         
+
         if urlHighResTextField.text?.isEmpty == false{
             urlHighResTextField.text = urlHighResTextField.text?.sanitize()
             if throwAlerts(URL : urlHighResTextField.text!, TypeofURL: "High") == false{
@@ -286,6 +261,7 @@ class SettingsView: UIViewController,UITextFieldDelegate {
     }
     
     @IBAction func validateLowRes(_ sender: Any) {
+        self.low = true
         if urlLowResTextField.text?.isEmpty == false {
             urlLowResTextField.text = urlLowResTextField.text?.sanitize()
             if throwAlerts(URL : urlLowResTextField.text!, TypeofURL: "Low") == false {
@@ -334,11 +310,13 @@ class SettingsView: UIViewController,UITextFieldDelegate {
  
         let url = URL(string: urlPath)!
         if fileExists(url: url as NSURL) == false {
-            print("file dose not exists")
+            print("file dose not exist")
         }
+        
+        tryPlayingURL(stream: url, TypeofURL: TypeofURL)
         let request = URLRequest(url: url)
         let task = URLSession.shared.dataTask(with: request) {data, response, error in
-            
+
             if let httpResponse = response as? HTTPURLResponse {
                 let localizedResponse = HTTPURLResponse.localizedString(forStatusCode: httpResponse.statusCode)
                 print("Status Code : \(httpResponse.statusCode)  \(localizedResponse)")
@@ -352,7 +330,7 @@ class SettingsView: UIViewController,UITextFieldDelegate {
 
                 if httpResponse.statusCode >= 400
                 {
-                    
+
                     let message : String =  String(httpResponse.statusCode) + " " + localizedResponse
                    print(message)
                     if TypeofURL == "High" {
@@ -362,8 +340,8 @@ class SettingsView: UIViewController,UITextFieldDelegate {
                         self.lowResMessage = message
                     }
 
-                    
-                    
+
+
 //                    AJAlertController.initialization().showAlertWithOkButton(title:"Status Code : ",aStrMessage: message) { (index, title) in
 //  //                  self.removeSpinner()
 //                    print(index,title)
@@ -382,7 +360,7 @@ class SettingsView: UIViewController,UITextFieldDelegate {
                         self.lowResURLFlag = true
 
                     }
-                    
+
                     }
                 else {
                     let message : String = String(httpResponse.statusCode) + " " + localizedResponse
@@ -413,6 +391,7 @@ class SettingsView: UIViewController,UITextFieldDelegate {
                 }
                 }
         }
+
         if TypeofURL == "High" {
        Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(runHigh), userInfo: nil, repeats: false)        }
         else {
@@ -420,6 +399,51 @@ class SettingsView: UIViewController,UITextFieldDelegate {
         }
  
         task.resume()
+
+    }
+    
+    func tryPlayingURL(stream: URL, TypeofURL : String){
+        
+        let item = AVPlayerItem(url: stream)
+        let output = AVPlayerItemVideoOutput(outputSettings: nil)
+        item.add(output)
+        if TypeofURL == "High" {
+            self.highResURLFlag = true
+            self.high = true
+        }
+        else {
+            self.lowResURLFlag = true
+            self.low = true
+        }
+        item.observe(\.status) { [weak self] item, _ in
+            guard item.status == .readyToPlay
+            else  {
+                    print("failed")
+                    if TypeofURL == "High" {
+                        self?.high = false
+                        self?.highResURLFlag = true
+//                    AJAlertController.initialization().showAlertWithOkButton(title:"Player",aStrMessage: "Please enter a URL with Valid Content") { (index, title) in
+//                        print(index,title)
+//
+//
+//                    }
+                        return
+                    }
+                    else {
+                        self?.low = false
+                        self?.lowResURLFlag = true
+//                        AJAlertController.initialization().showAlertWithOkButton(title:"Player",aStrMessage: "Please enter a URL with Valid Content") { (index, title) in
+//                            print(index,title)
+//
+//
+//                        }
+                        return
+
+                    }
+                    return
+            }
+        }
+        
         
     }
     

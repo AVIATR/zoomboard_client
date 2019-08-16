@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import UIKit
 import MetalKit
 import MetalPerformanceShaders
 import AVKit
@@ -17,37 +16,45 @@ protocol ModalViewControllerDelegate: class {
 }
 
 class SettingsView: UIViewController,UITextFieldDelegate {
-    
-    var highResMessage : String = ""
-    var highResCode : Int = 0
-    var throwAlert : Bool = false
-    var lowResMessage : String = ""
-    var lowResCode : Int = 0
 
-
-    weak var delegate: ModalViewControllerDelegate?
-    weak var delegate2: MenuViewController?
-    var highResDef : String = Movies.hRes()
-    var lowResDef : String = Movies.lRes()
-    @IBOutlet weak var srollViewOutlet: UIScrollView!
-    var highResURL : String = ""
-    var lowResURL : String = ""
-    
-    @IBOutlet weak var low1ResImgStatus: UIImageView!
-    @IBOutlet weak var high1ResImgStatus: UIImageView!
-    
     @IBOutlet weak var urlHighResTextField: UITextField!
     @IBOutlet weak var urlLowResTextField: UITextField!
-    var high: Bool = true
-    var low : Bool = true
+    
+    @IBOutlet weak var lowResImgStatus: UIImageView!
+    @IBOutlet weak var highResImgStatus: UIImageView!
 
+    var highResDef : String = Movies.hRes()
+    var lowResDef : String = Movies.lRes()
+    
+    var highResURL : String = ""
+    var lowResURL : String = ""
+
+    var highResValidity: Bool = true
+    var lowResValidity : Bool = true
+    
+    var highResMessage : String = ""
+    var lowResMessage : String = ""
+    
+    var highResHTTPCode : Int = 0
+    var lowResHTTPCode : Int = 0
+
+    weak var MenuViewContDelegate: MenuViewController?
+    var throwAlert : Bool = false
+    var lowResText : Bool = true
+
+    @IBOutlet weak var srollViewOutlet: UIScrollView!
     @IBOutlet weak var OKbutton: UIButton!
+
+    @IBOutlet weak var topRect: UILabel!
+    @IBOutlet weak var topKeyboardLimit: UILabel!
+    @IBOutlet weak var keyboardText: UILabel!
+    private var playerItemObserver: NSKeyValueObservation?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-//        OKbutton.titleLabel?.textColor = UIColor.blue
         OKbutton.setTitleColor(.gray, for: .disabled)
-        high = true
-        low = true
+        highResValidity = true
+        lowResValidity = true
         
         srollViewOutlet.showsVerticalScrollIndicator = false
         srollViewOutlet.showsHorizontalScrollIndicator = false
@@ -57,71 +64,29 @@ class SettingsView: UIViewController,UITextFieldDelegate {
 
         urlHighResTextField.text = highResURL
         urlLowResTextField.text = lowResURL
-        // Do any additional setup after loading the view.
-//        OKbutton.tintColor = UIColor.gray
-//        highResImgStatus.image = UIImage(named: "tick")
-//        lowResImgStatus.image = UIImage(named: "tick")
-//        highResImgStatus.isHidden = true
-//        lowResImgStatus.isHidden = true
-        
+
         highResTextEntered(self)
         lowResTextEntered(self)
 
     }
+    // -----------------------------------------------------------------
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
-    }
-    
-    @IBAction func highResTextEntered(_ sender: Any) {
-        lowResText = false
-        srollViewOutlet.scrollRectToVisible(topRect.frame, animated: true)
-        high1ResImgStatus.image = UIImage(named: "sync")
-//        highResImgStatus.isHidden = false
-        high1ResImgStatus.isHidden = false
-        high = false
-
- //       OKbutton.tintColor = UIColor.gray
-        self.validateURL(sender)
-    }
-    
-    @IBOutlet weak var topRect: UILabel!
-    var lowResText : Bool = true
-    @IBAction func lowResTextEntered(_ sender: Any) {
-        lowResText = true
-        srollViewOutlet.scrollRectToVisible(topRect.frame, animated: true)
-        low = false
-        low1ResImgStatus.image = UIImage(named: "sync")
-        low1ResImgStatus.isHidden = false
-//        lowResImgStatus.isHidden = false
-//       OKbutton.tintColor = UIColor.gray
-        self.validateLowRes(sender)
     }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return false
     }
     @IBAction func resetPressed(_ sender: Any) {
-//        highR = true
-//        lowR = true
-//        highResImgStatus.isHidden = true
-//        lowResImgStatus.isHidden = true
-//        OKbutton.isEnabled = false
-//        lowResImgStatus.image = UIImage(named: "tick")
-//        highResImgStatus.image = UIImage(named: "tick")
         urlHighResTextField.text = highResDef
         urlLowResTextField.text = lowResDef
         highResTextEntered(sender)
         lowResTextEntered(sender)
-
-        //        OKbutton.titleLabel?.textColor = UIColor.blue
     }
     @IBAction func cancelPressed(_ sender: Any) {
         dismiss(animated: true, completion: nil)
   //      delegate?.removeBlurredBackgroundView()
     }
-    
-    @IBOutlet weak var topKeyboardLimit: UILabel!
-    @IBOutlet weak var keyboardText: UILabel!
     @IBAction func editingStarted(_ sender: UITextField) {
         sender.backgroundColor = UIColor.white
         if sender == urlLowResTextField {
@@ -129,14 +94,11 @@ class SettingsView: UIViewController,UITextFieldDelegate {
         }
     }
     
-    func changeToColor(but : UIButton, col : UIColor){
-        but.titleColor(for: .disabled)
-
-    }
-    // TODO: sanitaze input ip address
+    // OK botton is pressed if enabled
+    // -----------------------------------------------------------------
     @IBAction func acceptChanges(_ sender: Any) {
 
-        if self.low == false || self.high == false {
+        if self.lowResValidity == false || self.highResValidity == false {
             OKbutton.titleLabel?.textColor = UIColor.gray
             OKbutton.isEnabled = false
             return
@@ -149,30 +111,24 @@ class SettingsView: UIViewController,UITextFieldDelegate {
             
             if canOpenURL(urlLowResTextField.text)==false{
                 AJAlertController.initialization().showAlertWithOkButton(title:"Settings",aStrMessage: "Please enter a valid Low Resolution URL") { (index, title) in
-                    
                     print(index,title)
                     if index == 0 {
-                        
                     }
                 }
-
                 return
             }
             if canOpenURL(urlHighResTextField.text)==false{
                 AJAlertController.initialization().showAlertWithOkButton(title:"Settings",aStrMessage: "Please enter a valid High Resolution URL") { (index, title) in
-
                     print(index,title)
                     if index == 0 {
                     }
                 }
-
                 return
             }
 
-            delegate2?.ipAddress_highres = urlHighResTextField.text!
-            delegate2?.ipAddress_lowres = urlLowResTextField.text!
+            MenuViewContDelegate?.ipAddress_highres = urlHighResTextField.text!
+            MenuViewContDelegate?.ipAddress_lowres = urlLowResTextField.text!
             dismiss(animated: true, completion: nil)
-  //          performSegue(withIdentifier: "mainMenu", sender: nil)
         }
         else{
             if urlLowResTextField.text?.isEmpty == true{
@@ -183,18 +139,99 @@ class SettingsView: UIViewController,UITextFieldDelegate {
             }
         }
     }
+
+
+    // Calls just after text is entered in High and Low Res URLs
+    // -----------------------------------------------------------------
+    @IBAction func highResTextEntered(_ sender: Any) {
+        lowResText = false
+        srollViewOutlet.scrollRectToVisible(topRect.frame, animated: true)
+        highResImgStatus.image = UIImage(named: "sync")
+        highResImgStatus.isHidden = false
+        highResValidity = false
+        self.validateHighResURL(sender)
+    }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    @IBAction func lowResTextEntered(_ sender: Any) {
+        lowResText = true
+        srollViewOutlet.scrollRectToVisible(topRect.frame, animated: true)
+        lowResValidity = false
+        lowResImgStatus.image = UIImage(named: "sync")
+        lowResImgStatus.isHidden = false
+        self.validateLowResURL(sender)
+    }
+
+    // Validates both the URLs
+    // -----------------------------------------------------------------
+    @IBAction func validateHighResURL(_ sender: Any) {
         
-        if let identifier = segue.identifier {
-            if identifier == "mainMenu" {
-                if let viewController = segue.destination as? MenuViewController {
-                    viewController.ipAddress_highres = urlHighResTextField.text!
-                    viewController.ipAddress_lowres = urlLowResTextField.text!
+        if urlHighResTextField.text?.isEmpty == false{
+            urlHighResTextField.text = urlHighResTextField.text?.sanitize()
+            if throwAlerts(URL : urlHighResTextField.text!, TypeofURL: "High") == false{
+                return
+            }
+            getHighResURLResponse(urlPath: urlHighResTextField.text!, TypeofURL: "High")
+        }
+        else {
+            highResImgStatus.image = UIImage(named: "cross")
+            OKbutton.isEnabled = false
+            highResValidity = false
+            let popUpTitle = "Empty URL"
+            let popUpMessage = "Please enter a URL"
+            AJAlertController.initialization().showAlertWithOkButton(title:popUpTitle,aStrMessage: popUpMessage) { (index, title) in
+                print(index,title)
+                if index == 0 {
                 }
             }
         }
     }
+    
+    @IBAction func validateLowResURL(_ sender: Any) {
+        self.lowResValidity = true
+        if urlLowResTextField.text?.isEmpty == false {
+            urlLowResTextField.text = urlLowResTextField.text?.sanitize()
+            if throwAlerts(URL : urlLowResTextField.text!, TypeofURL: "Low") == false {
+                return
+            }
+            getLowResURLResponse(urlPath: urlLowResTextField.text!, TypeofURL: "Low")
+        }
+        else {
+            lowResImgStatus.image = UIImage(named: "cross")
+            OKbutton.isEnabled = false
+            lowResValidity = false
+            let popUpTitle = "Empty URL"
+            let popUpMessage = "Please enter a URL"
+            AJAlertController.initialization().showAlertWithOkButton(title:popUpTitle,aStrMessage: popUpMessage) { (index, title) in
+                print(index,title)
+                if index == 0 {
+                }
+            }
+        }
+    }
+    
+    // Helper functions for Throwing alerts for string errors
+    // -----------------------------------------------------------------
+    func throwAlerts(URL : String,TypeofURL : String)-> Bool{
+        if canOpenURL(URL)==false{
+            if TypeofURL == "High"{
+                highResImgStatus.image = UIImage(named: "cross")
+                highResValidity = false
+            }
+            else {
+                lowResValidity = false
+                lowResImgStatus.image = UIImage(named: "cross")
+            }
+            AJAlertController.initialization().showAlertWithOkButton(title:"Settings",aStrMessage: "Please enter a valid \(TypeofURL) Resolution URL") { (index, title) in
+                print(index,title)
+                if index == 0 {
+                }
+            }
+            return false
+        }
+        return true
+    }
+    // Checks for string errors
+    // -----------------------------------------------------------------
     func canOpenURL(_ string: String?) -> Bool {
         guard let urlString = string,
             let url = URL(string: urlString)
@@ -203,91 +240,150 @@ class SettingsView: UIViewController,UITextFieldDelegate {
         if !UIApplication.shared.canOpenURL(url) { return false }
         
         let regEx = "((https|http)://)((\\w|-)+)(([.]|[/]|[:])((\\w|-)+))+"
-//        let regEx2 = "(http|https)://((\\w)*|([0-9]*)|([-|_])*)+([\\.|/]((\\w)*|([0-9]*)|([-|_])*))+"
         
         let predicate = NSPredicate(format:"SELF MATCHES %@", argumentArray:[regEx])
- //       let predicate2 = NSPredicate(format:"SELF MATCHES %@", argumentArray:[regEx2])
         return predicate.evaluate(with: string)
-//        return predicate2.evaluate(with: string)
+        
+        //       let predicate2 = NSPredicate(format:"SELF MATCHES %@", argumentArray:[regEx2])
+        //        return predicate2.evaluate(with: string)
+        //        let regEx2 = "(http|https)://((\\w)*|([0-9]*)|([-|_])*)
+        //        +([\\.|/]((\\w)*|([0-9]*)|([-|_])*))+"
     }
-    func throwAlerts(URL : String,TypeofURL : String)-> Bool{
-        if canOpenURL(URL)==false{
-            if TypeofURL == "High"{
-           high1ResImgStatus.image = UIImage(named: "cross")
-                high = false
-            }
-            else {
-                low = false
+    
 
-                low1ResImgStatus.image = UIImage(named: "cross")
-            }
-          AJAlertController.initialization().showAlertWithOkButton(title:"Settings",aStrMessage: "Please enter a valid \(TypeofURL) Resolution URL") { (index, title) in
-                
-                print(index,title)
-                if index == 0 {
+    // This is the main function where all the major HTTP tests happen.
+    //Functions throw High and low Res alerts depending on URL flags
+    // -----------------------------------------------------------------
+    func getHighResURLResponse(urlPath : String, TypeofURL: String) {
+        let url = URL(string: urlPath)!
+        print(urlPath)
+        // Tried some hacks
+        if fileExists(url: url as NSURL) == false {
+            print("file dose not exist")
+        }
+        // Tried some hacks
+        tryPlayingURL(stream: url, TypeofURL: "High")
+
+        let request = URLRequest(url: url)
+        let task = URLSession.shared.dataTask(with: request) {data, response, error in
+
+            if let httpResponse = response as? HTTPURLResponse {
+                let localizedResponse = HTTPURLResponse.localizedString(forStatusCode: httpResponse.statusCode)
+                print("Status Code : \(httpResponse.statusCode)  \(localizedResponse)")
+                    self.highResHTTPCode = httpResponse.statusCode
+
+                if httpResponse.statusCode >= 400
+                {
+                    let message : String =  String(httpResponse.statusCode) + " " + localizedResponse
+                   print(message)
+                        self.highResMessage = message
+                        self.highResValidity = false
+                }
+                else {
+                    let message : String = String(httpResponse.statusCode) + " " + localizedResponse
+                    print(message)
+                        self.highResMessage = message
+                        self.highResValidity = true
                 }
             }
-            
-            return false
         }
-        return true
-    }
-    @IBAction func validateURL(_ sender: Any) {
-        
 
-        if urlHighResTextField.text?.isEmpty == false{
-            urlHighResTextField.text = urlHighResTextField.text?.sanitize()
-            if throwAlerts(URL : urlHighResTextField.text!, TypeofURL: "High") == false{
-                //Blur ok button
-   //             highResImgStatus.image = UIImage(named: "cross")
-                return
+        Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(runHigh), userInfo: nil, repeats: false)
+        task.resume()
+
+    }
+
+    func getLowResURLResponse(urlPath : String, TypeofURL: String) {
+        let url = URL(string: urlPath)!
+        // Tried some hacks
+        if fileExists(url: url as NSURL) == false {
+            print("file dose not exist")
+        }
+        // Tried some hacks
+        tryPlayingURL(stream: url, TypeofURL: TypeofURL)
+        
+        let request = URLRequest(url: url)
+        let task = URLSession.shared.dataTask(with: request) {data, response, error in
+            
+            if let httpResponse = response as? HTTPURLResponse {
+                let localizedResponse = HTTPURLResponse.localizedString(forStatusCode: httpResponse.statusCode)
+                print("Status Code : \(httpResponse.statusCode)  \(localizedResponse)")
+                self.lowResHTTPCode = httpResponse.statusCode
+                if httpResponse.statusCode >= 400
+                {
+                    let message : String =  String(httpResponse.statusCode) + " " + localizedResponse
+                    print(message)
+                        self.lowResMessage = message
+                        self.lowResValidity = false
+                }
+                else {
+                    let message : String = String(httpResponse.statusCode) + " " + localizedResponse
+                    print(message)
+                        self.lowResMessage = message
+                        self.lowResValidity = true
+                }
             }
-            getURLResponse(urlPath: urlHighResTextField.text!, TypeofURL: "High")
+        }
+        Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(runLow), userInfo: nil, repeats: false)
+        task.resume()
+    }
+
+    // Functions Runs after a delay of 1 sec
+    // and throws High and low Res alerts depending on URL flags
+    // -----------------------------------------------------------------
+    @objc func runLow(){
+        print("timer function ran URLflag ")
+        
+        if self.lowResValidity == true{
+            self.lowResImgStatus.image = UIImage(named: "tick")
+        }
+        else{
+            self.lowResImgStatus.image = UIImage(named: "cross")
+            if lowResText == true {
+                AJAlertController.initialization().showAlertWithOkButton(title:"Low Res Status Code : ",aStrMessage: self.lowResMessage) { (index, title) in
+                    print(index,title)
+                    if index == 0 {
+                    }
+                }
+            }
+        }
+        
+        if self.lowResValidity == true && self.highResValidity == true {
+            self.OKbutton.isEnabled = true
         }
         else {
-            high1ResImgStatus.image = UIImage(named: "cross")
-            OKbutton.isEnabled = false
-            high = false
-            let popUpTitle = "Empty URL"
-            let popUpMessage = "Please enter a URL"
-            AJAlertController.initialization().showAlertWithOkButton(title:popUpTitle,aStrMessage: popUpMessage) { (index, title) in
-                //                   self.removeSpinner()
-                print(index,title)
-                if index == 0 {
-                    //                      self.removeSpinner()
-                }
-            }
+            self.OKbutton.isEnabled = false
         }
     }
     
-    @IBAction func validateLowRes(_ sender: Any) {
-        self.low = true
-        if urlLowResTextField.text?.isEmpty == false {
-            urlLowResTextField.text = urlLowResTextField.text?.sanitize()
-            if throwAlerts(URL : urlLowResTextField.text!, TypeofURL: "Low") == false {
-                //Blur ok button
-      //          lowResImgStatus.image = UIImage(named: "cross")
-                return
+    @objc func runHigh(){
+        print("timer function ran URLflag ")
+        
+        if self.highResValidity == true{
+            self.highResImgStatus.image = UIImage(named: "tick")
+        }
+        else{
+            self.highResImgStatus.image = UIImage(named: "cross")
+            if lowResText == false {
+                AJAlertController.initialization().showAlertWithOkButton(title:"High Res Status Code : ",aStrMessage: self.highResMessage) { (index, title) in
+                    print(index,title)
+                    if index == 0 {
+                    }
+                }
+                
             }
-            getURLResponse(urlPath: urlLowResTextField.text!, TypeofURL: "Low")
+        }
+        
+        if self.lowResValidity == true && self.highResValidity == true {
+            self.OKbutton.isEnabled = true
         }
         else {
-            low1ResImgStatus.image = UIImage(named: "cross")
-            OKbutton.isEnabled = false
-            low = false
-            let popUpTitle = "Empty URL"
-            let popUpMessage = "Please enter a URL"
-            AJAlertController.initialization().showAlertWithOkButton(title:popUpTitle,aStrMessage: popUpMessage) { (index, title) in
-                //                   self.removeSpinner()
-                print(index,title)
-                if index == 0 {
-                //                      self.removeSpinner()
-                }
-            }
+            self.OKbutton.isEnabled = false
         }
     }
-    var highResURLFlag : Bool = false
-    var lowResURLFlag : Bool = false
+
+    // Tried some Hacks
+    // -----------------------------------------------------------------
     func fileExists(url : NSURL!) -> Bool {
         
         let req = NSMutableURLRequest(url: url as URL)
@@ -296,217 +392,58 @@ class SettingsView: UIViewController,UITextFieldDelegate {
         
         var response : URLResponse?
         do {
-        try NSURLConnection.sendSynchronousRequest(req as URLRequest, returning: &response)
+            try NSURLConnection.sendSynchronousRequest(req as URLRequest, returning: &response)
         }
         catch {
             print("fail")
         }
         return ((response as? HTTPURLResponse)?.statusCode ?? -1) == 200
     }
-    func getURLResponse(urlPath : String, TypeofURL: String) {
-//        self.showSpinner(onView: self.view)
 
-        var valid : Bool = true
- 
-        let url = URL(string: urlPath)!
-        if fileExists(url: url as NSURL) == false {
-            print("file dose not exist")
-        }
-        
-        tryPlayingURL(stream: url, TypeofURL: TypeofURL)
-        let request = URLRequest(url: url)
-        let task = URLSession.shared.dataTask(with: request) {data, response, error in
-
-            if let httpResponse = response as? HTTPURLResponse {
-                let localizedResponse = HTTPURLResponse.localizedString(forStatusCode: httpResponse.statusCode)
-                print("Status Code : \(httpResponse.statusCode)  \(localizedResponse)")
-
-                if TypeofURL == "High" {
-                    self.highResCode = httpResponse.statusCode
-                }
-                else {
-                    self.lowResCode = httpResponse.statusCode
-                }
-
-                if httpResponse.statusCode >= 400
-                {
-
-                    let message : String =  String(httpResponse.statusCode) + " " + localizedResponse
-                   print(message)
-                    if TypeofURL == "High" {
-                        self.highResMessage = message
-                    }
-                    else {
-                        self.lowResMessage = message
-                    }
-
-
-
-//                    AJAlertController.initialization().showAlertWithOkButton(title:"Status Code : ",aStrMessage: message) { (index, title) in
-//  //                  self.removeSpinner()
-//                    print(index,title)
-//                    if index == 0 {
-// //                       self.removeSpinner()
-//                    }
-//                    }
-                    if TypeofURL == "High"{
-//                        self.lowResImgStatus.image = UIImage(named: "cross")
-                        self.high = false
-                        self.highResURLFlag = true
-                    }
-                    else {
-//                        self.highResImgStatus.image = UIImage(named: "cross")
-                        self.low = false
-                        self.lowResURLFlag = true
-
-                    }
-
-                    }
-                else {
-                    let message : String = String(httpResponse.statusCode) + " " + localizedResponse
-                    print(message)
-                    if TypeofURL == "High" {
-                        self.highResMessage = message
-                    }
-                    else {
-                        self.lowResMessage = message
-                    }
-//                    AJAlertController.initialization().showAlertWithOkButton(title:"Status Code : ",aStrMessage: message) { (index, title) in
-//     //                   self.removeSpinner()
-//                        print(index,title)
-//                        if index == 0 {
-//      //                      self.removeSpinner()
-//                        }
-//                    }
-                    if TypeofURL == "Low" {
- //                       self.highResImgStatus.image = UIImage(named: "tick")
-                        self.low = true
-                        self.lowResURLFlag = true
-                    }
-                    else {
-                        self.high = true
-                        self.highResURLFlag = true
- //                       self.lowResImgStatus.image = UIImage(named: "tick")
-                    }
-                }
-                }
-        }
-
-        if TypeofURL == "High" {
-       Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(runHigh), userInfo: nil, repeats: false)        }
-        else {
-       Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(runLow), userInfo: nil, repeats: false)
-        }
- 
-        task.resume()
-
-    }
-    
     func tryPlayingURL(stream: URL, TypeofURL : String){
         
         let item = AVPlayerItem(url: stream)
         let output = AVPlayerItemVideoOutput(outputSettings: nil)
         item.add(output)
         if TypeofURL == "High" {
-            self.highResURLFlag = true
-            self.high = true
+            self.highResValidity = true
         }
         else {
-            self.lowResURLFlag = true
-            self.low = true
+            self.lowResValidity = true
         }
-        item.observe(\.status) { [weak self] item, _ in
+        playerItemObserver = item.observe(\.status) { [weak self] item, _ in
             guard item.status == .readyToPlay
             else  {
                     print("failed")
                     if TypeofURL == "High" {
-                        self?.high = false
-                        self?.highResURLFlag = true
-//                    AJAlertController.initialization().showAlertWithOkButton(title:"Player",aStrMessage: "Please enter a URL with Valid Content") { (index, title) in
-//                        print(index,title)
-//
-//
-//                    }
+                        self?.highResValidity = false
                         return
                     }
                     else {
-                        self?.low = false
-                        self?.lowResURLFlag = true
-//                        AJAlertController.initialization().showAlertWithOkButton(title:"Player",aStrMessage: "Please enter a URL with Valid Content") { (index, title) in
-//                            print(index,title)
-//
-//
-//                        }
+                        self?.lowResValidity = false
                         return
-
                     }
                     return
             }
-        }
-        
-        
-    }
-    
-    @objc func runLow(){
-        print("timer function ran URLflag ")
-        if self.lowResURLFlag == true {
-            if self.low == true{
-                self.low1ResImgStatus.image = UIImage(named: "tick")
-            }
-            else{
-                self.low1ResImgStatus.image = UIImage(named: "cross")
-                if lowResText == true {
-                AJAlertController.initialization().showAlertWithOkButton(title:"Low Res Status Code : ",aStrMessage: self.lowResMessage) { (index, title) in
- //                   self.removeSpinner()
-                    print(index,title)
-                    if index == 0 {
-  //                      self.removeSpinner()
-                    }
-                }
-                }
-            }
-        }
-        if self.low == true && self.high == true {
-            //self.OKbutton.titleLabel?.textColor = UIColor.blue
-            self.OKbutton.isEnabled = true
-        }
-        else {
-            self.OKbutton.isEnabled = false
-            //self.OKbutton.titleLabel?.textColor = UIColor.gray
+            self?.playerItemObserver = nil
         }
     }
-        @objc func runHigh(){
-            print("timer function ran URLflag ")
-            if self.highResURLFlag == true {
-                if self.high == true{
-                    self.high1ResImgStatus.image = UIImage(named: "tick")
-                }
-                else{
-                    self.high1ResImgStatus.image = UIImage(named: "cross")
-                    if lowResText == false {
-                        AJAlertController.initialization().showAlertWithOkButton(title:"High Res Status Code : ",aStrMessage: self.highResMessage) { (index, title) in
-                            //                   self.removeSpinner()
-                            print(index,title)
-                            if index == 0 {
-                                //                      self.removeSpinner()
-                            }
-                        }
-                        
-                    }
-                }
-            }
-            if self.low == true && self.high == true {
-                //self.OKbutton.titleLabel?.textColor = UIColor.blue
-                self.OKbutton.isEnabled = true
-            }
-            else {
-                self.OKbutton.isEnabled = false
-                //self.OKbutton.titleLabel?.textColor = UIColor.gray
-            }
-    }
+// -----------------------------------------------------------------
+    //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    //
+    //        if let identifier = segue.identifier {
+    //            if identifier == "mainMenu" {
+    //                if let viewController = segue.destination as? MenuViewController {
+    //                    viewController.ipAddress_highres = urlHighResTextField.text!
+    //                    viewController.ipAddress_lowres = urlLowResTextField.text!
+    //                }
+    //            }
+    //        }
+    //    }
 
 }
 
+// Helper functions For sanitizing the URLs
 extension String {
     func replace(string:String, replacement:String) -> String {
         return self.replacingOccurrences(of: string, with: replacement, options: NSString.CompareOptions.literal, range: nil)

@@ -132,7 +132,7 @@ class MenuViewController: UIViewController,UITextFieldDelegate {
             if identifier == "settingsModalView" {
                 if let viewController = segue.destination as? SettingsView {
                     viewController.modalPresentationStyle = .overFullScreen
-                    viewController.delegate2 = self
+                    viewController.MenuViewContDelegate = self
                     viewController.highResURL = self.ipAddress_highres
                     viewController.lowResURL = self.ipAddress_lowres
                 }

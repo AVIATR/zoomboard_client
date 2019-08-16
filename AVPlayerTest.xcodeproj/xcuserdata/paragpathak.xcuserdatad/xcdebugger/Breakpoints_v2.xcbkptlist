@@ -122,44 +122,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/MenuViewController.swift"
-            timestampString = "587169408.1252789"
+            timestampString = "587620194.7973"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "145"
             endingLineNumber = "145"
             landmarkName = "prepare(for:sender:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "AVPlayerTest/SettingsView.swift"
-            timestampString = "587248819.7638381"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "188"
-            endingLineNumber = "188"
-            landmarkName = "prepare(for:sender:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "AVPlayerTest/SettingsView.swift"
-            timestampString = "587248819.764215"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "120"
-            endingLineNumber = "120"
-            landmarkName = "cancelPressed(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -170,28 +138,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/MenuViewController.swift"
-            timestampString = "587169408.126086"
+            timestampString = "587620194.797352"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "145"
             endingLineNumber = "145"
             landmarkName = "prepare(for:sender:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "AVPlayerTest/SettingsView.swift"
-            timestampString = "587248819.764502"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "172"
-            endingLineNumber = "172"
-            landmarkName = "acceptChanges(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -250,11 +202,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/SettingsView.swift"
-            timestampString = "587248819.764797"
+            timestampString = "587620194.79743"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "127"
-            endingLineNumber = "127"
+            startingLineNumber = "92"
+            endingLineNumber = "92"
             landmarkName = "editingStarted(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -266,7 +218,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/MenuViewController.swift"
-            timestampString = "587169408.128108"
+            timestampString = "587620194.7977901"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "118"
@@ -282,7 +234,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/MenuViewController.swift"
-            timestampString = "587169408.1281559"
+            timestampString = "587620194.797833"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "108"
@@ -298,7 +250,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/MenuViewController.swift"
-            timestampString = "587169408.128197"
+            timestampString = "587620194.797868"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "115"
@@ -314,45 +266,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/SettingsView.swift"
-            timestampString = "587248819.765088"
+            timestampString = "587620194.797904"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "508"
-            endingLineNumber = "508"
+            startingLineNumber = "447"
+            endingLineNumber = "447"
             landmarkName = "SettingsView"
             landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "AVPlayerTest/SettingsView.swift"
-            timestampString = "587248819.765354"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "451"
-            endingLineNumber = "451"
-            landmarkName = "runLow()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "AVPlayerTest/SettingsView.swift"
-            timestampString = "587248819.765622"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "72"
-            endingLineNumber = "72"
-            landmarkName = "touchesBegan(_:with:)"
-            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -426,11 +346,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/SettingsView.swift"
-            timestampString = "587248819.765916"
+            timestampString = "587620194.798184"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "55"
-            endingLineNumber = "55"
+            startingLineNumber = "62"
+            endingLineNumber = "62"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
@@ -442,7 +362,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/MenuViewController.swift"
-            timestampString = "587169408.132802"
+            timestampString = "587620194.798432"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "101"
@@ -458,12 +378,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/SettingsView.swift"
-            timestampString = "587248819.766191"
+            timestampString = "587620194.798472"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "90"
-            endingLineNumber = "90"
-            landmarkName = "lowResTextEntered(_:)"
+            startingLineNumber = "178"
+            endingLineNumber = "178"
+            landmarkName = "validateHighResURL(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -474,12 +394,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/SettingsView.swift"
-            timestampString = "587248819.76645"
+            timestampString = "587620194.798719"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "249"
-            endingLineNumber = "249"
-            landmarkName = "validateURL(_:)"
+            startingLineNumber = "263"
+            endingLineNumber = "263"
+            landmarkName = "getHighResURLResponse(urlPath:TypeofURL:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -490,12 +410,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/SettingsView.swift"
-            timestampString = "587248819.766709"
+            timestampString = "587620367.73856"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "314"
-            endingLineNumber = "314"
-            landmarkName = "getURLResponse(urlPath:TypeofURL:)"
+            startingLineNumber = "277"
+            endingLineNumber = "277"
+            landmarkName = "getHighResURLResponse(urlPath:TypeofURL:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -506,12 +426,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/SettingsView.swift"
-            timestampString = "587248819.766971"
+            timestampString = "587620385.786299"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "304"
-            endingLineNumber = "304"
-            landmarkName = "fileExists(url:)"
+            startingLineNumber = "275"
+            endingLineNumber = "275"
+            landmarkName = "getHighResURLResponse(urlPath:TypeofURL:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -522,12 +442,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/SettingsView.swift"
-            timestampString = "587248819.767241"
+            timestampString = "587620391.16224"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "423"
-            endingLineNumber = "423"
-            landmarkName = "tryPlayingURL(stream:TypeofURL:)"
+            startingLineNumber = "267"
+            endingLineNumber = "267"
+            landmarkName = "getHighResURLResponse(urlPath:TypeofURL:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -538,60 +458,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/SettingsView.swift"
-            timestampString = "587248819.767493"
+            timestampString = "587620393.242224"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "418"
-            endingLineNumber = "418"
-            landmarkName = "tryPlayingURL(stream:TypeofURL:)"
+            startingLineNumber = "272"
+            endingLineNumber = "272"
+            landmarkName = "getHighResURLResponse(urlPath:TypeofURL:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "AVPlayerTest.SettingsView.tryPlayingURL(stream: Foundation.URL, TypeofURL: Swift.String) -&gt; ()"
-                  moduleName = "AVPlayerTest"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/paragpathak/Downloads/ios_media_player_avfoundation_bug1/AVPlayerTest/SettingsView.swift"
-                  timestampString = "587247205.349798"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "417"
-                  endingLineNumber = "417"
-                  offsetFromSymbolStart = "484">
-               </Location>
-               <Location
-                  shouldBeEnabled = "No"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__C.AVPlayerItem, Foundation.NSKeyValueObservedChange&lt;__C.AVPlayerItemStatus&gt;) -&gt; () in AVPlayerTest.SettingsView.tryPlayingURL(stream: Foundation.URL, TypeofURL: Swift.String) -&gt; ()"
-                  moduleName = "AVPlayerTest"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/paragpathak/Downloads/ios_media_player_avfoundation_bug1/AVPlayerTest/SettingsView.swift"
-                  timestampString = "587247205.351523"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "417"
-                  endingLineNumber = "417"
-                  offsetFromSymbolStart = "48">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/SettingsView.swift"
-            timestampString = "587248819.7677439"
+            timestampString = "587620414.32182"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "419"
-            endingLineNumber = "419"
-            landmarkName = "tryPlayingURL(stream:TypeofURL:)"
+            startingLineNumber = "274"
+            endingLineNumber = "274"
+            landmarkName = "getHighResURLResponse(urlPath:TypeofURL:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -602,12 +490,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/SettingsView.swift"
-            timestampString = "587248819.767996"
+            timestampString = "587620496.008527"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "422"
-            endingLineNumber = "422"
-            landmarkName = "tryPlayingURL(stream:TypeofURL:)"
+            startingLineNumber = "311"
+            endingLineNumber = "311"
+            landmarkName = "getLowResURLResponse(urlPath:TypeofURL:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -618,12 +506,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AVPlayerTest/SettingsView.swift"
-            timestampString = "587248819.7682461"
+            timestampString = "587620496.968473"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "421"
-            endingLineNumber = "421"
-            landmarkName = "tryPlayingURL(stream:TypeofURL:)"
+            startingLineNumber = "315"
+            endingLineNumber = "315"
+            landmarkName = "getLowResURLResponse(urlPath:TypeofURL:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

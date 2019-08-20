@@ -23,8 +23,8 @@ class SettingsView: UIViewController,UITextFieldDelegate {
     @IBOutlet weak var lowResImgStatus: UIImageView!
     @IBOutlet weak var highResImgStatus: UIImageView!
     
-    var lowResTimer : Timer? = Timer.init(timeInterval: 1, target: self, selector: #selector(runLow), userInfo: nil, repeats: false)
-    var highResTimer : Timer? = Timer.init(timeInterval: 1, target: self, selector: #selector(runHigh), userInfo: nil, repeats: false)
+    var lowResTimer : Timer?
+    var highResTimer : Timer?
 
     var highResDef : String = Movies.hRes()
     var lowResDef : String = Movies.lRes()
@@ -71,8 +71,8 @@ class SettingsView: UIViewController,UITextFieldDelegate {
         urlHighResTextField.text = highResURL
         urlLowResTextField.text = lowResURL
 
-//        highResTextEntered(self)
-//        lowResTextEntered(self)
+        highResTextEntered(self)
+        lowResTextEntered(self)
 
     }
     // -----------------------------------------------------------------
@@ -86,8 +86,8 @@ class SettingsView: UIViewController,UITextFieldDelegate {
     @IBAction func resetPressed(_ sender: Any) {
         urlHighResTextField.text = highResDef
         urlLowResTextField.text = lowResDef
-//        highResTextEntered(sender)
-//        lowResTextEntered(sender)
+        highResTextEntered(sender)
+        lowResTextEntered(sender)
         isHighResTaskCompleated = true
         isLowResTaskCompleated = true
     }
@@ -324,13 +324,14 @@ class SettingsView: UIViewController,UITextFieldDelegate {
                 }
             }
             else {
+                self.highResMessage = "Error"
                 self.highResValidity = false
                 self.isHighResTaskCompleated = true
                 self.invalidateHighResTimer()
             }
         }
 
-        Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(runHigh), userInfo: nil, repeats: false)
+        highResTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(runHigh), userInfo: nil, repeats: true)
 
         task.resume()
 
@@ -371,23 +372,25 @@ class SettingsView: UIViewController,UITextFieldDelegate {
                 }
             }
             else {
+                self.lowResMessage = "Error"
                 self.lowResValidity = false
                 self.isLowResTaskCompleated = true
                 self.invalidateHighResTimer()
             }
         }
 
-        Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(runLow), userInfo: nil, repeats: false)
+        lowResTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(runLow), userInfo: nil, repeats: true)
         
         task.resume()
     }
     // Functions to invalidate timers
     // -----------------------------------------------------------------
     @objc func invalidateHighResTimer(){
+  //      highResTimer?.invalidate()
         //      Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(invalidateHighTimer), userInfo: nil, repeats: false)
     }
     @objc func invalidateLowResTimer(){
-        
+  //      lowResTimer?.invalidate()
         //      Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(invalidateLowTimer), userInfo: nil, repeats: false)
     }
     
@@ -428,6 +431,8 @@ class SettingsView: UIViewController,UITextFieldDelegate {
             self.OKbutton.isEnabled = false
         }
         if isLowResTaskCompleated == true {
+            isLowResTaskCompleated = false
+            lowResTimer?.invalidate()
             self.invalidateLowResTimer()
         }
     }
@@ -456,6 +461,8 @@ class SettingsView: UIViewController,UITextFieldDelegate {
             self.OKbutton.isEnabled = false
         }
         if isHighResTaskCompleated == true {
+            isHighResTaskCompleated = false
+            highResTimer?.invalidate()
             self.invalidateHighResTimer()
         }
     }

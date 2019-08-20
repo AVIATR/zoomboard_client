@@ -16,10 +16,10 @@ class Movies {
     static var jwplatform = "https://content.jwplatform.com/manifests/yp34SRmf.m3u8"
    static var bitdash = "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8"
     static func hRes()->String {
-        return bunny
+        return apple
     }
     static func lRes()->String {
-        return bitdash
+        return jwplatform
     }
 
 }

@@ -22,6 +22,9 @@ class SettingsView: UIViewController,UITextFieldDelegate {
     
     @IBOutlet weak var lowResImgStatus: UIImageView!
     @IBOutlet weak var highResImgStatus: UIImageView!
+    
+    var lowResTimer : Timer? = Timer.init(timeInterval: 1, target: self, selector: #selector(runLow), userInfo: nil, repeats: false)
+    var highResTimer : Timer? = Timer.init(timeInterval: 1, target: self, selector: #selector(runHigh), userInfo: nil, repeats: false)
 
     var highResDef : String = Movies.hRes()
     var lowResDef : String = Movies.lRes()
@@ -31,7 +34,10 @@ class SettingsView: UIViewController,UITextFieldDelegate {
 
     var highResValidity: Bool = true
     var lowResValidity : Bool = true
-    
+
+    var isHighResTaskCompleated: Bool = true
+    var isLowResTaskCompleated: Bool = true
+
     var highResMessage : String = ""
     var lowResMessage : String = ""
     
@@ -40,7 +46,7 @@ class SettingsView: UIViewController,UITextFieldDelegate {
 
     weak var MenuViewContDelegate: MenuViewController?
     var throwAlert : Bool = false
-    var lowResText : Bool = true
+    
 
     @IBOutlet weak var srollViewOutlet: UIScrollView!
     @IBOutlet weak var OKbutton: UIButton!
@@ -65,8 +71,8 @@ class SettingsView: UIViewController,UITextFieldDelegate {
         urlHighResTextField.text = highResURL
         urlLowResTextField.text = lowResURL
 
-        highResTextEntered(self)
-        lowResTextEntered(self)
+//        highResTextEntered(self)
+//        lowResTextEntered(self)
 
     }
     // -----------------------------------------------------------------
@@ -80,10 +86,16 @@ class SettingsView: UIViewController,UITextFieldDelegate {
     @IBAction func resetPressed(_ sender: Any) {
         urlHighResTextField.text = highResDef
         urlLowResTextField.text = lowResDef
-        highResTextEntered(sender)
-        lowResTextEntered(sender)
+//        highResTextEntered(sender)
+//        lowResTextEntered(sender)
+        isHighResTaskCompleated = true
+        isLowResTaskCompleated = true
     }
     @IBAction func cancelPressed(_ sender: Any) {
+        isHighResTaskCompleated = true
+        isLowResTaskCompleated = true
+        invalidateLowResTimer()
+        invalidateHighResTimer()
         dismiss(animated: true, completion: nil)
   //      delegate?.removeBlurredBackgroundView()
     }
@@ -97,6 +109,9 @@ class SettingsView: UIViewController,UITextFieldDelegate {
     // OK botton is pressed if enabled
     // -----------------------------------------------------------------
     @IBAction func acceptChanges(_ sender: Any) {
+        
+        isHighResTaskCompleated = true
+        isLowResTaskCompleated = true
 
         if self.lowResValidity == false || self.highResValidity == false {
             OKbutton.titleLabel?.textColor = UIColor.gray
@@ -144,20 +159,24 @@ class SettingsView: UIViewController,UITextFieldDelegate {
     // Calls just after text is entered in High and Low Res URLs
     // -----------------------------------------------------------------
     @IBAction func highResTextEntered(_ sender: Any) {
-        lowResText = false
+        
         srollViewOutlet.scrollRectToVisible(topRect.frame, animated: true)
         highResImgStatus.image = UIImage(named: "sync")
         highResImgStatus.isHidden = false
-        highResValidity = false
+        highResValidity = true
+        isHighResTaskCompleated =  false
+     //   highResTimer?.fire()
         self.validateHighResURL(sender)
     }
     
     @IBAction func lowResTextEntered(_ sender: Any) {
-        lowResText = true
+        
         srollViewOutlet.scrollRectToVisible(topRect.frame, animated: true)
-        lowResValidity = false
+        lowResValidity = true
         lowResImgStatus.image = UIImage(named: "sync")
         lowResImgStatus.isHidden = false
+        isLowResTaskCompleated =  false
+       // lowResTimer?.fire()
         self.validateLowResURL(sender)
     }
 
@@ -168,6 +187,8 @@ class SettingsView: UIViewController,UITextFieldDelegate {
         if urlHighResTextField.text?.isEmpty == false{
             urlHighResTextField.text = urlHighResTextField.text?.sanitize()
             if throwAlerts(URL : urlHighResTextField.text!, TypeofURL: "High") == false{
+                isHighResTaskCompleated = true
+                invalidateHighResTimer()
                 return
             }
             getHighResURLResponse(urlPath: urlHighResTextField.text!, TypeofURL: "High")
@@ -176,6 +197,8 @@ class SettingsView: UIViewController,UITextFieldDelegate {
             highResImgStatus.image = UIImage(named: "cross")
             OKbutton.isEnabled = false
             highResValidity = false
+            isHighResTaskCompleated = true
+            invalidateHighResTimer()
             let popUpTitle = "Empty URL"
             let popUpMessage = "Please enter a URL"
             AJAlertController.initialization().showAlertWithOkButton(title:popUpTitle,aStrMessage: popUpMessage) { (index, title) in
@@ -187,10 +210,12 @@ class SettingsView: UIViewController,UITextFieldDelegate {
     }
     
     @IBAction func validateLowResURL(_ sender: Any) {
-        self.lowResValidity = true
+        
         if urlLowResTextField.text?.isEmpty == false {
             urlLowResTextField.text = urlLowResTextField.text?.sanitize()
             if throwAlerts(URL : urlLowResTextField.text!, TypeofURL: "Low") == false {
+                isLowResTaskCompleated =  true
+                invalidateLowResTimer()
                 return
             }
             getLowResURLResponse(urlPath: urlLowResTextField.text!, TypeofURL: "Low")
@@ -199,6 +224,8 @@ class SettingsView: UIViewController,UITextFieldDelegate {
             lowResImgStatus.image = UIImage(named: "cross")
             OKbutton.isEnabled = false
             lowResValidity = false
+            isLowResTaskCompleated =  true
+            invalidateLowResTimer()
             let popUpTitle = "Empty URL"
             let popUpMessage = "Please enter a URL"
             AJAlertController.initialization().showAlertWithOkButton(title:popUpTitle,aStrMessage: popUpMessage) { (index, title) in
@@ -216,10 +243,14 @@ class SettingsView: UIViewController,UITextFieldDelegate {
             if TypeofURL == "High"{
                 highResImgStatus.image = UIImage(named: "cross")
                 highResValidity = false
+                isHighResTaskCompleated = true
+                invalidateHighResTimer()
             }
             else {
                 lowResValidity = false
                 lowResImgStatus.image = UIImage(named: "cross")
+                isLowResTaskCompleated = true
+                invalidateLowResTimer()
             }
             AJAlertController.initialization().showAlertWithOkButton(title:"Settings",aStrMessage: "Please enter a valid \(TypeofURL) Resolution URL") { (index, title) in
                 print(index,title)
@@ -251,22 +282,22 @@ class SettingsView: UIViewController,UITextFieldDelegate {
     }
     
 
-    // This is the main function where all the major HTTP tests happen.
+    // These are the main functions where all the major HTTP tests happen.
     //Functions throw High and low Res alerts depending on URL flags
     // -----------------------------------------------------------------
     func getHighResURLResponse(urlPath : String, TypeofURL: String) {
         let url = URL(string: urlPath)!
         print(urlPath)
-        // Tried some hacks
-        if fileExists(url: url as NSURL) == false {
-            print("file dose not exist")
-        }
-        // Tried some hacks
-        tryPlayingURL(stream: url, TypeofURL: "High")
+//        // Tried some hacks
+//        if fileExists(url: url as NSURL) == false {
+//            print("file dose not exist")
+//        }
+//        // Tried some hacks
+//        tryPlayingURL(stream: url, TypeofURL: "High")
 
         let request = URLRequest(url: url)
         let task = URLSession.shared.dataTask(with: request) {data, response, error in
-
+			
             if let httpResponse = response as? HTTPURLResponse {
                 let localizedResponse = HTTPURLResponse.localizedString(forStatusCode: httpResponse.statusCode)
                 print("Status Code : \(httpResponse.statusCode)  \(localizedResponse)")
@@ -278,30 +309,42 @@ class SettingsView: UIViewController,UITextFieldDelegate {
                    print(message)
                         self.highResMessage = message
                         self.highResValidity = false
+                        self.isHighResTaskCompleated = true
+                        self.invalidateHighResTimer()
+                    return
                 }
                 else {
                     let message : String = String(httpResponse.statusCode) + " " + localizedResponse
                     print(message)
                         self.highResMessage = message
                         self.highResValidity = true
+                        self.isHighResTaskCompleated = true
+                        self.invalidateHighResTimer()
+                    return
                 }
+            }
+            else {
+                self.highResValidity = false
+                self.isHighResTaskCompleated = true
+                self.invalidateHighResTimer()
             }
         }
 
-        Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(runHigh), userInfo: nil, repeats: false)
+        Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(runHigh), userInfo: nil, repeats: false)
+
         task.resume()
 
     }
-
+    
     func getLowResURLResponse(urlPath : String, TypeofURL: String) {
         let url = URL(string: urlPath)!
         // Tried some hacks
-        if fileExists(url: url as NSURL) == false {
-            print("file dose not exist")
-        }
-        // Tried some hacks
-        tryPlayingURL(stream: url, TypeofURL: TypeofURL)
-        
+//        if fileExists(url: url as NSURL) == false {
+//            print("file dose not exist")
+//        }
+//        // Tried some hacks
+//        tryPlayingURL(stream: url, TypeofURL: TypeofURL)
+//
         let request = URLRequest(url: url)
         let task = URLSession.shared.dataTask(with: request) {data, response, error in
             
@@ -315,37 +358,67 @@ class SettingsView: UIViewController,UITextFieldDelegate {
                     print(message)
                         self.lowResMessage = message
                         self.lowResValidity = false
+                        self.isLowResTaskCompleated = true
+                    return
                 }
                 else {
                     let message : String = String(httpResponse.statusCode) + " " + localizedResponse
                     print(message)
                         self.lowResMessage = message
                         self.lowResValidity = true
+                        self.isLowResTaskCompleated = true
+                    return
                 }
             }
+            else {
+                self.lowResValidity = false
+                self.isLowResTaskCompleated = true
+                self.invalidateHighResTimer()
+            }
         }
-        Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(runLow), userInfo: nil, repeats: false)
+
+        Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(runLow), userInfo: nil, repeats: false)
+        
         task.resume()
     }
-
+    // Functions to invalidate timers
+    // -----------------------------------------------------------------
+    @objc func invalidateHighResTimer(){
+        //      Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(invalidateHighTimer), userInfo: nil, repeats: false)
+    }
+    @objc func invalidateLowResTimer(){
+        
+        //      Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(invalidateLowTimer), userInfo: nil, repeats: false)
+    }
+    
+    @objc func invalidateHighTimer(){
+        print("highResTimer Invalidated")
+        //       self.highResTimer?.invalidate()
+    }
+    @objc func invalidateLowTimer(){
+        print("lowResTimer Invalidated")
+        //       self.lowResTimer?.invalidate()
+    }
+    
     // Functions Runs after a delay of 1 sec
     // and throws High and low Res alerts depending on URL flags
     // -----------------------------------------------------------------
     @objc func runLow(){
-        print("timer function ran URLflag ")
-        
+        print("isLowResTaskCompleated == \(isLowResTaskCompleated)")
+        if isLowResTaskCompleated == false {
+            return
+        }
         if self.lowResValidity == true{
             self.lowResImgStatus.image = UIImage(named: "tick")
         }
         else{
             self.lowResImgStatus.image = UIImage(named: "cross")
-            if lowResText == true {
+            
                 AJAlertController.initialization().showAlertWithOkButton(title:"Low Res Status Code : ",aStrMessage: self.lowResMessage) { (index, title) in
                     print(index,title)
                     if index == 0 {
                     }
                 }
-            }
         }
         
         if self.lowResValidity == true && self.highResValidity == true {
@@ -354,24 +427,26 @@ class SettingsView: UIViewController,UITextFieldDelegate {
         else {
             self.OKbutton.isEnabled = false
         }
+        if isLowResTaskCompleated == true {
+            self.invalidateLowResTimer()
+        }
     }
     
     @objc func runHigh(){
-        print("timer function ran URLflag ")
-        
+        print("isHighResTaskCompleated == \(isHighResTaskCompleated)")
+        if isHighResTaskCompleated == false {
+            return
+        }
         if self.highResValidity == true{
             self.highResImgStatus.image = UIImage(named: "tick")
         }
         else{
             self.highResImgStatus.image = UIImage(named: "cross")
-            if lowResText == false {
                 AJAlertController.initialization().showAlertWithOkButton(title:"High Res Status Code : ",aStrMessage: self.highResMessage) { (index, title) in
                     print(index,title)
                     if index == 0 {
                     }
                 }
-                
-            }
         }
         
         if self.lowResValidity == true && self.highResValidity == true {
@@ -379,6 +454,9 @@ class SettingsView: UIViewController,UITextFieldDelegate {
         }
         else {
             self.OKbutton.isEnabled = false
+        }
+        if isHighResTaskCompleated == true {
+            self.invalidateHighResTimer()
         }
     }
 

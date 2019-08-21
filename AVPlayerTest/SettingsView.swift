@@ -11,23 +11,37 @@ import MetalKit
 import MetalPerformanceShaders
 import AVKit
 
-protocol ModalViewControllerDelegate: class {
-    func removeBlurredBackgroundView()
-}
 
 class SettingsView: UIViewController,UITextFieldDelegate {
+    
+    struct streamStatus {
+        var urlValid: Bool = false
+        var streamExists: Bool = false
+        var HTTPResponseReceived: Bool = false
+        var statusImage: UIImageView
+        var HTTPCode: Int
+        var responseMsg: String
+    }
 
-    @IBOutlet weak var urlHighResTextField: UITextField!
-    @IBOutlet weak var urlLowResTextField: UITextField!
+//    @IBOutlet weak var urlHighResTextField: UITextField!
+//    @IBOutlet weak var urlLowResTextField: UITextField!
     
     @IBOutlet weak var lowResImgStatus: UIImageView!
     @IBOutlet weak var highResImgStatus: UIImageView!
     
+    let httpRequestTimeout = 5.0
+    
     var lowResTimer : Timer?
     var highResTimer : Timer?
-
+    
+    @IBOutlet weak var highResTextField: UITextField!
+    @IBOutlet weak var lowResTextField: UITextField!
+    
+    var streamInfo : [String: streamStatus] = [:]
+    
     var highResDef : String = Movies.hRes()
     var lowResDef : String = Movies.lRes()
+    
     
     var highResURL : String = ""
     var lowResURL : String = ""
@@ -43,12 +57,15 @@ class SettingsView: UIViewController,UITextFieldDelegate {
     
     var highResHTTPCode : Int = 0
     var lowResHTTPCode : Int = 0
-
+    
+    
+    @IBOutlet weak var msgLabel: UILabel!
+    
     weak var MenuViewContDelegate: MenuViewController?
     var throwAlert : Bool = false
     
 
-    @IBOutlet weak var srollViewOutlet: UIScrollView!
+    @IBOutlet weak var scrollViewOutlet: UIScrollView!
     @IBOutlet weak var OKbutton: UIButton!
 
     @IBOutlet weak var topRect: UILabel!
@@ -58,21 +75,26 @@ class SettingsView: UIViewController,UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        streamInfo[highResTextField.accessibilityIdentifier!] = streamStatus(urlValid: false, streamExists: false, HTTPResponseReceived: false, statusImage: highResImgStatus, HTTPCode: 0, responseMsg: "")
+        streamInfo[lowResTextField.accessibilityIdentifier!] = streamStatus(urlValid: false, streamExists: false, HTTPResponseReceived: false, statusImage: lowResImgStatus, HTTPCode: 0, responseMsg: "")
+        
         OKbutton.setTitleColor(.gray, for: .disabled)
+        
         highResValidity = true
         lowResValidity = true
         
-        srollViewOutlet.showsVerticalScrollIndicator = false
-        srollViewOutlet.showsHorizontalScrollIndicator = false
+        scrollViewOutlet.showsVerticalScrollIndicator = false
+        scrollViewOutlet.showsHorizontalScrollIndicator = false
 
-        srollViewOutlet.isPagingEnabled = false
-        srollViewOutlet.isScrollEnabled = false
+        scrollViewOutlet.isPagingEnabled = false
+        scrollViewOutlet.isScrollEnabled = false
 
-        urlHighResTextField.text = highResURL
-        urlLowResTextField.text = lowResURL
+        highResTextField.text = highResURL
+        lowResTextField.text = lowResURL
 
-        highResTextEntered(self)
-        lowResTextEntered(self)
+//        highResTextEntered(self)
+//        lowResTextEntered(self)
 
     }
     // -----------------------------------------------------------------
@@ -84,8 +106,8 @@ class SettingsView: UIViewController,UITextFieldDelegate {
         return false
     }
     @IBAction func resetPressed(_ sender: Any) {
-        urlHighResTextField.text = highResDef
-        urlLowResTextField.text = lowResDef
+        highResTextField.text = highResDef
+        lowResTextField.text = lowResDef
         highResTextEntered(sender)
         lowResTextEntered(sender)
         isHighResTaskCompleated = true
@@ -101,8 +123,8 @@ class SettingsView: UIViewController,UITextFieldDelegate {
     }
     @IBAction func editingStarted(_ sender: UITextField) {
         sender.backgroundColor = UIColor.white
-        if sender == urlLowResTextField {
-            srollViewOutlet.scrollRectToVisible(keyboardText.frame, animated: true)
+        if sender == lowResTextField {
+            scrollViewOutlet.scrollRectToVisible(keyboardText.frame, animated: true)
         }
     }
     
@@ -119,12 +141,12 @@ class SettingsView: UIViewController,UITextFieldDelegate {
             return
         }
 
-        if urlLowResTextField.text?.isEmpty == false && urlHighResTextField.text?.isEmpty == false{
+        if lowResTextField.text?.isEmpty == false && highResTextField.text?.isEmpty == false{
 
-            urlLowResTextField.text = urlLowResTextField.text?.sanitize()
-            urlHighResTextField.text = urlHighResTextField.text?.sanitize()
+            lowResTextField.text = lowResTextField.text?.sanitize()
+            highResTextField.text = highResTextField.text?.sanitize()
             
-            if canOpenURL(urlLowResTextField.text)==false{
+            if canOpenURL(lowResTextField.text)==false{
                 AJAlertController.initialization().showAlertWithOkButton(title:"Settings",aStrMessage: "Please enter a valid Low Resolution URL") { (index, title) in
                     print(index,title)
                     if index == 0 {
@@ -132,7 +154,7 @@ class SettingsView: UIViewController,UITextFieldDelegate {
                 }
                 return
             }
-            if canOpenURL(urlHighResTextField.text)==false{
+            if canOpenURL(highResTextField.text)==false{
                 AJAlertController.initialization().showAlertWithOkButton(title:"Settings",aStrMessage: "Please enter a valid High Resolution URL") { (index, title) in
                     print(index,title)
                     if index == 0 {
@@ -141,16 +163,16 @@ class SettingsView: UIViewController,UITextFieldDelegate {
                 return
             }
 
-            MenuViewContDelegate?.ipAddress_highres = urlHighResTextField.text!
-            MenuViewContDelegate?.ipAddress_lowres = urlLowResTextField.text!
+            MenuViewContDelegate?.ipAddress_highres = highResTextField.text!
+            MenuViewContDelegate?.ipAddress_lowres = highResTextField.text!
             dismiss(animated: true, completion: nil)
         }
         else{
-            if urlLowResTextField.text?.isEmpty == true{
-                urlLowResTextField.backgroundColor = UIColor.red
+            if highResTextField.text?.isEmpty == true{
+                lowResTextField.backgroundColor = UIColor.red
             }
-            if urlHighResTextField.text?.isEmpty == true{
-                urlHighResTextField.backgroundColor = UIColor.red
+            if highResTextField.text?.isEmpty == true{
+                highResTextField.backgroundColor = UIColor.red
             }
         }
     }
@@ -160,7 +182,7 @@ class SettingsView: UIViewController,UITextFieldDelegate {
     // -----------------------------------------------------------------
     @IBAction func highResTextEntered(_ sender: Any) {
         
-        srollViewOutlet.scrollRectToVisible(topRect.frame, animated: true)
+        scrollViewOutlet.scrollRectToVisible(topRect.frame, animated: true)
         highResImgStatus.image = UIImage(named: "sync")
         highResImgStatus.isHidden = false
         highResValidity = true
@@ -169,9 +191,45 @@ class SettingsView: UIViewController,UITextFieldDelegate {
         self.validateHighResURL(sender)
     }
     
+    @IBAction func urlEditDidEnd(_ sender: UITextField) {
+        scrollViewOutlet.scrollRectToVisible(topRect.frame, animated: true)
+        let streamID = sender.accessibilityIdentifier
+        streamInfo[streamID!]!.statusImage.image = UIImage(named: "sync")
+        streamInfo[streamID!]!.statusImage.isHidden = false
+        streamInfo[streamID!]!.urlValid = false
+        streamInfo[streamID!]!.HTTPResponseReceived = false
+        streamInfo[streamID!]!.streamExists = false
+        self.validateURL(sender: sender)
+    }
+    
+    func validateURL(sender: UITextField){
+        //first check if URL is valid
+        let streamID = sender.accessibilityIdentifier
+        
+        // we have a string to validate
+        if sender.text?.isEmpty == false{
+            sender.text = sender.text?.sanitize()
+            if canOpenURL(sender.text) == false{ // the url is incorrect
+                
+                streamInfo[streamID!]?.statusImage.image = UIImage(named: "cross")
+                streamInfo[streamID!]?.urlValid = false
+                //            streamInfo[streamID!]?.streamExists = false
+                //            streamInfo[streamID!]?.HTTPResponseReceived = false
+                
+                return
+            }
+        }
+        else{
+            streamInfo[streamID!]!.statusImage.image = UIImage(named: "cross")
+            OKbutton.isEnabled = false
+        }
+        
+    }
+    
+    
     @IBAction func lowResTextEntered(_ sender: Any) {
         
-        srollViewOutlet.scrollRectToVisible(topRect.frame, animated: true)
+        scrollViewOutlet.scrollRectToVisible(topRect.frame, animated: true)
         lowResValidity = true
         lowResImgStatus.image = UIImage(named: "sync")
         lowResImgStatus.isHidden = false
@@ -183,15 +241,15 @@ class SettingsView: UIViewController,UITextFieldDelegate {
     // Validates both the URLs
     // -----------------------------------------------------------------
     @IBAction func validateHighResURL(_ sender: Any) {
-        
-        if urlHighResTextField.text?.isEmpty == false{
-            urlHighResTextField.text = urlHighResTextField.text?.sanitize()
-            if throwAlerts(URL : urlHighResTextField.text!, TypeofURL: "High") == false{
+        msgLabel.isHidden = false
+        if highResTextField.text?.isEmpty == false{
+            highResTextField.text = highResTextField.text?.sanitize()
+            if throwAlerts(URL : highResTextField.text!, TypeofURL: "High") == false{
                 isHighResTaskCompleated = true
                 invalidateHighResTimer()
                 return
             }
-            getHighResURLResponse(urlPath: urlHighResTextField.text!, TypeofURL: "High")
+            getHighResURLResponse(urlPath: highResTextField.text!, TypeofURL: "High")
         }
         else {
             highResImgStatus.image = UIImage(named: "cross")
@@ -210,15 +268,15 @@ class SettingsView: UIViewController,UITextFieldDelegate {
     }
     
     @IBAction func validateLowResURL(_ sender: Any) {
-        
-        if urlLowResTextField.text?.isEmpty == false {
-            urlLowResTextField.text = urlLowResTextField.text?.sanitize()
-            if throwAlerts(URL : urlLowResTextField.text!, TypeofURL: "Low") == false {
+        msgLabel.isHidden = false
+        if lowResTextField.text?.isEmpty == false {
+            lowResTextField.text = highResTextField.text?.sanitize()
+            if throwAlerts(URL : lowResTextField.text!, TypeofURL: "Low") == false {
                 isLowResTaskCompleated =  true
                 invalidateLowResTimer()
                 return
             }
-            getLowResURLResponse(urlPath: urlLowResTextField.text!, TypeofURL: "Low")
+            getLowResURLResponse(urlPath: lowResTextField.text!, TypeofURL: "Low")
         }
         else {
             lowResImgStatus.image = UIImage(named: "cross")
@@ -238,29 +296,56 @@ class SettingsView: UIViewController,UITextFieldDelegate {
     
     // Helper functions for Throwing alerts for string errors
     // -----------------------------------------------------------------
-    func throwAlerts(URL : String,TypeofURL : String)-> Bool{
-        if canOpenURL(URL)==false{
-            if TypeofURL == "High"{
-                highResImgStatus.image = UIImage(named: "cross")
-                highResValidity = false
-                isHighResTaskCompleated = true
-                invalidateHighResTimer()
-            }
-            else {
-                lowResValidity = false
-                lowResImgStatus.image = UIImage(named: "cross")
-                isLowResTaskCompleated = true
-                invalidateLowResTimer()
-            }
-            AJAlertController.initialization().showAlertWithOkButton(title:"Settings",aStrMessage: "Please enter a valid \(TypeofURL) Resolution URL") { (index, title) in
-                print(index,title)
-                if index == 0 {
-                }
-            }
-            return false
-        }
-        return true
-    }
+    
+//    func throwAlerts(sender: UITextField)-> Bool{
+//        let streamID = sender.accessibilityIdentifier
+//        if canOpenURL(sender.text)==false{
+//
+//            streamInfo[streamID!]?.statusImage.image = UIImage(named: "cross")
+//            streamInfo[streamID!]?.urlValid = false
+//            streamInfo[streamID!]?.streamExists = false
+//            streamInfo[streamID!]?.HTTPResponseReceived = false
+//            // TODO: stop time? I am not sure
+//
+//            // what is this?
+////            AJAlertController.initialization().showAlertWithOkButton(title:"Settings",aStrMessage: "Please enter a valid \(TypeofURL) Resolution URL") { (index, title) in
+////                print(index,title)
+////                if index == 0 {
+////                }
+////            }
+//            return false
+//        }
+//        return true
+//    }
+    
+    
+    
+    
+    
+    
+//    func throwAlerts(URL : String,TypeofURL : String)-> Bool{
+//        if canOpenURL(URL)==false{
+//            if TypeofURL == "High"{
+//                highResImgStatus.image = UIImage(named: "cross")
+//                highResValidity = false
+//                isHighResTaskCompleated = true
+//                invalidateHighResTimer()
+//            }
+//            else {
+//                lowResValidity = false
+//                lowResImgStatus.image = UIImage(named: "cross")
+//                isLowResTaskCompleated = true
+//                invalidateLowResTimer()
+//            }
+//            AJAlertController.initialization().showAlertWithOkButton(title:"Settings",aStrMessage: "Please enter a valid \(TypeofURL) Resolution URL") { (index, title) in
+//                print(index,title)
+//                if index == 0 {
+//                }
+//            }
+//            return false
+//        }
+//        return true
+//    }
     // Checks for string errors
     // -----------------------------------------------------------------
     func canOpenURL(_ string: String?) -> Bool {
@@ -295,7 +380,9 @@ class SettingsView: UIViewController,UITextFieldDelegate {
 //        // Tried some hacks
 //        tryPlayingURL(stream: url, TypeofURL: "High")
 
-        let request = URLRequest(url: url)
+        var request = URLRequest(url: url)
+        request.httpMethod = "HEAD"
+        request.timeoutInterval = httpRequestTimeout
         let task = URLSession.shared.dataTask(with: request) {data, response, error in
 			
             if let httpResponse = response as? HTTPURLResponse {
@@ -346,7 +433,9 @@ class SettingsView: UIViewController,UITextFieldDelegate {
 //        // Tried some hacks
 //        tryPlayingURL(stream: url, TypeofURL: TypeofURL)
 //
-        let request = URLRequest(url: url)
+        var request = URLRequest(url: url)
+        request.httpMethod = "HEAD"
+        request.timeoutInterval = httpRequestTimeout
         let task = URLSession.shared.dataTask(with: request) {data, response, error in
             
             if let httpResponse = response as? HTTPURLResponse {

@@ -130,6 +130,7 @@
 				TargetAttributes = {
 					3FA58E5E2203A45D00C90B23 = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1030;
 					};
 				};
 			};
@@ -328,7 +329,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = edu.wisc.waisman.aviatr.zoombrd;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -349,7 +350,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = edu.wisc.waisman.aviatr.zoombrd;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

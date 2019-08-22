@@ -15,16 +15,15 @@ import AVKit
 class SettingsView: UIViewController,UITextFieldDelegate {
     
     struct streamStatus {
-        var urlValid: Bool = false
-        var streamExists: Bool = false
-        var HTTPResponseReceived: Bool = false
-        var statusImage: UIImageView
-        var HTTPCode: Int
-        var responseMsg: String
+        var urlValid: Bool = false              // did the url pass the syntax check?
+        var streamExists: Bool = false          // did we get a positive response to the HTTP request?
+        var HTTPResponseReceived: Bool = false  // have we received the HTTP response?
+        var statusImage: UIImageView            // status image
+        var HTTPCode: Int                       // response code
+        var responseMsg: String                 // response message
+        var requestTask: URLSessionDataTask     // task to send HTTP request to URL
+        var responseCheckTimer: Timer
     }
-
-//    @IBOutlet weak var urlHighResTextField: UITextField!
-//    @IBOutlet weak var urlLowResTextField: UITextField!
     
     @IBOutlet weak var lowResImgStatus: UIImageView!
     @IBOutlet weak var highResImgStatus: UIImageView!
@@ -45,19 +44,19 @@ class SettingsView: UIViewController,UITextFieldDelegate {
     
     var highResURL : String = ""
     var lowResURL : String = ""
-
-    var highResValidity: Bool = true
-    var lowResValidity : Bool = true
-
-    var isHighResTaskCompleated: Bool = true
-    var isLowResTaskCompleated: Bool = true
-
-    var highResMessage : String = ""
-    var lowResMessage : String = ""
-    
-    var highResHTTPCode : Int = 0
-    var lowResHTTPCode : Int = 0
-    
+//
+//    var highResValidity: Bool = true
+//    var lowResValidity : Bool = true
+//
+//    var isHighResTaskCompleated: Bool = true
+//    var isLowResTaskCompleated: Bool = true
+//
+//    var highResMessage : String = ""
+//    var lowResMessage : String = ""
+//
+//    var highResHTTPCode : Int = 0
+//    var lowResHTTPCode : Int = 0
+//
     
     @IBOutlet weak var msgLabel: UILabel!
     
@@ -66,6 +65,7 @@ class SettingsView: UIViewController,UITextFieldDelegate {
     
 
     @IBOutlet weak var scrollViewOutlet: UIScrollView!
+    
     @IBOutlet weak var OKbutton: UIButton!
 
     @IBOutlet weak var topRect: UILabel!
@@ -76,14 +76,13 @@ class SettingsView: UIViewController,UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        streamInfo[highResTextField.accessibilityIdentifier!] = streamStatus(urlValid: false, streamExists: false, HTTPResponseReceived: false, statusImage: highResImgStatus, HTTPCode: 0, responseMsg: "")
-        streamInfo[lowResTextField.accessibilityIdentifier!] = streamStatus(urlValid: false, streamExists: false, HTTPResponseReceived: false, statusImage: lowResImgStatus, HTTPCode: 0, responseMsg: "")
+        streamInfo[highResTextField.accessibilityIdentifier!] = streamStatus(urlValid: false, streamExists: false,
+                                                                             HTTPResponseReceived: false, statusImage: highResImgStatus, HTTPCode: 0, responseMsg: "", requestTask: URLSessionDataTask(), responseCheckTimer: Timer())
+        streamInfo[lowResTextField.accessibilityIdentifier!] = streamStatus(urlValid: false, streamExists: false,
+                                                                            HTTPResponseReceived: false, statusImage: lowResImgStatus, HTTPCode: 0, responseMsg: "", requestTask: URLSessionDataTask(), responseCheckTimer: Timer())
         
         OKbutton.setTitleColor(.gray, for: .disabled)
-        
-        highResValidity = true
-        lowResValidity = true
-        
+
         scrollViewOutlet.showsVerticalScrollIndicator = false
         scrollViewOutlet.showsHorizontalScrollIndicator = false
 
@@ -97,30 +96,35 @@ class SettingsView: UIViewController,UITextFieldDelegate {
 //        lowResTextEntered(self)
 
     }
+    
     // -----------------------------------------------------------------
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return false
     }
+    
     @IBAction func resetPressed(_ sender: Any) {
         highResTextField.text = highResDef
         lowResTextField.text = lowResDef
-        highResTextEntered(sender)
-        lowResTextEntered(sender)
-        isHighResTaskCompleated = true
-        isLowResTaskCompleated = true
+//        highResTextEntered(sender)
+//        lowResTextEntered(sender)
+//        isHighResTaskCompleated = true
+//        isLowResTaskCompleated = true
     }
+    
     @IBAction func cancelPressed(_ sender: Any) {
-        isHighResTaskCompleated = true
-        isLowResTaskCompleated = true
-        invalidateLowResTimer()
-        invalidateHighResTimer()
+//        isHighResTaskCompleated = true
+//        isLowResTaskCompleated = true
+//        invalidateLowResTimer()
+//        invalidateHighResTimer()
         dismiss(animated: true, completion: nil)
   //      delegate?.removeBlurredBackgroundView()
     }
+    
     @IBAction func editingStarted(_ sender: UITextField) {
         sender.backgroundColor = UIColor.white
         if sender == lowResTextField {
@@ -128,69 +132,17 @@ class SettingsView: UIViewController,UITextFieldDelegate {
         }
     }
     
+    
     // OK botton is pressed if enabled
     // -----------------------------------------------------------------
     @IBAction func acceptChanges(_ sender: Any) {
         
-        isHighResTaskCompleated = true
-        isLowResTaskCompleated = true
-
-        if self.lowResValidity == false || self.highResValidity == false {
-            OKbutton.titleLabel?.textColor = UIColor.gray
-            OKbutton.isEnabled = false
-            return
-        }
-
-        if lowResTextField.text?.isEmpty == false && highResTextField.text?.isEmpty == false{
-
-            lowResTextField.text = lowResTextField.text?.sanitize()
-            highResTextField.text = highResTextField.text?.sanitize()
-            
-            if canOpenURL(lowResTextField.text)==false{
-                AJAlertController.initialization().showAlertWithOkButton(title:"Settings",aStrMessage: "Please enter a valid Low Resolution URL") { (index, title) in
-                    print(index,title)
-                    if index == 0 {
-                    }
-                }
-                return
-            }
-            if canOpenURL(highResTextField.text)==false{
-                AJAlertController.initialization().showAlertWithOkButton(title:"Settings",aStrMessage: "Please enter a valid High Resolution URL") { (index, title) in
-                    print(index,title)
-                    if index == 0 {
-                    }
-                }
-                return
-            }
-
-            MenuViewContDelegate?.ipAddress_highres = highResTextField.text!
-            MenuViewContDelegate?.ipAddress_lowres = highResTextField.text!
-            dismiss(animated: true, completion: nil)
-        }
-        else{
-            if highResTextField.text?.isEmpty == true{
-                lowResTextField.backgroundColor = UIColor.red
-            }
-            if highResTextField.text?.isEmpty == true{
-                highResTextField.backgroundColor = UIColor.red
-            }
-        }
+        print("OK Pressed")
     }
 
 
     // Calls just after text is entered in High and Low Res URLs
     // -----------------------------------------------------------------
-    @IBAction func highResTextEntered(_ sender: Any) {
-        
-        scrollViewOutlet.scrollRectToVisible(topRect.frame, animated: true)
-        highResImgStatus.image = UIImage(named: "sync")
-        highResImgStatus.isHidden = false
-        highResValidity = true
-        isHighResTaskCompleated =  false
-     //   highResTimer?.fire()
-        self.validateHighResURL(sender)
-    }
-    
     @IBAction func urlEditDidEnd(_ sender: UITextField) {
         scrollViewOutlet.scrollRectToVisible(topRect.frame, animated: true)
         let streamID = sender.accessibilityIdentifier
@@ -209,146 +161,106 @@ class SettingsView: UIViewController,UITextFieldDelegate {
         // we have a string to validate
         if sender.text?.isEmpty == false{
             sender.text = sender.text?.sanitize()
-            if canOpenURL(sender.text) == false{ // the url is incorrect
-                
-                streamInfo[streamID!]?.statusImage.image = UIImage(named: "cross")
-                streamInfo[streamID!]?.urlValid = false
-                //            streamInfo[streamID!]?.streamExists = false
-                //            streamInfo[streamID!]?.HTTPResponseReceived = false
-                
-                return
+            // we have a url, is it valid and is it pointing to something?
+            initURLRequest(sender: sender)
+            if streamInfo[streamID!]?.urlValid == false{
+                msgLabel.isHidden = true
+                // TODO: alert user that the URL is not well formatted
+                self.msgLabel.isHidden = true
+                print("Error in URL")
+            }
+            else{
+                print("all good")
             }
         }
         else{
             streamInfo[streamID!]!.statusImage.image = UIImage(named: "cross")
             OKbutton.isEnabled = false
+            // TODO: send a message about empty text box
         }
         
     }
     
     
-    @IBAction func lowResTextEntered(_ sender: Any) {
+    func initURLRequest(sender: UITextField){
+        msgLabel.isHidden = false
+        let streamID : String = sender.accessibilityIdentifier!
+        streamInfo[streamID]?.urlValid = true
+        if !isURLValid(sender.text){
+//        guard let url = URL(string: sender.text!) else {
+            print("Error: URL is incorrect")
+            streamInfo[streamID]?.statusImage.image = UIImage(named: "cross")
+            streamInfo[streamID]?.urlValid = false
+            return
+        }
         
-        scrollViewOutlet.scrollRectToVisible(topRect.frame, animated: true)
-        lowResValidity = true
-        lowResImgStatus.image = UIImage(named: "sync")
-        lowResImgStatus.isHidden = false
-        isLowResTaskCompleated =  false
-       // lowResTimer?.fire()
-        self.validateLowResURL(sender)
-    }
-
-    // Validates both the URLs
-    // -----------------------------------------------------------------
-    @IBAction func validateHighResURL(_ sender: Any) {
-        msgLabel.isHidden = false
-        if highResTextField.text?.isEmpty == false{
-            highResTextField.text = highResTextField.text?.sanitize()
-            if throwAlerts(URL : highResTextField.text!, TypeofURL: "High") == false{
-                isHighResTaskCompleated = true
-                invalidateHighResTimer()
-                return
-            }
-            getHighResURLResponse(urlPath: highResTextField.text!, TypeofURL: "High")
-        }
-        else {
-            highResImgStatus.image = UIImage(named: "cross")
-            OKbutton.isEnabled = false
-            highResValidity = false
-            isHighResTaskCompleated = true
-            invalidateHighResTimer()
-            let popUpTitle = "Empty URL"
-            let popUpMessage = "Please enter a URL"
-            AJAlertController.initialization().showAlertWithOkButton(title:popUpTitle,aStrMessage: popUpMessage) { (index, title) in
-                print(index,title)
-                if index == 0 {
+        guard let url = URL(string: sender.text!) else {return }
+        self.streamInfo[streamID]!.HTTPResponseReceived = false
+        // set up an HTTP request
+        var request = URLRequest(url: url)
+        request.httpMethod = "HEAD"
+        request.timeoutInterval = httpRequestTimeout
+        streamInfo[streamID]!.requestTask = URLSession.shared.dataTask(with: request as URLRequest) {data, response, error in
+            
+            if let httpResponse = response as? HTTPURLResponse {
+                let localizedResponse = HTTPURLResponse.localizedString(forStatusCode: httpResponse.statusCode)
+                print("Status Code : \(httpResponse.statusCode)  \(localizedResponse)")
+                let message : String =  String(httpResponse.statusCode) + " " + localizedResponse
+                print(message)
+                self.streamInfo[streamID]!.HTTPCode = httpResponse.statusCode
+                if httpResponse.statusCode >= 400
+                {
+                    self.streamInfo[streamID]!.responseMsg = message
+                    self.streamInfo[streamID]!.streamExists = false
+                    self.streamInfo[streamID]!.HTTPResponseReceived = true
+                    return
+                }
+                else {
+                    self.streamInfo[streamID]!.responseMsg = message
+                    self.streamInfo[streamID]!.streamExists = true
+                    self.streamInfo[streamID]!.HTTPResponseReceived = true
+                    return
                 }
             }
+            else {
+                self.streamInfo[streamID]!.responseMsg = "Undefined error in URL request."
+                self.streamInfo[streamID]!.streamExists = false
+                self.streamInfo[streamID]!.HTTPResponseReceived = true
+            }
+        }
+        self.streamInfo[streamID]!.responseCheckTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(checkHTTPRequestStatus), userInfo: ["streamID": streamID], repeats: true)
+        streamInfo[streamID]!.requestTask.resume()
+       
+    }
+    
+    @objc func checkHTTPRequestStatus(timer: Timer){
+        let info = timer.userInfo as! [String: String]
+        let streamID = String(info["streamID"]!)
+        let stream : streamStatus = self.streamInfo[streamID]!
+        // did we receive the response?
+        if stream.HTTPResponseReceived{
+            // 1) stop the timer
+            stream.responseCheckTimer.invalidate()
+            handleResponse(stream: stream)
+        }
+        else{
+          return
+        }
+        
+    }
+    
+    func handleResponse(stream: streamStatus){
+        self.msgLabel.isHidden = true
+        if stream.streamExists{
+            stream.statusImage.image = UIImage(named: "tick")
+        }
+        else{
+            stream.statusImage.image = UIImage(named: "cross")
+            //TODO: show error message
         }
     }
     
-    @IBAction func validateLowResURL(_ sender: Any) {
-        msgLabel.isHidden = false
-        if lowResTextField.text?.isEmpty == false {
-            lowResTextField.text = highResTextField.text?.sanitize()
-            if throwAlerts(URL : lowResTextField.text!, TypeofURL: "Low") == false {
-                isLowResTaskCompleated =  true
-                invalidateLowResTimer()
-                return
-            }
-            getLowResURLResponse(urlPath: lowResTextField.text!, TypeofURL: "Low")
-        }
-        else {
-            lowResImgStatus.image = UIImage(named: "cross")
-            OKbutton.isEnabled = false
-            lowResValidity = false
-            isLowResTaskCompleated =  true
-            invalidateLowResTimer()
-            let popUpTitle = "Empty URL"
-            let popUpMessage = "Please enter a URL"
-            AJAlertController.initialization().showAlertWithOkButton(title:popUpTitle,aStrMessage: popUpMessage) { (index, title) in
-                print(index,title)
-                if index == 0 {
-                }
-            }
-        }
-    }
-    
-    // Helper functions for Throwing alerts for string errors
-    // -----------------------------------------------------------------
-    
-//    func throwAlerts(sender: UITextField)-> Bool{
-//        let streamID = sender.accessibilityIdentifier
-//        if canOpenURL(sender.text)==false{
-//
-//            streamInfo[streamID!]?.statusImage.image = UIImage(named: "cross")
-//            streamInfo[streamID!]?.urlValid = false
-//            streamInfo[streamID!]?.streamExists = false
-//            streamInfo[streamID!]?.HTTPResponseReceived = false
-//            // TODO: stop time? I am not sure
-//
-//            // what is this?
-////            AJAlertController.initialization().showAlertWithOkButton(title:"Settings",aStrMessage: "Please enter a valid \(TypeofURL) Resolution URL") { (index, title) in
-////                print(index,title)
-////                if index == 0 {
-////                }
-////            }
-//            return false
-//        }
-//        return true
-//    }
-    
-    
-    
-    
-    
-    
-//    func throwAlerts(URL : String,TypeofURL : String)-> Bool{
-//        if canOpenURL(URL)==false{
-//            if TypeofURL == "High"{
-//                highResImgStatus.image = UIImage(named: "cross")
-//                highResValidity = false
-//                isHighResTaskCompleated = true
-//                invalidateHighResTimer()
-//            }
-//            else {
-//                lowResValidity = false
-//                lowResImgStatus.image = UIImage(named: "cross")
-//                isLowResTaskCompleated = true
-//                invalidateLowResTimer()
-//            }
-//            AJAlertController.initialization().showAlertWithOkButton(title:"Settings",aStrMessage: "Please enter a valid \(TypeofURL) Resolution URL") { (index, title) in
-//                print(index,title)
-//                if index == 0 {
-//                }
-//            }
-//            return false
-//        }
-//        return true
-//    }
-    // Checks for string errors
-    // -----------------------------------------------------------------
-    func canOpenURL(_ string: String?) -> Bool {
+    func isURLValid(_ string: String?) -> Bool {
         guard let urlString = string,
             let url = URL(string: urlString)
             else { return false }
@@ -360,262 +272,11 @@ class SettingsView: UIViewController,UITextFieldDelegate {
         let predicate = NSPredicate(format:"SELF MATCHES %@", argumentArray:[regEx])
         return predicate.evaluate(with: string)
         
-        //       let predicate2 = NSPredicate(format:"SELF MATCHES %@", argumentArray:[regEx2])
-        //        return predicate2.evaluate(with: string)
-        //        let regEx2 = "(http|https)://((\\w)*|([0-9]*)|([-|_])*)
-        //        +([\\.|/]((\\w)*|([0-9]*)|([-|_])*))+"
     }
-    
-
-    // These are the main functions where all the major HTTP tests happen.
-    //Functions throw High and low Res alerts depending on URL flags
-    // -----------------------------------------------------------------
-    func getHighResURLResponse(urlPath : String, TypeofURL: String) {
-        let url = URL(string: urlPath)!
-        print(urlPath)
-//        // Tried some hacks
-//        if fileExists(url: url as NSURL) == false {
-//            print("file dose not exist")
-//        }
-//        // Tried some hacks
-//        tryPlayingURL(stream: url, TypeofURL: "High")
-
-        var request = URLRequest(url: url)
-        request.httpMethod = "HEAD"
-        request.timeoutInterval = httpRequestTimeout
-        let task = URLSession.shared.dataTask(with: request) {data, response, error in
-			
-            if let httpResponse = response as? HTTPURLResponse {
-                let localizedResponse = HTTPURLResponse.localizedString(forStatusCode: httpResponse.statusCode)
-                print("Status Code : \(httpResponse.statusCode)  \(localizedResponse)")
-                    self.highResHTTPCode = httpResponse.statusCode
-
-                if httpResponse.statusCode >= 400
-                {
-                    let message : String =  String(httpResponse.statusCode) + " " + localizedResponse
-                   print(message)
-                        self.highResMessage = message
-                        self.highResValidity = false
-                        self.isHighResTaskCompleated = true
-                        self.invalidateHighResTimer()
-                    return
-                }
-                else {
-                    let message : String = String(httpResponse.statusCode) + " " + localizedResponse
-                    print(message)
-                        self.highResMessage = message
-                        self.highResValidity = true
-                        self.isHighResTaskCompleated = true
-                        self.invalidateHighResTimer()
-                    return
-                }
-            }
-            else {
-                self.highResMessage = "Error"
-                self.highResValidity = false
-                self.isHighResTaskCompleated = true
-                self.invalidateHighResTimer()
-            }
-        }
-
-        highResTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(runHigh), userInfo: nil, repeats: true)
-
-        task.resume()
-
-    }
-    
-    func getLowResURLResponse(urlPath : String, TypeofURL: String) {
-        let url = URL(string: urlPath)!
-        // Tried some hacks
-//        if fileExists(url: url as NSURL) == false {
-//            print("file dose not exist")
-//        }
-//        // Tried some hacks
-//        tryPlayingURL(stream: url, TypeofURL: TypeofURL)
-//
-        var request = URLRequest(url: url)
-        request.httpMethod = "HEAD"
-        request.timeoutInterval = httpRequestTimeout
-        let task = URLSession.shared.dataTask(with: request) {data, response, error in
-            
-            if let httpResponse = response as? HTTPURLResponse {
-                let localizedResponse = HTTPURLResponse.localizedString(forStatusCode: httpResponse.statusCode)
-                print("Status Code : \(httpResponse.statusCode)  \(localizedResponse)")
-                self.lowResHTTPCode = httpResponse.statusCode
-                if httpResponse.statusCode >= 400
-                {
-                    let message : String =  String(httpResponse.statusCode) + " " + localizedResponse
-                    print(message)
-                        self.lowResMessage = message
-                        self.lowResValidity = false
-                        self.isLowResTaskCompleated = true
-                    return
-                }
-                else {
-                    let message : String = String(httpResponse.statusCode) + " " + localizedResponse
-                    print(message)
-                        self.lowResMessage = message
-                        self.lowResValidity = true
-                        self.isLowResTaskCompleated = true
-                    return
-                }
-            }
-            else {
-                self.lowResMessage = "Error"
-                self.lowResValidity = false
-                self.isLowResTaskCompleated = true
-                self.invalidateHighResTimer()
-            }
-        }
-
-        lowResTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(runLow), userInfo: nil, repeats: true)
-        
-        task.resume()
-    }
-    // Functions to invalidate timers
-    // -----------------------------------------------------------------
-    @objc func invalidateHighResTimer(){
-  //      highResTimer?.invalidate()
-        //      Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(invalidateHighTimer), userInfo: nil, repeats: false)
-    }
-    @objc func invalidateLowResTimer(){
-  //      lowResTimer?.invalidate()
-        //      Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(invalidateLowTimer), userInfo: nil, repeats: false)
-    }
-    
-    @objc func invalidateHighTimer(){
-        print("highResTimer Invalidated")
-        //       self.highResTimer?.invalidate()
-    }
-    @objc func invalidateLowTimer(){
-        print("lowResTimer Invalidated")
-        //       self.lowResTimer?.invalidate()
-    }
-    
-    // Functions Runs after a delay of 1 sec
-    // and throws High and low Res alerts depending on URL flags
-    // -----------------------------------------------------------------
-    @objc func runLow(){
-        print("isLowResTaskCompleated == \(isLowResTaskCompleated)")
-        if isLowResTaskCompleated == false {
-            return
-        }
-        if self.lowResValidity == true{
-            self.lowResImgStatus.image = UIImage(named: "tick")
-        }
-        else{
-            self.lowResImgStatus.image = UIImage(named: "cross")
-            
-                AJAlertController.initialization().showAlertWithOkButton(title:"Low Res Status Code : ",aStrMessage: self.lowResMessage) { (index, title) in
-                    print(index,title)
-                    if index == 0 {
-                    }
-                }
-        }
-        
-        if self.lowResValidity == true && self.highResValidity == true {
-            self.OKbutton.isEnabled = true
-        }
-        else {
-            self.OKbutton.isEnabled = false
-        }
-        if isLowResTaskCompleated == true {
-            isLowResTaskCompleated = false
-            lowResTimer?.invalidate()
-            self.invalidateLowResTimer()
-        }
-    }
-    
-    @objc func runHigh(){
-        print("isHighResTaskCompleated == \(isHighResTaskCompleated)")
-        if isHighResTaskCompleated == false {
-            return
-        }
-        if self.highResValidity == true{
-            self.highResImgStatus.image = UIImage(named: "tick")
-        }
-        else{
-            self.highResImgStatus.image = UIImage(named: "cross")
-                AJAlertController.initialization().showAlertWithOkButton(title:"High Res Status Code : ",aStrMessage: self.highResMessage) { (index, title) in
-                    print(index,title)
-                    if index == 0 {
-                    }
-                }
-        }
-        
-        if self.lowResValidity == true && self.highResValidity == true {
-            self.OKbutton.isEnabled = true
-        }
-        else {
-            self.OKbutton.isEnabled = false
-        }
-        if isHighResTaskCompleated == true {
-            isHighResTaskCompleated = false
-            highResTimer?.invalidate()
-            self.invalidateHighResTimer()
-        }
-    }
-
-    // Tried some Hacks
-    // -----------------------------------------------------------------
-    func fileExists(url : NSURL!) -> Bool {
-        
-        let req = NSMutableURLRequest(url: url as URL)
-        req.httpMethod = "HEAD"
-        req.timeoutInterval = 1.0 // Adjust to your needs
-        
-        var response : URLResponse?
-        do {
-            try NSURLConnection.sendSynchronousRequest(req as URLRequest, returning: &response)
-        }
-        catch {
-            print("fail")
-        }
-        return ((response as? HTTPURLResponse)?.statusCode ?? -1) == 200
-    }
-
-    func tryPlayingURL(stream: URL, TypeofURL : String){
-        
-        let item = AVPlayerItem(url: stream)
-        let output = AVPlayerItemVideoOutput(outputSettings: nil)
-        item.add(output)
-        if TypeofURL == "High" {
-            self.highResValidity = true
-        }
-        else {
-            self.lowResValidity = true
-        }
-        playerItemObserver = item.observe(\.status) { [weak self] item, _ in
-            guard item.status == .readyToPlay
-            else  {
-                    print("failed")
-                    if TypeofURL == "High" {
-                        self?.highResValidity = false
-                        return
-                    }
-                    else {
-                        self?.lowResValidity = false
-                        return
-                    }
-                    return
-            }
-            self?.playerItemObserver = nil
-        }
-    }
-// -----------------------------------------------------------------
-    //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    //
-    //        if let identifier = segue.identifier {
-    //            if identifier == "mainMenu" {
-    //                if let viewController = segue.destination as? MenuViewController {
-    //                    viewController.ipAddress_highres = urlHighResTextField.text!
-    //                    viewController.ipAddress_lowres = urlLowResTextField.text!
-    //                }
-    //            }
-    //        }
-    //    }
 
 }
+
+
 
 // Helper functions For sanitizing the URLs
 extension String {
@@ -625,30 +286,5 @@ extension String {
     
     func sanitize() -> String {
         return self.replace(string: " ", replacement: "").localizedLowercase
-    }
-}
-var vSpinner : UIView?
-extension UIViewController {
-    
-    func showSpinner(onView : UIView) {
-        let spinnerView = UIView.init(frame: onView.bounds)
-        spinnerView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
-        let ai = UIActivityIndicatorView.init(style: .whiteLarge)
-        ai.startAnimating()
-        ai.center = spinnerView.center
-        
-        DispatchQueue.main.async {
-            spinnerView.addSubview(ai)
-            onView.addSubview(spinnerView)
-        }
-        
-        vSpinner = spinnerView
-    }
-    
-    func removeSpinner() {
-        DispatchQueue.main.async {
-            vSpinner?.removeFromSuperview()
-            vSpinner = nil
-        }
     }
 }

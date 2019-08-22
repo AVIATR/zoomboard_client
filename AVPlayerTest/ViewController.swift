@@ -211,11 +211,11 @@ class ViewController: UIViewController {
         var pt : CGPoint = zoomPoint
         pt.x -= playerView.bounds.midX
         pt.y -= playerView.bounds.midY
-        var tranf = playerView.transform
+//        var tranf = playerView.transform
 
-        playerView.transform = playerView.transform.translatedBy(x: pt.x, y: pt.y).scaledBy(x: zoomFactor, y: zoomFactor).translatedBy(x: -pt.x, y: -pt.y)
-//        playerView.transform = playerView.transform.scaledBy(x: zoomFactor, y: zoomFactor)
-  //      playerView.transform = playerView.transform.translatedBy(x: -pt.x, y: -pt.y)
+//        playerView.transform = playerView.transform.translatedBy(x: pt.x, y: pt.y).scaledBy(x: zoomFactor, y: zoomFactor).translatedBy(x: -pt.x, y: -pt.y)
+        playerView.transform = playerView.transform.scaledBy(x: zoomFactor, y: zoomFactor)
+        playerView.transform = playerView.transform.translatedBy(x: -pt.x, y: -pt.y)
     }
     
     
@@ -232,10 +232,10 @@ class ViewController: UIViewController {
         if (zoomFactor > 1){
             UIView.animate(withDuration: TimeInterval(0.4), delay: 0, options: .curveEaseInOut, animations: {
                 let ratio = self.playerOriginalSize.width / self.playerView.frame.width
-                print(ratio)
+//                print(ratio)
                 self.playerView.transform = .identity
-//                self.playerView.transform = self.playerView.transform.scaledBy(x: ratio, y: ratio)
-  //              self.playerView.frame = self.playerOriginalSize
+                self.playerView.transform = self.playerView.transform.scaledBy(x: ratio, y: ratio)
+                self.playerView.frame = self.playerOriginalSize
                 
                 self.zoomFactor = 1
                 self.fixView()

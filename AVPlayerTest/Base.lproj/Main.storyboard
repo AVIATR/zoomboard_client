@@ -633,7 +633,6 @@
         <image name="snapshot" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="hlr-IN-18C"/>
         <segue reference="33l-lD-4Kr"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -30,8 +30,8 @@ class SettingsView: UIViewController,UITextFieldDelegate {
     
     let httpRequestTimeout = 5.0
     
-    var lowResTimer : Timer?
-    var highResTimer : Timer?
+//    var lowResTimer : Timer?
+//    var highResTimer : Timer?
     
     @IBOutlet weak var highResTextField: UITextField!
     @IBOutlet weak var lowResTextField: UITextField!
@@ -121,6 +121,7 @@ class SettingsView: UIViewController,UITextFieldDelegate {
 //        isLowResTaskCompleated = true
 //        invalidateLowResTimer()
 //        invalidateHighResTimer()
+        streamInfo[highResTextField.accessibilityIdentifier!]!.responseCheckTimer.invalidate()
         dismiss(animated: true, completion: nil)
   //      delegate?.removeBlurredBackgroundView()
     }
@@ -144,6 +145,7 @@ class SettingsView: UIViewController,UITextFieldDelegate {
     // Calls just after text is entered in High and Low Res URLs
     // -----------------------------------------------------------------
     @IBAction func urlEditDidEnd(_ sender: UITextField) {
+        OKbutton.isEnabled = false
         scrollViewOutlet.scrollRectToVisible(topRect.frame, animated: true)
         let streamID = sender.accessibilityIdentifier
         streamInfo[streamID!]!.statusImage.image = UIImage(named: "sync")
@@ -170,13 +172,14 @@ class SettingsView: UIViewController,UITextFieldDelegate {
                 print("Error in URL")
             }
             else{
-                print("all good")
+                print("URL is good, waiting for HTTP response...")
             }
         }
-        else{
+        else{ //string is empty
             streamInfo[streamID!]!.statusImage.image = UIImage(named: "cross")
             OKbutton.isEnabled = false
             // TODO: send a message about empty text box
+            sender.backgroundColor = UIColor.red
         }
         
     }
@@ -246,19 +249,21 @@ class SettingsView: UIViewController,UITextFieldDelegate {
         else{
           return
         }
-        
     }
+    
     
     func handleResponse(stream: streamStatus){
         self.msgLabel.isHidden = true
         if stream.streamExists{
             stream.statusImage.image = UIImage(named: "tick")
+            OKbutton.isEnabled = true
         }
         else{
             stream.statusImage.image = UIImage(named: "cross")
             //TODO: show error message
         }
     }
+    
     
     func isURLValid(_ string: String?) -> Bool {
         guard let urlString = string,
@@ -271,11 +276,9 @@ class SettingsView: UIViewController,UITextFieldDelegate {
         
         let predicate = NSPredicate(format:"SELF MATCHES %@", argumentArray:[regEx])
         return predicate.evaluate(with: string)
-        
     }
 
 }
-
 
 
 // Helper functions For sanitizing the URLs

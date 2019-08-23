@@ -254,7 +254,6 @@ class ViewController: UIViewController {
         self.playerView.transform = self.playerView.transform.scaledBy(x: ratio, y: ratio)
         self.playerView.frame = self.playerOriginalSize
     }
-
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -353,41 +352,17 @@ class ViewController: UIViewController {
         else{
             resetZoom()
         }
-        if navigationController == nil
-        {
+        if navigationController == nil{
             return
         }
+        
         let navBarHeight = self.navigationController!.navigationBar.frame.size.height
 
-            let window = UIApplication.shared.keyWindow
+        let window = UIApplication.shared.keyWindow
         let topPadding = window?.safeAreaInsets.top
         
-        let screenSize = UIScreen.main.bounds
-        if isStarting == true {
-            screenHeight = self.view.frame.size.height// - (navBarHeight + topPadding!)
-            screenWidth = self.view.frame.size.width
-        }
-        else {
-            screenHeight = self.view.frame.size.width// - (navBarHeight + topPadding!)
-            screenWidth = self.view.frame.size.height
-        }
+        swapScreenDimensions(screenSize: UIScreen.main.bounds)
         
-//        print("screenHeight = \(screenHeight)")
-//        print("screenWidth = \(screenWidth)")
-        
-        // this is a workaround for when device is flat
-        if (screenSize.height > screenSize.width){ // screen orientation is portrait
-            if self.view.frame.size.height < self.view.frame.size.width{
-                screenHeight = self.view.frame.size.width// - (navBarHeight + topPadding!)
-                screenWidth = self.view.frame.size.height
-            }
-        }
-        if (screenSize.width > screenSize.height){ // screen orientation is landscaspe
-            if self.view.frame.size.width < self.view.frame.size.height{
-                screenHeight = self.view.frame.size.width// - (navBarHeight + topPadding!)
-                screenWidth = self.view.frame.size.height
-            }
-        }
         
         superView.frame = CGRect(x:0,y:0, width:screenWidth, height:screenHeight)
         lectureLabel.frame = CGRect(x: 0, y: topPadding! + navBarHeight + 5, width: screenWidth, height: lectureLabel.frame.height)
@@ -400,6 +375,35 @@ class ViewController: UIViewController {
         filtersView.frame = CGRect(x: screenWidth-frame.width, y: screenHeight-frame.height-30, width: frame.width, height: frame.height)
     }
     
+    func swapScreenDimensions(screenSize: CGRect){
+        // this happens only at the beginning
+        if isStarting == true {
+            screenHeight = self.view.frame.size.height// - (navBarHeight + topPadding!)
+            screenWidth = self.view.frame.size.width
+        }
+        else { // when the device rotates, swap screen height with width and viceversa
+            screenHeight = self.view.frame.size.width// - (navBarHeight + topPadding!)
+            screenWidth = self.view.frame.size.height
+        }
+        handleFlatDeviceOrientation(screenSize: screenSize)
+    }
+    
+    func handleFlatDeviceOrientation(screenSize: CGRect){
+        // this is a workaround for when device is flat
+        if (screenSize.height > screenSize.width){ // screen orientation is portrait
+            if self.view.frame.size.height < self.view.frame.size.width{
+                screenHeight = self.view.frame.size.width// - (navBarHeight + topPadding!)
+                screenWidth = self.view.frame.size.height
+            }
+        }
+        else if (screenSize.width > screenSize.height){ // screen orientation is landscaspe
+            if self.view.frame.size.width < self.view.frame.size.height{
+                screenHeight = self.view.frame.size.width// - (navBarHeight + topPadding!)
+                screenWidth = self.view.frame.size.height
+            }
+        }
+    }
+    
     func setupVideoFrameSize(){
         // if we received the first frame, resize video to fit available space on screen
         if (videoSize.width > 0){
@@ -407,7 +411,6 @@ class ViewController: UIViewController {
                 setupLandscapeVideo()
             }
             else{
-                // @Parag TODO: handle portrait video
                 setupPortraitVideo()
             }
             snapshotImageView.frame = playerView.frame
@@ -418,23 +421,28 @@ class ViewController: UIViewController {
     }
     
     func setupPortraitVideo(){
-       setupLandscapeVideo()
+        var w : CGFloat = videoSize.width
+        var h : CGFloat = videoSize.height
+        let center = superView.center
+        
+        w = (screenHeight * w)/h
+        h = screenHeight
+        
+        let x = center.x - w/2
+        let y = center.y - h/2
+        playerView.frame = CGRect(x: x, y: y, width: w, height: h)
+        playerOriginalSize = playerView.frame
     }
     
     // WARNING: possible problem with video getting cropped when the else triggers
     func setupLandscapeVideo(){
-        var w : CGFloat = 0
-        var h : CGFloat = 0
+        
+        var w : CGFloat = videoSize.width
+        var h : CGFloat = videoSize.height
         let center = superView.center
-        let aspectRatio = (screenHeight) / screenWidth
-        if aspectRatio > videoSize.height / videoSize.width {
-            w = screenWidth
-            h = (videoSize.height / videoSize.width) * w
-        }
-        else{
-            h = screenHeight
-            w = (videoSize.width / videoSize.height) * screenHeight
-        }
+      
+        h = (screenWidth * h)/w
+        w = screenWidth
         
         let x = center.x - w/2
         let y = center.y - h/2

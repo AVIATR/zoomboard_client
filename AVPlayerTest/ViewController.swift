@@ -50,9 +50,10 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var streamSwitch: UISwitch!
     @IBOutlet weak var superView: UIView!
-    
 
     @IBOutlet var tapGesture: UITapGestureRecognizer!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tapGesture.numberOfTapsRequired = 2
@@ -72,8 +73,8 @@ class ViewController: UIViewController {
         lectureLabel.text = lectureName
 
         // set up player bar to always be at the bottom and span the entire width of the screen
-        let screenHeight = UIScreen.main.bounds.height
-        let screenWidth = UIScreen.main.bounds.width
+//        let screenHeight = UIScreen.main.bounds.height
+//        let screenWidth = UIScreen.main.bounds.width
        
         streamURL = highResStream
 //        setupUI()
@@ -96,14 +97,11 @@ class ViewController: UIViewController {
         playerView.play(stream: streamURL, fps: 30){
             self.playerView.player.isMuted = true
         }
+        if !playerView.isStreamValid(){
+            showErrorPopup(title: "Error", message: "Video Stream not found.")
+        }
     }
-    /** Creates a photo album with title lecturename.
-     
-     :returns: Nothing
-     */
-    func fail()-> Void{
-        
-    }
+    
     func createAlbum() {
         SDPhotosHelper.createAlbum(withTitle: lectureName) { (true, error) in
         }
@@ -138,12 +136,17 @@ class ViewController: UIViewController {
         
         playerView.frame = CGRect(x: x, y: y, width: playerView.frame.width, height: playerView.frame.height)
     }
+    
 //---------------------------------------------------------
     @IBAction func toggleStreamSwitch(_ sender: Any) {
         playerView.stop()
         streamURL = streamSwitch.isOn ? highResStream : lowResStream
         playerView.play(stream: streamURL, fps: 30){
             self.playerView.player.isMuted = true
+        }
+        if !playerView.isStreamValid(){
+            print("PANIC!")
+            showErrorPopup(title: "Error", message: "Video Stream not found.")
         }
         
     }
@@ -213,9 +216,9 @@ class ViewController: UIViewController {
         pt.y -= playerView.bounds.midY
 //        var tranf = playerView.transform
 
-//        playerView.transform = playerView.transform.translatedBy(x: pt.x, y: pt.y).scaledBy(x: zoomFactor, y: zoomFactor).translatedBy(x: -pt.x, y: -pt.y)
-        playerView.transform = playerView.transform.scaledBy(x: zoomFactor, y: zoomFactor)
-        playerView.transform = playerView.transform.translatedBy(x: -pt.x, y: -pt.y)
+        playerView.transform = playerView.transform.translatedBy(x: pt.x, y: pt.y).scaledBy(x: zoomFactor, y: zoomFactor).translatedBy(x: -pt.x, y: -pt.y)
+//        playerView.transform = playerView.transform.scaledBy(x: zoomFactor, y: zoomFactor)
+//        playerView.transform = playerView.transform.translatedBy(x: -pt.x, y: -pt.y)
     }
     
     
@@ -231,11 +234,11 @@ class ViewController: UIViewController {
         recognizer.numberOfTouchesRequired = 1
         if (zoomFactor > 1){
             UIView.animate(withDuration: TimeInterval(0.4), delay: 0, options: .curveEaseInOut, animations: {
-                let ratio = self.playerOriginalSize.width / self.playerView.frame.width
+//                let ratio = self.playerOriginalSize.width / self.playerView.frame.width
 //                print(ratio)
                 self.playerView.transform = .identity
-                self.playerView.transform = self.playerView.transform.scaledBy(x: ratio, y: ratio)
-                self.playerView.frame = self.playerOriginalSize
+//                self.playerView.transform = self.playerView.transform.scaledBy(x: ratio, y: ratio)
+//                self.playerView.frame = self.playerOriginalSize
                 
                 self.zoomFactor = 1
                 self.fixView()
@@ -280,12 +283,29 @@ class ViewController: UIViewController {
             playerView.play(stream: streamURL, fps: 30){
                 self.playerView.player.isMuted = true
             }
+            if !playerView.isStreamValid(){
+                showErrorPopup(title: "Error", message: "Video Stream not found.")
+            }
             Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(setupUI), userInfo: nil, repeats: false)
             lectureLabel.isHidden = true
         }
     }
 
 
+    func showErrorPopup(title: String, message: String){
+        let alert = UIAlertController(title: title, message: nil, preferredStyle: UIAlertController.Style.alert)
+        let messageFont = [kCTFontAttributeName: UIFont(name: "Avenir-Roman", size: 20.0)!]
+        let messageAttrString = NSMutableAttributedString(string: message, attributes: messageFont as [NSAttributedString.Key : Any])
+        alert.setValue(messageAttrString, forKey: "attributedMessage")
+        
+        let okButton = UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel, handler: { _ in
+            _ = self.navigationController?.popToRootViewController(animated: true)
+        })
+        alert.addAction(okButton)
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
 
     func getImageToSave() -> UIImage{
         
@@ -409,6 +429,7 @@ class ViewController: UIViewController {
        setupLandscapeVideo()
     }
     
+    // WARNING: possible problem with video getting cropped when the else triggers
     func setupLandscapeVideo(){
         var w : CGFloat = 0
         var h : CGFloat = 0

@@ -20,6 +20,7 @@ class MPSVideoView : MTKView{
     private var output: AVPlayerItemVideoOutput!
     private var playerItemObserver: NSKeyValueObservation?
     var delegateView : ViewController?
+    private var streamOK : Bool = true
     
     // timer to synchronize drawing to refresh rate of display
     private var displayLink: CADisplayLink!
@@ -129,19 +130,9 @@ class MPSVideoView : MTKView{
         
         playerItemObserver = item.observe(\.status) { [weak self] item, _ in
             guard item.status == .readyToPlay
-            else {
-                
+            else{
                 print("failed")
-                AJAlertController.initialization().showAlertWithOkButton(title:"Player",aStrMessage: "Please enter a URL with Valid Content") { (index, title) in
-                    
-
-                    print(index,title)
-                    if index == 0 {
-                        self?.delegateView?.navigationController?.popViewController(animated: false)
-                        self?.delegateView?.navigationController?.popViewController(animated: true)
-                        
-                    }
-                }
+                self!.streamOK = false
                 return
             }
             self?.playerItemObserver = nil
@@ -151,6 +142,12 @@ class MPSVideoView : MTKView{
         }
         
         player = AVPlayer(playerItem: item)
+        streamOK = true
+        
+    }
+    
+    public func isStreamValid() -> Bool{
+        return streamOK
     }
     
     override func draw(_ rect: CGRect) {

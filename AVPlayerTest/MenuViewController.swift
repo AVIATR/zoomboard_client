@@ -72,6 +72,7 @@ class MenuViewController: UIViewController,UITextFieldDelegate {
         let screenWidth = UIScreen.main.bounds.width
 
         bottomView.frame.origin.y =   screenWidth - bottomView.bounds.height
+        
     }
     
     func fadeInOutView(view : UIView, duration: TimeInterval, delay : TimeInterval){
@@ -91,10 +92,12 @@ class MenuViewController: UIViewController,UITextFieldDelegate {
     func showWelcomeText(){
         UIView.animate(withDuration: 1, animations: { () -> Void in
             self.welcomeText.alpha = 1
+            self.welcomeText.becomeFirstResponder()
         })
         UIView.animate(withDuration: 1, delay: TimeInterval(0.5), options: UIView.AnimationOptions.curveEaseIn, animations: {
             self.connectView.alpha = 1.0
         }, completion: nil)
+        
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

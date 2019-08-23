@@ -21,6 +21,7 @@ class MPSVideoView : MTKView{
     private var playerItemObserver: NSKeyValueObservation?
     var delegateView : ViewController?
     private var streamOK : Bool = true
+    var observer: NSKeyValueObservation?
     
     // timer to synchronize drawing to refresh rate of display
     private var displayLink: CADisplayLink!
@@ -122,27 +123,46 @@ class MPSVideoView : MTKView{
     func play(stream: URL, fps: Int, completion:  (()->Void)? = nil){
         layer.isOpaque = true
         
-        let item = AVPlayerItem(url: stream)
+        let asset = AVAsset(url: stream)
+        let assetKeys = ["playable"]
         
+//        let item = AVPlayerItem(url: stream)
+        let item = AVPlayerItem(asset: asset,
+                                  automaticallyLoadedAssetKeys: assetKeys)
         output = AVPlayerItemVideoOutput(outputSettings: nil)
         
         item.add(output)
         
-        playerItemObserver = item.observe(\.status) { [weak self] item, _ in
-            guard item.status == .readyToPlay
-            else{
-                print("failed")
-                self!.streamOK = false
-                return
+        // Register as an observer of the player item's status property
+        self.observer = item.observe(\.status, options:  [.new, .old], changeHandler: { (playerItem, change) in
+            if playerItem.status == .readyToPlay {
+                self.streamOK = true
+                self.setupDisplayLink(fps: fps)
+                self.player.play()
+                completion?()
             }
-            self?.playerItemObserver = nil
-            self?.setupDisplayLink(fps: fps)
-            self?.player.play()
-            completion?()
-        }
+            else{
+                self.streamOK = false
+            }
+        })
+        
+//        streamOK = (item.status == .readyToPlay)
+        
+//        playerItemObserver = item.observe(\.status) { [weak self] item, _ in
+//
+//            guard item.status == .readyToPlay
+//            else{
+//                print("failed")
+//                return
+//            }
+//            self?.playerItemObserver = nil
+//            self?.setupDisplayLink(fps: fps)
+//            self?.player.play()
+//            completion?()
+//        }
         
         player = AVPlayer(playerItem: item)
-        streamOK = true
+        
         
     }
     

@@ -137,6 +137,14 @@ class ViewController: UIViewController {
         playerView.frame = CGRect(x: x, y: y, width: playerView.frame.width, height: playerView.frame.height)
     }
     
+    
+    @objc func checkStreamStatus(){
+        if !playerView.isStreamValid(){
+            print("PANIC!")
+            showErrorPopup(title: "Error", message: "Video Stream not found.")
+        }
+    }
+    
 //---------------------------------------------------------
     @IBAction func toggleStreamSwitch(_ sender: Any) {
         playerView.stop()
@@ -144,10 +152,10 @@ class ViewController: UIViewController {
         playerView.play(stream: streamURL, fps: 30){
             self.playerView.player.isMuted = true
         }
-        if !playerView.isStreamValid(){
-            print("PANIC!")
-            showErrorPopup(title: "Error", message: "Video Stream not found.")
-        }
+        
+        //checks that stream is valid
+        Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(checkStreamStatus), userInfo: nil, repeats: false)
+        
         
     }
 //---------------------------------------------------------
@@ -283,9 +291,8 @@ class ViewController: UIViewController {
             playerView.play(stream: streamURL, fps: 30){
                 self.playerView.player.isMuted = true
             }
-            if !playerView.isStreamValid(){
-                showErrorPopup(title: "Error", message: "Video Stream not found.")
-            }
+            //checks that stream is valid
+            Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(checkStreamStatus), userInfo: nil, repeats: false)
             Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(setupUI), userInfo: nil, repeats: false)
             lectureLabel.isHidden = true
         }
@@ -298,9 +305,10 @@ class ViewController: UIViewController {
         let messageAttrString = NSMutableAttributedString(string: message, attributes: messageFont as [NSAttributedString.Key : Any])
         alert.setValue(messageAttrString, forKey: "attributedMessage")
         
-        let okButton = UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel, handler: { _ in
-            _ = self.navigationController?.popToRootViewController(animated: true)
-        })
+//        let okButton = UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel, handler: { _ in
+//            _ = self.navigationController?.popToRootViewController(animated: true)
+//        })
+        let okButton = UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel, handler: nil)
         alert.addAction(okButton)
         
         self.present(alert, animated: true, completion: nil)

@@ -68,9 +68,9 @@ class SettingsView: UIViewController, UITextFieldDelegate{
         super.viewDidLoad()
 
         streamInfo[highResTextField.accessibilityIdentifier!] = streamStatus(urlValid: false, streamExists: false,
-                                                                             HTTPResponseReceived: false, statusImage: highResImgStatus, HTTPCode: 0, responseMsg: "", requestTask: URLSessionDataTask(), responseCheckTimer: Timer(), textField: highResTextField, prevURL: highResTextField.text!)
+                                                                             HTTPResponseReceived: false, statusImage: highResImgStatus, HTTPCode: 0, responseMsg: "", requestTask: URLSessionDataTask(), responseCheckTimer: Timer(), textField: highResTextField, prevURL: highResURL)
         streamInfo[lowResTextField.accessibilityIdentifier!] = streamStatus(urlValid: false, streamExists: false,
-                                                                            HTTPResponseReceived: false, statusImage: lowResImgStatus, HTTPCode: 0, responseMsg: "", requestTask: URLSessionDataTask(), responseCheckTimer: Timer(), textField: lowResTextField, prevURL: lowResTextField.text!)
+                                                                            HTTPResponseReceived: false, statusImage: lowResImgStatus, HTTPCode: 0, responseMsg: "", requestTask: URLSessionDataTask(), responseCheckTimer: Timer(), textField: lowResTextField, prevURL: lowResURL)
         
         OKbutton.setTitleColor(.gray, for: .disabled)
 
@@ -175,14 +175,14 @@ class SettingsView: UIViewController, UITextFieldDelegate{
             else{
                 if UIAccessibility.isVoiceOverRunning{
                     UIAccessibility.post(notification:.announcement, argument:"Checking URL")
-//                    print("URL is good, waiting for HTTP response...")
+
                 }
             }
         }
         else{ //string is empty
             streamInfo[streamID!]!.statusImage.image = UIImage(named: "cross")
             OKbutton.isEnabled = false
-            // TODO: send a message about empty text box
+            
             sender.backgroundColor = UIColor.red
             showErrorPopup(stream: streamInfo[streamID!]!, title: "Error in URL", message: "Please enter a URL")
         }
@@ -206,7 +206,7 @@ class SettingsView: UIViewController, UITextFieldDelegate{
         var request = URLRequest(url: url)
         request.httpMethod = "HEAD"
         request.timeoutInterval = httpRequestTimeout
-//        streamInfo[streamID]!.requestTask.cancel()
+
         streamInfo[streamID]!.requestTask = URLSession.shared.dataTask(with: request as URLRequest) {data, response, error in
             
             if let httpResponse = response as? HTTPURLResponse {
@@ -214,7 +214,7 @@ class SettingsView: UIViewController, UITextFieldDelegate{
                 print("Status Code : \(httpResponse.statusCode)  \(localizedResponse)")
                 let message : String =  String(httpResponse.statusCode) + " " + localizedResponse
                 print(message)
-                print(error)
+                
                 self.streamInfo[streamID]!.HTTPCode = httpResponse.statusCode
                 if httpResponse.statusCode >= 400
                 {
@@ -302,9 +302,8 @@ class SettingsView: UIViewController, UITextFieldDelegate{
         guard let urlString = string,
             let url = URL(string: urlString)
             else { return false }
+        if !UIApplication.shared.canOpenURL(url) { return false }
         return true
-//        if !UIApplication.shared.canOpenURL(url) { return false }
-        
 //        let regEx = "((https|http)://)((\\w|-)+)(([.]|[/]|[:])((\\w|-)+))+"
 //
 //        let predicate = NSPredicate(format:"SELF MATCHES %@", argumentArray:[regEx])

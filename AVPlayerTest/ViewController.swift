@@ -72,17 +72,14 @@ class ViewController: UIViewController {
         viewCenter =  superView.center
         lectureLabel.text = lectureName
 
-        // set up player bar to always be at the bottom and span the entire width of the screen
+        // these might be useful in the future if we handle other aspect ratios (height-dominant)
 //        let screenHeight = UIScreen.main.bounds.height
 //        let screenWidth = UIScreen.main.bounds.width
        
         streamURL = highResStream
-//        setupUI()
         startStream()
-        
         // once connected, set up folder for the session
         createAlbum()
- 
         setupUI()
         
     }
@@ -185,7 +182,7 @@ class ViewController: UIViewController {
                     newY = screenHeight - playerView.frame.height
                 }
             }
-            UIView.animate(withDuration: TimeInterval(0.1), delay: 0, options: .curveLinear, animations: {
+            UIView.animate(withDuration: TimeInterval(0.25), delay: 0, options: .curveLinear, animations: {
                 self.playerView.frame = CGRect(x: newX, y: newY, width: self.playerView.frame.width, height: self.playerView.frame.height)
                 
             }, completion: nil )
@@ -205,7 +202,7 @@ class ViewController: UIViewController {
         }
         if zoomFactor <= 1 {
             
-            UIView.animate(withDuration: TimeInterval(0.1), delay: 0, options: .curveLinear, animations: {
+            UIView.animate(withDuration: TimeInterval(0.25), delay: 0, options: .curveLinear, animations: {
                 self.playerView.frame = self.playerOriginalSize
             }, completion: nil )
 
@@ -222,14 +219,9 @@ class ViewController: UIViewController {
         var pt : CGPoint = zoomPoint
         pt.x -= playerView.bounds.midX
         pt.y -= playerView.bounds.midY
-//        var tranf = playerView.transform
-
         playerView.transform = playerView.transform.translatedBy(x: pt.x, y: pt.y).scaledBy(x: zoomFactor, y: zoomFactor).translatedBy(x: -pt.x, y: -pt.y)
-//        playerView.transform = playerView.transform.scaledBy(x: zoomFactor, y: zoomFactor)
-//        playerView.transform = playerView.transform.translatedBy(x: -pt.x, y: -pt.y)
+
     }
-    
-    
     
     // make player bar disappear when touching video
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -242,16 +234,11 @@ class ViewController: UIViewController {
         recognizer.numberOfTouchesRequired = 1
         if (zoomFactor > 1){
             UIView.animate(withDuration: TimeInterval(0.4), delay: 0, options: .curveEaseInOut, animations: {
-//                let ratio = self.playerOriginalSize.width / self.playerView.frame.width
-//                print(ratio)
                 self.playerView.transform = .identity
-//                self.playerView.transform = self.playerView.transform.scaledBy(x: ratio, y: ratio)
-//                self.playerView.frame = self.playerOriginalSize
-                
+                self.playerView.frame = self.playerOriginalSize
                 self.zoomFactor = 1
                 self.fixView()
                  }, completion: nil )
-           
         }
         else{
             UIView.animate(withDuration: TimeInterval(0.4), delay: 0, options: .curveEaseInOut, animations: {
@@ -276,6 +263,7 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
     @IBAction func showFiltersButtonPushed(_ sender: Any) {
         filtersView.isHidden = !filtersView.isHidden
     }
@@ -305,6 +293,7 @@ class ViewController: UIViewController {
         let messageAttrString = NSMutableAttributedString(string: message, attributes: messageFont as [NSAttributedString.Key : Any])
         alert.setValue(messageAttrString, forKey: "attributedMessage")
         
+        // >> NOTE: replace with this if you want to go back to home page on error
 //        let okButton = UIAlertAction(title: "OK", style: UIAlertAction.Style.cancel, handler: { _ in
 //            _ = self.navigationController?.popToRootViewController(animated: true)
 //        })
@@ -386,8 +375,10 @@ class ViewController: UIViewController {
             screenHeight = self.view.frame.size.width// - (navBarHeight + topPadding!)
             screenWidth = self.view.frame.size.height
         }
-        print("screenHeight = \(screenHeight)")
-        print("screenWidth = \(screenWidth)")
+        
+//        print("screenHeight = \(screenHeight)")
+//        print("screenWidth = \(screenWidth)")
+        
         // this is a workaround for when device is flat
         if (screenSize.height > screenSize.width){ // screen orientation is portrait
             if self.view.frame.size.height < self.view.frame.size.width{

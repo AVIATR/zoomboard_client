@@ -19,7 +19,7 @@ class Movies {
         return bitdash
     }
     static func lRes()->String {
-        return bunny
+        return apple
     }
 
 }

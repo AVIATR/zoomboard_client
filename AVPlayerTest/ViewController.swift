@@ -17,11 +17,7 @@ class ViewController: UIViewController {
     
     @IBOutlet var filtersView: UIView!
     @IBOutlet var playerView: MPSVideoView!
-    
-   
-    
     @IBOutlet weak var lectureLabel: UILabel!
-    
     @IBOutlet weak var snapshotButton: UIButton!
     
     var filtersManager : FiltersManager = FiltersManager()
@@ -145,16 +141,17 @@ class ViewController: UIViewController {
 //---------------------------------------------------------
     @IBAction func toggleStreamSwitch(_ sender: Any) {
         playerView.stop()
+        isPlaying = false
         streamURL = streamSwitch.isOn ? highResStream : lowResStream
-        playerView.play(stream: streamURL, fps: 30){
-            self.playerView.player.isMuted = true
-        }
+        startStream()
+        setupUI()
         
         //checks that stream is valid
         Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(checkStreamStatus), userInfo: nil, repeats: false)
         
         
     }
+    
 //---------------------------------------------------------
     @IBAction func handlePan(recognizer:UIPanGestureRecognizer) {
         let translation = recognizer.translation(in: self.view)
@@ -305,7 +302,6 @@ class ViewController: UIViewController {
     
 
     func getImageToSave() -> UIImage{
-        
         snapshotImageView.image = playerView.getCurrentImage()
         let size: CGSize = playerView.getOriginalVideoResolution()
         UIGraphicsBeginImageContext(size)
@@ -398,13 +394,10 @@ class ViewController: UIViewController {
         
         //fit video frame to screen
         setupVideoFrameSize()
-
         
         // set filters panel position
         let frame = filtersView.frame
         filtersView.frame = CGRect(x: screenWidth-frame.width, y: screenHeight-frame.height-30, width: frame.width, height: frame.height)
-            
-        
     }
     
     func setupVideoFrameSize(){

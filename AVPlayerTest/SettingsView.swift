@@ -37,12 +37,16 @@ class SettingsView: UIViewController, UITextFieldDelegate{
     @IBOutlet weak var highResTextField: UITextField!
     @IBOutlet weak var lowResTextField: UITextField!
     
+    @IBOutlet weak var lowResLabel: UILabel!
+    @IBOutlet weak var highResLabel: UILabel!
     var streamInfo : [String: streamStatus] = [:]
     
+    @IBOutlet weak var cancelButton: UIButton!
     var highResDef : String = Movies.hRes()
     var lowResDef : String = Movies.lRes()
     var synthesizer : AVSpeechSynthesizer = AVSpeechSynthesizer()
     
+    @IBOutlet weak var resetButton: UIButton!
     var highResURL : String = ""
     var lowResURL : String = ""
     
@@ -59,6 +63,7 @@ class SettingsView: UIViewController, UITextFieldDelegate{
     
     @IBOutlet weak var OKbutton: UIButton!
 
+    @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var topRect: UILabel!
     @IBOutlet weak var topKeyboardLimit: UILabel!
     @IBOutlet weak var keyboardText: UILabel!
@@ -82,7 +87,7 @@ class SettingsView: UIViewController, UITextFieldDelegate{
 
         highResTextField.text = highResURL
         lowResTextField.text = lowResURL
-        
+        contentView.accessibilityElements = [highResLabel!, highResTextField!, lowResLabel!, lowResTextField!, OKbutton!, resetButton!, cancelButton!]
     }
     
     // -----------------------------------------------------------------

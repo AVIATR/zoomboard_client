@@ -13,13 +13,16 @@ import AVFoundation
 
 class ViewController: UIViewController {
   
-    @IBOutlet weak var streamButton: UISwitch!
     
-    @IBOutlet var filtersView: UIView!
+    
+   
     @IBOutlet var playerView: MPSVideoView!
     @IBOutlet weak var lectureLabel: UILabel!
     @IBOutlet weak var snapshotButton: UIButton!
+    @IBOutlet weak var streamSwitch: UISwitch!
+     @IBOutlet var filtersView: UIView!
     
+    @IBOutlet weak var uiView: UIView!
     var filtersManager : FiltersManager = FiltersManager()
 
     var scaledState : Bool = false
@@ -44,7 +47,8 @@ class ViewController: UIViewController {
     var lectureName : String = "default"
     var streamURL : URL = URL(string: "default")!
 
-    @IBOutlet weak var streamSwitch: UISwitch!
+    @IBOutlet weak var filtersButton: UIButton!
+    
     @IBOutlet weak var superView: UIView!
 
     @IBOutlet var tapGesture: UITapGestureRecognizer!
@@ -72,13 +76,18 @@ class ViewController: UIViewController {
 //        let screenHeight = UIScreen.main.bounds.height
 //        let screenWidth = UIScreen.main.bounds.width
        
+        
         streamURL = highResStream
         startStream()
         // once connected, set up folder for the session
         createAlbum()
         setupUI()
-        
+        uiView.accessibilityElements = [snapshotButton!, streamSwitch!, filtersButton!, filtersView!]
     }
+    
+
+    
+    
     @objc func appMovedToBackground() {
         print("App moved to background!")
         print("Player Stopped")

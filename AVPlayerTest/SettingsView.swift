@@ -72,7 +72,7 @@ class SettingsView: UIViewController, UITextFieldDelegate{
         streamInfo[lowResTextField.accessibilityIdentifier!] = streamStatus(urlValid: false, streamExists: false,
                                                                             HTTPResponseReceived: false, statusImage: lowResImgStatus, HTTPCode: 0, responseMsg: "", requestTask: URLSessionDataTask(), responseCheckTimer: Timer(), textField: lowResTextField, prevURL: lowResURL)
         
-        OKbutton.setTitleColor(.gray, for: .disabled)
+//        OKbutton.setTitleColor(.gray, for: .disabled)
 
         scrollViewOutlet.showsVerticalScrollIndicator = false
         scrollViewOutlet.showsHorizontalScrollIndicator = false
@@ -98,8 +98,15 @@ class SettingsView: UIViewController, UITextFieldDelegate{
     @IBAction func resetPressed(_ sender: Any) {
         highResTextField.text = highResDef
         lowResTextField.text = lowResDef
+        
+        streamInfo[highResTextField.accessibilityIdentifier!] = streamStatus(urlValid: false, streamExists: false,
+                                                                             HTTPResponseReceived: false, statusImage: highResImgStatus, HTTPCode: 0, responseMsg: "", requestTask: URLSessionDataTask(), responseCheckTimer: Timer(), textField: highResTextField, prevURL: highResDef)
+        streamInfo[lowResTextField.accessibilityIdentifier!] = streamStatus(urlValid: false, streamExists: false,
+                                                                            HTTPResponseReceived: false, statusImage: lowResImgStatus, HTTPCode: 0, responseMsg: "", requestTask: URLSessionDataTask(), responseCheckTimer: Timer(), textField: lowResTextField, prevURL: lowResDef)
+        
         streamInfo[highResTextField.accessibilityIdentifier!]!.responseCheckTimer.invalidate()
         streamInfo[lowResTextField.accessibilityIdentifier!]!.responseCheckTimer.invalidate()
+        OKbutton.isEnabled = true
     }
     
     @IBAction func cancelPressed(_ sender: Any) {
@@ -236,7 +243,7 @@ class SettingsView: UIViewController, UITextFieldDelegate{
                 self.streamInfo[streamID]!.HTTPResponseReceived = true
             }
         }
-        self.streamInfo[streamID]!.responseCheckTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(checkHTTPRequestStatus), userInfo: ["streamID": streamID], repeats: true)
+        self.streamInfo[streamID]!.responseCheckTimer = Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(checkHTTPRequestStatus), userInfo: ["streamID": streamID], repeats: true)
         streamInfo[streamID]!.requestTask.resume()
        
     }
@@ -263,6 +270,10 @@ class SettingsView: UIViewController, UITextFieldDelegate{
         if stream.streamExists{
             stream.statusImage.image = UIImage(named: "tick")
             OKbutton.isEnabled = true
+            if UIAccessibility.isVoiceOverRunning{
+                UIAccessibility.post(notification:.announcement, argument:"URL is correct!")
+                
+            }
         }
         else{
             stream.statusImage.image = UIImage(named: "cross")

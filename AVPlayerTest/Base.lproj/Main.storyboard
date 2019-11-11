@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MFv-Nu-t9W">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MFv-Nu-t9W">
     <device id="ipad10_5" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15509"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -12,20 +12,20 @@
         <scene sceneID="zoS-Nn-XeZ">
             <objects>
                 <viewController title="Home" id="a5e-tQ-vtO" userLabel="Home" customClass="MenuViewController" customModule="AVPlayerTest" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="JNf-hS-y4w">
-                        <rect key="frame" x="0.0" y="0.0" width="834" height="1112"/>
+                    <view key="view" contentMode="scaleToFill" ambiguous="YES" id="JNf-hS-y4w">
+                        <rect key="frame" x="0.0" y="0.0" width="712" height="1006.9200564096436"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1u7-Sm-sNS" customClass="UIScrollView">
-                                <rect key="frame" x="0.0" y="50" width="834" height="1082"/>
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1u7-Sm-sNS" customClass="UIScrollView">
+                                <rect key="frame" x="0.0" y="0.0" width="834" height="1027"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pXu-p6-5iH" userLabel="Content View">
-                                        <rect key="frame" x="0.0" y="0.0" width="834" height="1082"/>
+                                    <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pXu-p6-5iH" userLabel="Content View">
+                                        <rect key="frame" x="0.0" y="0.0" width="834" height="1027"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yhb-n2-eQY">
+                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yhb-n2-eQY">
                                                 <rect key="frame" x="0.0" y="38" width="834" height="75"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to Zoomboard" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HTJ-2v-Z69">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Welcome to Zoomboard" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HTJ-2v-Z69">
                                                         <rect key="frame" x="174.5" y="10" width="485" height="55.5"/>
                                                         <fontDescription key="fontDescription" name=".SFNSDisplay" family=".SF NS Display" pointSize="50"/>
                                                         <nil key="highlightedColor"/>
@@ -38,7 +38,7 @@
                                                     <constraint firstItem="HTJ-2v-Z69" firstAttribute="centerX" secondItem="Yhb-n2-eQY" secondAttribute="centerX" id="PWB-OJ-ntM"/>
                                                 </constraints>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lwI-Q7-sm9">
+                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lwI-Q7-sm9">
                                                 <rect key="frame" x="0.0" y="-20" width="834" height="100"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mTN-K9-0u5">
@@ -58,7 +58,7 @@
                                                             <segue destination="pqv-Jr-06J" kind="presentation" identifier="settingsModalView" id="hlr-IN-18C"/>
                                                         </connections>
                                                     </button>
-                                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kES-pc-S2n">
+                                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kES-pc-S2n">
                                                         <rect key="frame" x="734" y="0.0" width="100" height="100"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <accessibility key="accessibilityConfiguration" hint="shows images gallery" label="browse snapshots"/>
@@ -80,7 +80,7 @@
                                                     <constraint firstItem="mTN-K9-0u5" firstAttribute="top" secondItem="lwI-Q7-sm9" secondAttribute="top" id="msZ-xK-r3d"/>
                                                 </constraints>
                                             </view>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2H4-7a-l0f">
+                                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2H4-7a-l0f">
                                                 <rect key="frame" x="-22" y="168.5" width="878" height="564"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is the name of the album where your snapshots will be saved" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jbJ-WO-YNL">
@@ -112,8 +112,6 @@
                                                         <textInputTraits key="textInputTraits" keyboardAppearance="alert" returnKeyType="join" enablesReturnKeyAutomatically="YES"/>
                                                         <connections>
                                                             <action selector="isEditing:" destination="a5e-tQ-vtO" eventType="editingChanged" id="OyF-Ay-k4G"/>
-                                                            <action selector="lectureNameEditingBegan:" destination="a5e-tQ-vtO" eventType="editingDidBegin" id="ehG-R0-fTX"/>
-                                                            <action selector="lectureNameEditingEnded:" destination="a5e-tQ-vtO" eventType="editingDidEnd" id="wTw-cN-1cl"/>
                                                         </connections>
                                                     </textField>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XNz-fQ-6MZ">
@@ -178,8 +176,8 @@
                                     <constraint firstItem="pXu-p6-5iH" firstAttribute="trailing" secondItem="1u7-Sm-sNS" secondAttribute="trailing" id="zRa-uM-fgW"/>
                                 </constraints>
                             </view>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gc6-Yq-xpn">
-                                <rect key="frame" x="396" y="959" width="42" height="21"/>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gc6-Yq-xpn">
+                                <rect key="frame" x="396" y="909" width="42" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="Cjx-Lw-MvR"/>
                                     <constraint firstAttribute="width" constant="42" id="u1h-rd-TA7"/>
@@ -188,8 +186,8 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zci-ky-oy5">
-                                <rect key="frame" x="396" y="50" width="42" height="21"/>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zci-ky-oy5">
+                                <rect key="frame" x="396" y="0.0" width="42" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="42" id="JOd-ST-RiA"/>
                                     <constraint firstAttribute="height" constant="21" id="lht-St-lUl"/>
@@ -436,12 +434,12 @@
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController storyboardIdentifier="ViewController" id="BYZ-38-t0r" customClass="ViewController" customModule="AVPlayerTest" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleAspectFit" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="834" height="1112"/>
+                    <view key="view" contentMode="scaleAspectFit" ambiguous="YES" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="712" height="1006.9200564096436"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleAspectFit" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R5e-Do-ApW">
-                                <rect key="frame" x="0.0" y="348" width="1111" height="764"/>
+                                <rect key="frame" x="0.0" y="243" width="1111" height="764"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <mtkView multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" preservesSuperviewLayoutMargins="YES" colorPixelFormat="BGRA8Unorm" depthStencilPixelFormat="Depth32Float" translatesAutoresizingMaskIntoConstraints="NO" id="uhV-sl-fA3" customClass="MPSVideoView" customModule="AVPlayerTest" customModuleProvider="target">
@@ -492,8 +490,8 @@
                                 </subviews>
                                 <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bD9-B5-06C">
-                                <rect key="frame" x="1" y="1036" width="834" height="75"/>
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bD9-B5-06C">
+                                <rect key="frame" x="1" y="931" width="834" height="75"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Orl-rA-P2q">
                                         <rect key="frame" x="0.0" y="0.0" width="75" height="75"/>
@@ -508,7 +506,7 @@
                                             <action selector="saveSnapshotPushed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fUk-uI-EW0"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y8J-a1-ZHG">
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y8J-a1-ZHG">
                                         <rect key="frame" x="759" y="0.0" width="75" height="75"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <accessibility key="accessibilityConfiguration" hint="show image enhancement filters" label="image enhancement"/>
@@ -521,7 +519,7 @@
                                             <action selector="showFiltersButtonPushed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="15B-UH-RHT"/>
                                         </connections>
                                     </button>
-                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5WY-sB-jEL">
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5WY-sB-jEL">
                                         <rect key="frame" x="392.5" y="22" width="51" height="31"/>
                                         <connections>
                                             <action selector="toggleStreamSwitch:" destination="BYZ-38-t0r" eventType="valueChanged" id="dLC-bf-qJF"/>
@@ -610,6 +608,7 @@
         <image name="snapshot" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="VzO-Do-yfe"/>
+        <segue reference="hlr-IN-18C"/>
+        <segue reference="33l-lD-4Kr"/>
     </inferredMetricsTieBreakers>
 </document>

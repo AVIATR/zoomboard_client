@@ -29,10 +29,10 @@ class SettingsView: UIViewController, UITextFieldDelegate{
     @IBOutlet weak var lowResImgStatus: UIImageView!
     @IBOutlet weak var highResImgStatus: UIImageView!
     
-    let httpRequestTimeout = 5.0
+    let httpRequestTimeout = 15.0
     
 //    var lowResTimer : Timer?
-//    var highResTimer : Timer?
+    var validationTimer : Timer?
     
     @IBOutlet weak var highResTextField: UITextField!
     @IBOutlet weak var lowResTextField: UITextField!
@@ -88,6 +88,20 @@ class SettingsView: UIViewController, UITextFieldDelegate{
         highResTextField.text = highResURL
         lowResTextField.text = lowResURL
         contentView.accessibilityElements = [highResLabel!, highResTextField!, lowResLabel!, lowResTextField!, OKbutton!, resetButton!, cancelButton!]
+        self.validateURL(sender: highResTextField)
+        self.validateURL(sender: lowResTextField)
+        OKbutton.isEnabled = false
+        OKbutton.setTitleColor(UIColor.gray, for: .disabled)
+        validationTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(checkStreamsValid), userInfo: nil, repeats: true)
+    }
+    
+    @objc func checkStreamsValid(timer: Timer){
+        if (streamInfo[highResTextField.accessibilityIdentifier!]!.streamExists) && (streamInfo[lowResTextField.accessibilityIdentifier!]!.streamExists){
+            OKbutton.isEnabled = true
+        }
+        else{
+            OKbutton.isEnabled = false
+        }
     }
     
     // -----------------------------------------------------------------
@@ -111,7 +125,15 @@ class SettingsView: UIViewController, UITextFieldDelegate{
         
         streamInfo[highResTextField.accessibilityIdentifier!]!.responseCheckTimer.invalidate()
         streamInfo[lowResTextField.accessibilityIdentifier!]!.responseCheckTimer.invalidate()
-        OKbutton.isEnabled = true
+        OKbutton.isEnabled = false
+        self.validateURL(sender: highResTextField)
+        self.validateURL(sender: lowResTextField)
+    }
+    
+    // invalidate URL when corresponding text box is touched for editing
+    @IBAction func touchedTextField(_ sender: UITextField) {
+        OKbutton.isEnabled = false
+       streamInfo[sender.accessibilityIdentifier!]!.streamExists = false
     }
     
     @IBAction func cancelPressed(_ sender: Any) {
@@ -122,6 +144,7 @@ class SettingsView: UIViewController, UITextFieldDelegate{
     
     @IBAction func editingStarted(_ sender: UITextField) {
         sender.backgroundColor = UIColor.white
+         OKbutton.isEnabled = false
         if sender == lowResTextField {
             scrollViewOutlet.scrollRectToVisible(keyboardText.frame, animated: true)
         }
@@ -156,7 +179,7 @@ class SettingsView: UIViewController, UITextFieldDelegate{
         scrollViewOutlet.scrollRectToVisible(topRect.frame, animated: true)
         let streamID = sender.accessibilityIdentifier
         
-        if streamInfo[streamID!]!.prevURL != streamInfo[streamID!]!.textField.text!{
+        //if streamInfo[streamID!]!.prevURL != streamInfo[streamID!]!.textField.text!{
             streamInfo[streamID!]!.prevURL = streamInfo[streamID!]!.textField.text!
             
             streamInfo[streamID!]!.statusImage.image = UIImage(named: "sync")
@@ -165,7 +188,7 @@ class SettingsView: UIViewController, UITextFieldDelegate{
             streamInfo[streamID!]!.HTTPResponseReceived = false
             streamInfo[streamID!]!.streamExists = false
             self.validateURL(sender: sender)
-        }
+        //}
     }
     
     func validateURL(sender: UITextField){
@@ -274,7 +297,7 @@ class SettingsView: UIViewController, UITextFieldDelegate{
         self.msgLabel.isHidden = true
         if stream.streamExists{
             stream.statusImage.image = UIImage(named: "tick")
-            OKbutton.isEnabled = true
+            //OKbutton.isEnabled = true
             if UIAccessibility.isVoiceOverRunning{
                 UIAccessibility.post(notification:.announcement, argument:"URL is correct!")
                 

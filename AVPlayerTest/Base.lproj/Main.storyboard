@@ -259,6 +259,8 @@
                                                 <textInputTraits key="textInputTraits" keyboardType="URL" keyboardAppearance="alert" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                 <connections>
                                                     <action selector="editingStarted:" destination="pqv-Jr-06J" eventType="editingDidBegin" id="WkN-tr-LnC"/>
+                                                    <action selector="touchedTextField:" destination="pqv-Jr-06J" eventType="touchDown" id="A4w-tf-fZH"/>
+                                                    <action selector="touchedTextField:" destination="pqv-Jr-06J" eventType="touchUpInside" id="P3p-ah-Y9M"/>
                                                     <action selector="urlEditDidEnd:" destination="pqv-Jr-06J" eventType="editingDidEnd" id="hXs-i5-Hvk"/>
                                                     <outlet property="delegate" destination="pqv-Jr-06J" id="fgi-YI-Vqk"/>
                                                 </connections>
@@ -281,6 +283,7 @@
                                                 <textInputTraits key="textInputTraits" keyboardType="URL" keyboardAppearance="alert" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                                 <connections>
                                                     <action selector="editingStarted:" destination="pqv-Jr-06J" eventType="editingDidBegin" id="ijC-es-GZP"/>
+                                                    <action selector="touchedTextField:" destination="pqv-Jr-06J" eventType="touchDown" id="3Xu-2X-8Lj"/>
                                                     <action selector="urlEditDidEnd:" destination="pqv-Jr-06J" eventType="editingDidEnd" id="eiS-KD-cbT"/>
                                                     <outlet property="delegate" destination="pqv-Jr-06J" id="svx-vL-UTm"/>
                                                 </connections>
@@ -608,7 +611,6 @@
         <image name="snapshot" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="hlr-IN-18C"/>
         <segue reference="33l-lD-4Kr"/>
     </inferredMetricsTieBreakers>
 </document>

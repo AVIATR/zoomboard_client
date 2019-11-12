@@ -156,7 +156,7 @@ class ViewController: UIViewController {
         setupUI()
         
         //checks that stream is valid
-        Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(checkStreamStatus), userInfo: nil, repeats: false)
+        Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(checkStreamStatus), userInfo: nil, repeats: false)
         
         
     }
@@ -285,7 +285,7 @@ class ViewController: UIViewController {
                 self.playerView.player.isMuted = true
             }
             //checks that stream is valid
-            Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(checkStreamStatus), userInfo: nil, repeats: false)
+            Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(checkStreamStatus), userInfo: nil, repeats: false)
             Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(setupUI), userInfo: nil, repeats: false)
             lectureLabel.isHidden = true
         }

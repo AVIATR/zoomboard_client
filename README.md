@@ -1,10 +1,11 @@
-#ZoomBoard Client iOS app
+
+# ZoomBoard Client iOS app
 
 This app connects to the ZoomBoard server and allows the users to watch and take snapshots of a camera feed in real-time. This app provides the option of applying image enhancement filters to the incoming video stream.
 
-#How to connect to the server
+## How to connect to the server
 
-#Apps functionalities
+# App functionalities
 ## Zoom and pan
 The video can be zoomed in or out using a double tap or pinching gestures. Panning can be achieved by swiping a single finger across the image.
 ## Snapshots

@@ -30,6 +30,15 @@
 		<true/>
 		<key>NSExceptionDomains</key>
 		<dict>
+			<key>http://169.254.63.218:8080/hls/test.m3u8</key>
+			<dict>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+				<key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSTemporaryExceptionMinimumTLSVersion</key>
+				<string>TLSv1.1</string>
+			</dict>
 			<key>wowza.com</key>
 			<dict>
 				<key>NSIncludesSubdomains</key>

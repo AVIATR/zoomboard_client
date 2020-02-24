@@ -77,8 +77,6 @@ class SettingsView: UIViewController, UITextFieldDelegate{
         streamInfo[lowResTextField.accessibilityIdentifier!] = streamStatus(urlValid: false, streamExists: false,
                                                                             HTTPResponseReceived: false, statusImage: lowResImgStatus, HTTPCode: 0, responseMsg: "", requestTask: URLSessionDataTask(), responseCheckTimer: Timer(), textField: lowResTextField, prevURL: lowResURL)
         
-//        OKbutton.setTitleColor(.gray, for: .disabled)
-
         scrollViewOutlet.showsVerticalScrollIndicator = false
         scrollViewOutlet.showsHorizontalScrollIndicator = false
 
@@ -88,8 +86,8 @@ class SettingsView: UIViewController, UITextFieldDelegate{
         highResTextField.text = highResURL
         lowResTextField.text = lowResURL
         contentView.accessibilityElements = [highResLabel!, highResTextField!, lowResLabel!, lowResTextField!, OKbutton!, resetButton!, cancelButton!]
-        self.validateURL(sender: highResTextField)
-        self.validateURL(sender: lowResTextField)
+//        self.validateURL(sender: highResTextField)
+//        self.validateURL(sender: lowResTextField)
         OKbutton.isEnabled = false
         OKbutton.setTitleColor(UIColor.gray, for: .disabled)
         validationTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(checkStreamsValid), userInfo: nil, repeats: true)
@@ -133,7 +131,7 @@ class SettingsView: UIViewController, UITextFieldDelegate{
     // invalidate URL when corresponding text box is touched for editing
     @IBAction func touchedTextField(_ sender: UITextField) {
         OKbutton.isEnabled = false
-       streamInfo[sender.accessibilityIdentifier!]!.streamExists = false
+        streamInfo[sender.accessibilityIdentifier!]!.streamExists = false
     }
     
     @IBAction func cancelPressed(_ sender: Any) {
@@ -144,7 +142,7 @@ class SettingsView: UIViewController, UITextFieldDelegate{
     
     @IBAction func editingStarted(_ sender: UITextField) {
         sender.backgroundColor = UIColor.white
-         OKbutton.isEnabled = false
+        OKbutton.isEnabled = false
         if sender == lowResTextField {
             scrollViewOutlet.scrollRectToVisible(keyboardText.frame, animated: true)
         }
@@ -300,13 +298,11 @@ class SettingsView: UIViewController, UITextFieldDelegate{
             //OKbutton.isEnabled = true
             if UIAccessibility.isVoiceOverRunning{
                 UIAccessibility.post(notification:.announcement, argument:"URL is correct!")
-                
             }
         }
         else{
             stream.statusImage.image = UIImage(named: "cross")
             showErrorPopup(stream: stream, title: "Error. Cannot find the video", message: "Please check that the URL entered is correct")
-            
         }
     }
     

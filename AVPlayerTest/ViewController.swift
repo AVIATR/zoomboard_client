@@ -164,23 +164,14 @@ class ViewController: UIViewController {
     
 //---------------------------------------------------------
     @IBAction func handlePan(recognizer:UIPanGestureRecognizer) {
-        let translation = recognizer.translation(in: self.playerView)
         let velocity = recognizer.velocity(in: self.playerView)
         if recognizer.state == .began{
             prevCenter = self.playerView.center
         }
         if recognizer.state != .cancelled{
             if zoomFactor > 1{
-                //print(translation)
-                print(recognizer.velocity(in: self.playerView))
                 var tx = velocity.x * 0.1
-//                if abs(tx) > 20{
-//                    tx *= 1.3
-//                }
                 var ty = velocity.y * 0.1
-//                if abs(ty) > 20{
-//                    ty *= 1.3
-//                }
                 var newX : CGFloat = playerView.frame.minX + tx
 
                 if  newX > 0{
@@ -204,7 +195,6 @@ class ViewController: UIViewController {
                         newY = screenHeight - playerView.frame.height
                     }
                 }
-//                self.playerView.center = CGPoint(x: prevCenter.x + translation.x, y: prevCenter.y + translation.y)
                 UIView.animate(withDuration: TimeInterval(0.35), delay: 0, options: .curveEaseOut, animations: {
                     self.playerView.frame = CGRect(x: newX, y: newY, width: self.playerView.frame.width, height: self.playerView.frame.height)
                     

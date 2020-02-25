@@ -33,6 +33,7 @@ class ViewController: UIViewController {
     var screenHeight : CGFloat = 0
     var screenWidth : CGFloat = 0
     var isStarting: Bool = true
+    var prevCenter: CGPoint = CGPoint(x: 0,y: 0)
     
     var videoSize : CGSize = CGSize(width: 0, height: 0)
     let barHeight  : CGFloat = 44.0 // player bar height
@@ -163,36 +164,53 @@ class ViewController: UIViewController {
     
 //---------------------------------------------------------
     @IBAction func handlePan(recognizer:UIPanGestureRecognizer) {
-        let translation = recognizer.translation(in: self.view)
-        if zoomFactor > 1{
-            var newX : CGFloat = playerView.frame.minX + translation.x
+        let translation = recognizer.translation(in: self.playerView)
+        let velocity = recognizer.velocity(in: self.playerView)
+        if recognizer.state == .began{
+            prevCenter = self.playerView.center
+        }
+        if recognizer.state != .cancelled{
+            if zoomFactor > 1{
+                //print(translation)
+                print(recognizer.velocity(in: self.playerView))
+                var tx = velocity.x * 0.1
+//                if abs(tx) > 20{
+//                    tx *= 1.3
+//                }
+                var ty = velocity.y * 0.1
+//                if abs(ty) > 20{
+//                    ty *= 1.3
+//                }
+                var newX : CGFloat = playerView.frame.minX + tx
 
-            if  newX > 0{
-                newX = 0
-            }
-            else if newX < screenWidth - playerView.frame.width{
-                newX = screenWidth - playerView.frame.width
-            }
-            let navBarHeight = self.navigationController!.navigationBar.frame.size.height
-            let window = UIApplication.shared.keyWindow
-            let topPadding = window?.safeAreaInsets.top
-            let yoffset = navBarHeight + topPadding!
-            
-            var newY = playerView.frame.minY
-            if playerView.frame.height > screenHeight{
-                newY = playerView.frame.minY + translation.y
-                if  newY > yoffset{
-                    newY = yoffset
+                if  newX > 0{
+                    newX = 0
                 }
-                if newY < screenHeight - playerView.frame.height{
-                    newY = screenHeight - playerView.frame.height
+                else if newX < screenWidth - playerView.frame.width{
+                    newX = screenWidth - playerView.frame.width
                 }
-            }
-            UIView.animate(withDuration: TimeInterval(0.25), delay: 0, options: .curveLinear, animations: {
-                self.playerView.frame = CGRect(x: newX, y: newY, width: self.playerView.frame.width, height: self.playerView.frame.height)
+                let navBarHeight = self.navigationController!.navigationBar.frame.size.height
+                let window = UIApplication.shared.keyWindow
+                let topPadding = window?.safeAreaInsets.top
+                let yoffset = navBarHeight + topPadding!
                 
-            }, completion: nil )
-            
+                var newY = playerView.frame.minY
+                if playerView.frame.height > screenHeight{
+                    newY = playerView.frame.minY + ty
+                    if  newY > yoffset{
+                        newY = yoffset
+                    }
+                    if newY < screenHeight - playerView.frame.height{
+                        newY = screenHeight - playerView.frame.height
+                    }
+                }
+//                self.playerView.center = CGPoint(x: prevCenter.x + translation.x, y: prevCenter.y + translation.y)
+                UIView.animate(withDuration: TimeInterval(0.35), delay: 0, options: .curveEaseOut, animations: {
+                    self.playerView.frame = CGRect(x: newX, y: newY, width: self.playerView.frame.width, height: self.playerView.frame.height)
+                    
+                }, completion: nil )
+                
+            }
         }
         recognizer.setTranslation(CGPoint.zero, in: self.view)
     }
